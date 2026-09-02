@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Krishnudu Mandate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Telugu:wght@400;600&display=swap">
+<style>
+:root{
+  --paper:#faf7f2; --surface:#ffffff; --surface-2:#f3eee5; --surface-3:#e9e2d5;
+  --line:#e3dbcc; --line-strong:#cdc2ae;
+  --text:#1a1712; --text-2:#5a5145; --text-3:#8a8175;
+  --accent:#b0660f; --accent-soft:#f7e9d4;
+  --river:#1c5f5a; --river-soft:#dcecea;
+  --risk:#a8402c; --risk-soft:#f7e3de;
+  --grow:#2b6f52; --grow-soft:#dcefe5;
+  --s1:#b0660f; --s2:#1667c4;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --telugu:"Noto Sans Telugu","Nirmala UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#16140f; --surface:#1f1c16; --surface-2:#26221b; --surface-3:#302b22;
+    --line:#38322a; --line-strong:#4c443a;
+    --text:#f3efe6; --text-2:#aca496; --text-3:#7c7568;
+    --accent:#e0a049; --accent-soft:#392d17;
+    --river:#68b0a8; --river-soft:#153230;
+    --risk:#df7259; --risk-soft:#3a1f19;
+    --grow:#57b189; --grow-soft:#14301f;
+    --s1:#bd8130; --s2:#5793d8;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#16140f; --surface:#1f1c16; --surface-2:#26221b; --surface-3:#302b22;
+  --line:#38322a; --line-strong:#4c443a;
+  --text:#f3efe6; --text-2:#aca496; --text-3:#7c7568;
+  --accent:#e0a049; --accent-soft:#392d17;
+  --river:#68b0a8; --river-soft:#153230;
+  --risk:#df7259; --risk-soft:#3a1f19;
+  --grow:#57b189; --grow-soft:#14301f;
+}
+
+.legend{display:flex; gap:22px; flex-wrap:wrap; margin-bottom:8px}
+.legend span{display:inline-flex; align-items:center; gap:8px; font-family:var(--mono);
+  font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--text-2)}
+.legend i{width:11px; height:11px; border-radius:3px; display:block}
+.assume{margin-top:18px; padding:15px 17px; background:var(--surface-2); border-radius:7px;
+  font-family:var(--mono); font-size:11.5px; line-height:1.8; color:var(--text-2)}
+.assume b{color:var(--text); font-weight:500}
+*{box-sizing:border-box}
+body{margin:0; background:var(--paper); color:var(--text);
+  font-family:var(--body); font-size:16px; line-height:1.62; -webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+.page{max-width:1000px; margin:0 auto; padding:0 26px}
+.col{max-width:660px}
+
+/* cover */
+.cover{border-bottom:1px solid var(--line); padding:52px 0 40px}
+.stamp{font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin:0 0 22px}
+.cover h1{
+  font-family:var(--display); font-weight:700; font-size:clamp(36px,6.4vw,62px); line-height:1.02;
+  letter-spacing:-.022em; margin:0 0 20px; max-width:16ch; text-wrap:balance;
+}
+.cover .standfirst{font-size:19px; line-height:1.5; color:var(--text-2); max-width:56ch; margin:0}
+.meta{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-top:38px}
+.meta div{background:var(--surface); padding:13px 16px}
+.meta dt{font-family:var(--mono); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--text-3); margin:0 0 3px}
+.meta dd{margin:0; font-weight:600; font-size:14.5px}
+
+/* sections */
+section{padding:52px 0; border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+.num{font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--accent); display:block; margin-bottom:12px}
+h2{font-family:var(--display); font-weight:600; font-size:clamp(25px,3.6vw,34px); line-height:1.12;
+  letter-spacing:-.018em; margin:0 0 18px; max-width:22ch; text-wrap:balance}
+h3{font-family:var(--display); font-weight:600; font-size:19px; letter-spacing:-.01em; margin:0 0 8px}
+p{margin:0 0 17px}
+p:last-child{margin-bottom:0}
+.lead{font-size:18px; color:var(--text-2)}
+strong{font-weight:600}
+em{font-style:italic}
+
+.pull{
+  font-family:var(--display); font-size:clamp(21px,3vw,27px); line-height:1.32; font-weight:400;
+  letter-spacing:-.014em; color:var(--text); border-left:3px solid var(--accent);
+  padding:4px 0 4px 24px; margin:30px 0; max-width:30ch; text-wrap:balance;
+}
+
+/* figures */
+figure{margin:36px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:26px 26px 20px}
+figure svg{display:block; width:100%; max-width:100%; height:auto; color:var(--text-2)}
+figcaption{margin-top:18px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:13.5px; color:var(--text-2); line-height:1.55}
+figcaption b{color:var(--text); font-weight:600}
+
+/* tables */
+.tw{overflow-x:auto; border:1px solid var(--line); border-radius:9px; background:var(--surface); margin:28px 0}
+table{border-collapse:collapse; width:100%; font-size:14.5px; min-width:560px}
+thead th{font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); text-align:left; font-weight:500; padding:12px 16px;
+  border-bottom:1px solid var(--line-strong); background:var(--surface-2)}
+tbody td{padding:13px 16px; border-bottom:1px solid var(--line); vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+td .sm{display:block; font-size:12.5px; color:var(--text-3); margin-top:3px}
+.rec td{background:var(--grow-soft)}
+.tag{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase;
+  padding:2.5px 7px; border-radius:3px; white-space:nowrap}
+.tag.pick{background:var(--grow); color:var(--paper)}
+
+/* blocks */
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:24px 26px; margin:24px 0}
+.panel.risk{border-left:4px solid var(--risk); border-radius:0 10px 10px 0}
+.panel.grow{border-left:4px solid var(--grow); border-radius:0 10px 10px 0}
+.panel h3{margin-bottom:10px}
+.panel p{font-size:15px; color:var(--text-2)}
+.panel p strong{color:var(--text)}
+
+ul.clean{margin:0 0 17px; padding-left:20px; color:var(--text-2)}
+ul.clean li{margin-bottom:9px}
+ul.clean li strong{color:var(--text)}
+
+.twocol{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin:26px 0}
+@media (max-width:740px){.twocol{grid-template-columns:1fr}}
+
+.promise{display:grid; grid-template-columns:auto 1fr; gap:14px; padding:14px 0; border-bottom:1px solid var(--line); align-items:baseline}
+.promise:last-child{border-bottom:0}
+.promise .m{font-family:var(--mono); font-size:10px; letter-spacing:.1em; font-weight:500}
+.promise.will .m{color:var(--grow)}
+.promise.wont .m{color:var(--risk)}
+.promise span:last-child{font-size:15px; color:var(--text-2)}
+
+.te{font-family:var(--telugu)}
+
+.ask{background:var(--accent-soft); border-radius:12px; padding:34px 32px; margin:10px 0 0}
+.ask h2{margin-bottom:14px}
+.ask p{color:var(--text-2); font-size:16.5px; max-width:56ch}
+.asklist{display:grid; gap:12px; margin-top:24px}
+.askrow{display:grid; grid-template-columns:26px 1fr; gap:14px; align-items:baseline; font-size:15.5px}
+.askrow .n{font-family:var(--mono); font-size:12px; color:var(--accent); font-weight:500}
+
+footer{padding:34px 0 56px; color:var(--text-3); font-size:12.5px; line-height:1.6}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="cover">
+  <p class="stamp">Campaign mandate · Bigg Boss Telugu Season 10 · Confidential</p>
+  <h1>The case for taking Krishnudu to the top three</h1>
+  <p class="standfirst">Prepared for Krishnudu's management ahead of the 6 September entry. It contains one argument, the evidence behind it, the risks we have already mapped, and what we would need from you to begin.</p>
+  <dl class="meta">
+    <div><dt>Prepared for</dt><dd>[Manager name]</dd></div>
+    <div><dt>Contestant</dt><dd>Krishnudu</dd></div>
+    <div><dt>By</dt><dd>[Your agency]</dd></div>
+    <div><dt>Season</dt><dd>Star Maa · JioHotstar</dd></div>
+    <div><dt>Entry</dt><dd>Sat 6 Sep, 7:00 PM</dd></div>
+    <div><dt>Decision needed</dt><dd>Within 48 hours</dd></div>
+  </dl>
+</header>
+
+<section>
+  <div class="col">
+    <span class="num">01</span>
+    <h2>The one thing nobody has told him</h2>
+    <p class="lead">Every film actor who enters that house loses on the same sentence: <em>he doesn't need it.</em></p>
+    <p>It is the most reliable killer in Bigg Boss Telugu. The audience watches a working actor arrive, decides the show is a career move rather than a necessity, and gives their votes to someone whose need feels real. Recognition is not the problem — nine seasons show that recognition without perceived need produces a comfortable fifth place.</p>
+    <p>Krishnudu is the one person that sentence cannot touch. The trade press is already writing him as out of form. Every viewer who remembers his face from <em>Pokiri</em>, <em>Happy Days</em>, <em>Arya 2</em> and <em>Gopala Gopala</em> can see for themselves that he stopped appearing. The need is visible without anyone having to argue for it.</p>
+    <p>Which means the decline is not the thing to manage quietly. It is the campaign.</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 900 300" role="img" aria-label="Diagram showing that the audience question 'does he need this?' splits contestants into an admiration path that does not produce votes and a protection path that does; most film actors take the first path and Krishnudu takes the second.">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+        <marker id="arRisk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#a8402c"/>
+        </marker>
+        <marker id="arGrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#2b6f52"/>
+        </marker>
+      </defs>
+
+      <rect x="10" y="118" width="176" height="64" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="98" y="144" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">Viewer recognises</text>
+      <text x="98" y="163" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">the face</text>
+
+      <line x1="186" y1="150" x2="262" y2="150" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar)"/>
+
+      <polygon points="352,104 434,150 352,196 270,150" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="352" y="145" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="currentColor">Does he</text>
+      <text x="352" y="162" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="currentColor">need this?</text>
+
+      <path d="M352,104 L352,62 L470,62" fill="none" stroke="#a8402c" stroke-width="1.5" marker-end="url(#arRisk)"/>
+      <text x="366" y="52" font-family="IBM Plex Mono, monospace" font-size="11" fill="#a8402c">NO</text>
+
+      <rect x="474" y="34" width="184" height="56" rx="7" fill="none" stroke="#a8402c" stroke-width="1.5"/>
+      <text x="566" y="58" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#a8402c">Admiration</text>
+      <text x="566" y="76" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#a8402c">without ownership</text>
+
+      <line x1="658" y1="62" x2="736" y2="62" stroke="#a8402c" stroke-width="1.5" marker-end="url(#arRisk)"/>
+      <text x="690" y="52" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#a8402c">watches</text>
+      <text x="820" y="57" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" fill="#a8402c">No vote</text>
+      <text x="820" y="76" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#a8402c">FIFTH PLACE</text>
+
+      <path d="M352,196 L352,238 L470,238" fill="none" stroke="#2b6f52" stroke-width="1.5" marker-end="url(#arGrow)"/>
+      <text x="366" y="230" font-family="IBM Plex Mono, monospace" font-size="11" fill="#2b6f52">YES</text>
+
+      <rect x="474" y="210" width="184" height="56" rx="7" fill="none" stroke="#2b6f52" stroke-width="1.5"/>
+      <text x="566" y="234" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#2b6f52">Feels responsible</text>
+      <text x="566" y="252" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#2b6f52">for protecting him</text>
+
+      <line x1="658" y1="238" x2="736" y2="238" stroke="#2b6f52" stroke-width="1.5" marker-end="url(#arGrow)"/>
+      <text x="690" y="228" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#2b6f52">dials</text>
+      <text x="820" y="233" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" fill="#2b6f52">Votes</text>
+      <text x="820" y="252" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#2b6f52">TOP THREE</text>
+
+      <text x="10" y="24" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.2" fill="currentColor">MOST FILM ACTORS TAKE THIS PATH</text>
+      <text x="10" y="290" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.2" fill="currentColor">KRISHNUDU IS ALREADY ON THIS ONE</text>
+    </svg>
+    <figcaption><b>The fork every contestant is put through in the first fortnight.</b> Recognition alone routes a viewer to admiration, which produces no vote. Perceived need routes them to protection, which does. The campaign's entire job is to make sure Krishnudu is read on the lower path — and unusually, the raw material for that is already public.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">02</span>
+    <h2>What nine finales actually prove</h2>
+    <p>This is not an opinion about what audiences like. It is what the results say when you line up every winner since 2017 and ask what they had in common.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Season</th><th>Winner</th><th>By trade</th><th>What actually won it</th></tr></thead>
+      <tbody>
+        <tr><td>S1 · 2017</td><td>Siva Balaji</td><td>Actor</td><td>Grounded family man</td></tr>
+        <tr><td>S2 · 2018</td><td>Kaushal Manda</td><td>Actor</td><td>Polarising warrior with an organised army</td></tr>
+        <tr><td>S3 · 2019</td><td>Rahul Sipligunj</td><td>Singer</td><td>Street-mass Hyderabadi</td></tr>
+        <tr><td>S4 · 2020</td><td>Abijeet</td><td>Actor</td><td>Calm protector</td></tr>
+        <tr><td>S5 · 2021</td><td>VJ Sunny</td><td>VJ, dancer</td><td>Working-class grinder</td></tr>
+        <tr><td>S6 · 2022</td><td>L.V. Revanth</td><td>Singer</td><td>Humble underdog</td></tr>
+        <tr><td>S7 · 2023</td><td>Pallavi Prashanth</td><td>Farmer</td><td>Rural mass underdog</td></tr>
+        <tr><td>S8 · 2024</td><td>Nikhil Maliyakkal</td><td>Actor</td><td>Dominant house chief</td></tr>
+        <tr><td>S9 · 2025</td><td>Kalyan Padala</td><td>Army officer</td><td>Dignity underdog</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col">
+    <p>Four different professions, one recurring shape. Six of the nine won on a relatable story rather than superior gameplay. Two of the last three were not celebrities at all.</p>
+    <p>Three further patterns matter for Krishnudu specifically. Contestants with large online followings have reached the final three times — seasons 5, 6 and 8 — and won nothing; follower counts do not convert into missed calls. Comedians arrive with enormous recall and reliably cap around third. And no woman has taken the Telugu title in nine seasons.</p>
+    <p class="pull">The show does not crown the best player. It crowns the person the audience feels responsible for.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">03</span>
+    <h2>The position we would run</h2>
+    <p>A house holds roughly sixteen people and about eight workable emotional positions. Two contestants standing in the same one split a single vote base and both lose it. This is the highest-leverage decision of the whole season, and it has to be made before Saturday.</p>
+    <p>The pure underdog lane is already closed — six commoners are entering from the Agnipariksha pre-show with backstories that have been built on air for weeks. Krishnudu does not need it. He has three things that stack into a position no one else in the house can claim.</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 900 250" role="img" aria-label="Three components — underdog by decline, Godavari identity, and the elder who works — combining into a single position: the Godavari man who lost everything twice and is still standing.">
+      <rect x="14" y="26" width="230" height="60" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="34" y="49" font-family="IBM Plex Sans, sans-serif" font-size="13.5" font-weight="600" fill="currentColor">Underdog by decline</text>
+      <text x="34" y="70" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">Not poverty — loss</text>
+
+      <rect x="14" y="96" width="230" height="60" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="34" y="119" font-family="IBM Plex Sans, sans-serif" font-size="13.5" font-weight="600" fill="currentColor">Godavari identity</text>
+      <text x="34" y="140" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">Razole · East Godavari</text>
+
+      <rect x="14" y="166" width="230" height="60" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="34" y="189" font-family="IBM Plex Sans, sans-serif" font-size="13.5" font-weight="600" fill="currentColor">The elder who works</text>
+      <text x="34" y="210" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">Oldest in the house, at 51</text>
+
+      <path d="M244,56 C300,56 300,126 340,126" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M244,126 L340,126" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M244,196 C300,196 300,126 340,126" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="340" y1="126" x2="404" y2="126" stroke="#b0660f" stroke-width="2" marker-end="url(#ar2)"/>
+      <defs>
+        <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#b0660f"/>
+        </marker>
+      </defs>
+
+      <rect x="410" y="76" width="476" height="100" rx="9" fill="none" stroke="#b0660f" stroke-width="2"/>
+      <text x="436" y="106" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.4" fill="#b0660f">THE POSITION</text>
+      <text x="436" y="136" font-family="Fraunces, Georgia, serif" font-size="19" font-weight="600" fill="currentColor">The Godavari man who lost</text>
+      <text x="436" y="160" font-family="Fraunces, Georgia, serif" font-size="19" font-weight="600" fill="currentColor">everything twice — and is still standing</text>
+    </svg>
+    <figcaption><b>Twice is literal.</b> The family land, and then the career. It is documented, it is his alone, and no other name reported for this season can claim any part of it. He never says the sentence out loud — the audience has to arrive at it by watching him behave that way for weeks.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">04</span>
+    <h2>The gap only a campaign can close</h2>
+    <p>Krishnudu walks in with something most contestants would pay for: two decades of face recall, across both film audiences and daytime serial audiences from <em>Yuva</em> and <em>Gangato Ram Babu</em>. That second audience matters more than the first, because it is the household that votes by missed call.</p>
+    <p>What he does not have is a single organised person. Twenty years of goodwill is worth nothing on a two-hour voting window if nobody knows the number, the window is closing, and no one is reminding them. That gap is the entire job.</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 900 330" role="img" aria-label="Comparison showing that without a captain network, recognition collapses to a trickle of votes, while adding a district captain layer converts the same recognition into organised voting.">
+      <text x="14" y="22" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.3" fill="#a8402c">WITHOUT A CAMPAIGN — WHAT HE HAS TODAY</text>
+      <rect x="14" y="38" width="200" height="52" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="114" y="60" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">Face recall</text>
+      <text x="114" y="78" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="currentColor">Film + serial audiences</text>
+
+      <line x1="214" y1="64" x2="330" y2="64" stroke="#a8402c" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arRisk2)"/>
+      <defs>
+        <marker id="arRisk2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#a8402c"/>
+        </marker>
+        <marker id="arGrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#2b6f52"/>
+        </marker>
+      </defs>
+      <text x="272" y="54" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#a8402c">nothing in between</text>
+
+      <rect x="330" y="38" width="150" height="52" rx="7" fill="none" stroke="#a8402c" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="405" y="68" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#a8402c">A few votes</text>
+
+      <text x="500" y="58" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#a8402c">Nobody knows the number.</text>
+      <text x="500" y="78" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#a8402c">Nobody reminds them before it closes.</text>
+
+      <line x1="14" y1="126" x2="886" y2="126" stroke="currentColor" stroke-width="1" opacity="0.28"/>
+
+      <text x="14" y="160" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.3" fill="#2b6f52">WITH THE MACHINE — THE ONE LAYER WE ADD</text>
+      <rect x="14" y="176" width="200" height="52" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="114" y="198" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">Face recall</text>
+      <text x="114" y="216" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="currentColor">Same audience, unchanged</text>
+
+      <line x1="214" y1="202" x2="290" y2="202" stroke="#2b6f52" stroke-width="1.5" marker-end="url(#arGrow2)"/>
+
+      <rect x="294" y="164" width="196" height="76" rx="7" fill="none" stroke="#2b6f52" stroke-width="2"/>
+      <text x="392" y="188" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="#2b6f52">District captains</text>
+      <text x="392" y="206" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#2b6f52">WhatsApp groups by town</text>
+      <text x="392" y="224" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#2b6f52">Trained, named, accountable</text>
+
+      <line x1="490" y1="202" x2="566" y2="202" stroke="#2b6f52" stroke-width="1.5" marker-end="url(#arGrow2)"/>
+      <text x="528" y="192" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#2b6f52">alert in 15 min</text>
+
+      <rect x="570" y="176" width="180" height="52" rx="7" fill="none" stroke="#2b6f52" stroke-width="1.5"/>
+      <text x="660" y="198" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="#2b6f52">Organised voting</text>
+      <text x="660" y="216" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#2b6f52">Every window, every week</text>
+
+      <path d="M660,228 L660,258 L392,258 L392,240" fill="none" stroke="#2b6f52" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#arGrow2)"/>
+      <text x="526" y="276" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#2b6f52">"REPLY VOTED" CHECK-INS — THE ONLY NUMBER THAT TELLS US THE TRUTH</text>
+
+      <text x="14" y="312" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="currentColor">The audience is identical in both rows. The only variable is whether anyone organised it.</text>
+    </svg>
+    <figcaption><b>This is the whole proposition.</b> We do not claim to make people like Krishnudu — twenty years of work already did that. We convert existing affection into a number on a Friday night, and we measure it honestly through check-ins rather than through follower counts.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">05</span>
+    <h2>Who actually votes, and which of them remember him</h2>
+    <p>"The Telugu audience" is four different audiences watching on two different screens and voting by two different methods. They do not behave alike, and the difference decides which contestant converts attention into numbers.</p>
+    <p>The generation that produces trends is not the generation that produces votes.</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 900 400" role="img" aria-label="Diagram routing five generational cohorts to the screen they watch on and the voting method they use, showing that millennials aged 30 to 45 are the only cohort that uses both methods with high repeat discipline and also has strong recall of Krishnudu.">
+      <defs>
+        <marker id="c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+        <marker id="c2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#2b6f52"/>
+        </marker>
+      </defs>
+
+      <text x="14" y="20" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.3" fill="currentColor">COHORT</text>
+      <text x="360" y="20" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.3" fill="currentColor">SCREEN</text>
+      <text x="606" y="20" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.3" fill="currentColor">VOTING METHOD</text>
+      <text x="800" y="20" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.3" fill="currentColor">RECALL</text>
+
+      <rect x="14" y="36" width="200" height="42" rx="6" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.55"/>
+      <text x="30" y="54" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="currentColor" opacity="0.7">Gen Alpha</text>
+      <text x="30" y="70" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="currentColor" opacity="0.7">Under 13 · cannot vote</text>
+
+      <rect x="14" y="88" width="200" height="42" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="30" y="106" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="currentColor">Gen Z</text>
+      <text x="30" y="122" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="currentColor">14–29</text>
+
+      <rect x="14" y="152" width="200" height="56" rx="6" fill="#2b6f52" fill-opacity="0.13" stroke="#2b6f52" stroke-width="2"/>
+      <text x="30" y="174" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#2b6f52">Millennials · 90s kids</text>
+      <text x="30" y="190" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#2b6f52">30–45 · his core</text>
+
+      <rect x="14" y="218" width="200" height="42" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="30" y="236" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="currentColor">Gen X</text>
+      <text x="30" y="252" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="currentColor">46–61</text>
+
+      <rect x="14" y="270" width="200" height="42" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="30" y="288" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="currentColor">Boomers</text>
+      <text x="30" y="304" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="currentColor">62 and over</text>
+
+      <rect x="352" y="70" width="150" height="46" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="427" y="90" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="currentColor">JioHotstar</text>
+      <text x="427" y="107" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="currentColor">mobile</text>
+
+      <rect x="352" y="230" width="150" height="46" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="427" y="250" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="currentColor">Star Maa</text>
+      <text x="427" y="267" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="currentColor">living-room TV</text>
+
+      <rect x="600" y="70" width="150" height="46" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="675" y="90" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="currentColor">In-app vote</text>
+      <text x="675" y="107" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="currentColor">urban, young</text>
+
+      <rect x="600" y="230" width="150" height="46" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="675" y="250" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="currentColor">Missed call</text>
+      <text x="675" y="267" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="currentColor">districts, decisive</text>
+
+      <path d="M214,57 L300,57 L300,80 L352,80" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45" stroke-dasharray="4 4"/>
+      <text x="238" y="50" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="currentColor" opacity="0.6">keeps the TV on</text>
+
+      <line x1="214" y1="109" x2="352" y2="98" stroke="currentColor" stroke-width="1.4" marker-end="url(#c1)"/>
+      <line x1="502" y1="93" x2="600" y2="93" stroke="currentColor" stroke-width="1.4" marker-end="url(#c1)"/>
+
+      <path d="M214,172 L282,172 L282,96 L352,93" fill="none" stroke="#2b6f52" stroke-width="2" marker-end="url(#c2)"/>
+      <path d="M214,190 L282,190 L282,250 L352,253" fill="none" stroke="#2b6f52" stroke-width="2" marker-end="url(#c2)"/>
+      <text x="230" y="212" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#2b6f52">BOTH SCREENS</text>
+
+      <path d="M502,106 L540,106 L540,88 L600,88" fill="none" stroke="#2b6f52" stroke-width="2" marker-end="url(#c2)"/>
+      <path d="M502,262 L540,262 L540,258 L600,258" fill="none" stroke="#2b6f52" stroke-width="2" marker-end="url(#c2)"/>
+      <text x="512" y="176" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#2b6f52">BOTH METHODS</text>
+
+      <line x1="214" y1="239" x2="352" y2="248" stroke="currentColor" stroke-width="1.4" marker-end="url(#c1)"/>
+      <line x1="214" y1="291" x2="352" y2="264" stroke="currentColor" stroke-width="1.4" marker-end="url(#c1)"/>
+      <line x1="502" y1="253" x2="600" y2="253" stroke="currentColor" stroke-width="1.4" marker-end="url(#c1)"/>
+
+      <text x="790" y="112" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor" opacity="0.75">Low</text>
+      <text x="790" y="180" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="#2b6f52">Very high</text>
+      <text x="790" y="240" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">High</text>
+      <text x="790" y="292" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">Medium</text>
+
+      <line x1="14" y1="336" x2="886" y2="336" stroke="currentColor" stroke-width="1" opacity="0.28"/>
+      <text x="14" y="360" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">One cohort sits on both screens, uses both methods, and remembers him. That is where the campaign goes.</text>
+      <text x="14" y="382" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="currentColor" opacity="0.8">Gen Z decides what trends. Millennials decide who survives.</text>
+    </svg>
+    <figcaption><b>Krishnudu's recall peaks exactly where the voting power sits.</b> The 30–45 cohort were between ten and twenty-five when <em>Pokiri</em> (2006), <em>Happy Days</em> (2007) and <em>Arya 2</em> (2009) released — the films that formed their cinema-going years. They are also the cohort that lives in WhatsApp groups, has the disposable time to vote repeatedly across a five-day window, and watches on both screens. No other contestant's recall aligns with the voting cohort this precisely.</figcaption>
+  </figure>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Cohort</th><th>Age in 2026</th><th>Behaviour that matters</th><th>What we do with them</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Gen Alpha</strong></td><td>Under 13</td><td>Cannot vote. Anchors family co-viewing — the reason the set is on at 9:30 PM.<span class="sm">Zero direct value</span></td><td>Nothing. Never a target.</td></tr>
+        <tr><td><strong>Gen Z</strong></td><td>14–29</td><td>High-volume in-app voting, meme velocity, fast allegiance switching, weak repeat discipline.<span class="sm">Produces trends, not survival</span></td><td>Supply clippable moments. Do not spend budget chasing them, and do not read their trend volume as a health signal.</td></tr>
+        <tr class="rec"><td><strong>Millennials · 90s kids</strong> <span class="tag pick">Core</span></td><td>30–45</td><td>Both screens, both voting methods, native to WhatsApp groups, high repeat discipline across a five-day window.<span class="sm">Produces survival and finale volume</span></td><td>The entire district structure is built for them. Nostalgia content, group captaincy, "reply VOTED" discipline.</td></tr>
+        <tr><td><strong>Gen X</strong></td><td>46–61</td><td>Linear Star Maa, missed-call voting, decides as a household. Knows him from <em>Yuva</em> and <em>Gangato Ram Babu</em>.<span class="sm">Most loyal once won</span></td><td>Serial-audience fan pages run separately from film ones. The elder-who-works framing is aimed here.</td></tr>
+        <tr><td><strong>Boomers</strong></td><td>62+</td><td>Television only; votes through a family member's phone.<span class="sm">Small but sticky</span></td><td>Reached indirectly, through the household. Respect framing, never youth framing.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col">
+    <p class="pull">Every other contestant will spend September fighting for Gen Z attention. His base is the one that actually dials.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">06</span>
+    <h2>Where his votes actually live</h2>
+    <p>Almost every Bigg Boss campaign concentrates on Hyderabad and the Telangana districts, because that is where media, trends and agencies are. It means those regions are crowded every season and no single contestant can own them.</p>
+    <p>Krishnudu is from Razole in East Godavari. The Godavari belt is the most under-organised vote base in Telugu reality television — deep regional pride, high missed-call behaviour, and nobody campaigning for it seriously. We would weight the build there rather than spread it evenly.</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 900 300" role="img" aria-label="Diagram contrasting the crowded Hyderabad and Telangana territory where rival campaigns concentrate against the uncontested Godavari belt where Krishnudu's home vote base sits.">
+      <rect x="14" y="40" width="400" height="220" rx="10" fill="none" stroke="#a8402c" stroke-width="1.5" stroke-dasharray="6 5"/>
+      <text x="34" y="30" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.3" fill="#a8402c">CONTESTED — EVERY CAMPAIGN IS HERE</text>
+      <text x="34" y="70" font-family="Fraunces, Georgia, serif" font-size="20" font-weight="600" fill="currentColor">Hyderabad &amp; Telangana</text>
+
+      <circle cx="80" cy="120" r="17" fill="#a8402c" opacity="0.55"/>
+      <circle cx="122" cy="138" r="17" fill="#a8402c" opacity="0.55"/>
+      <circle cx="104" cy="164" r="17" fill="#a8402c" opacity="0.55"/>
+      <circle cx="152" cy="116" r="17" fill="#a8402c" opacity="0.55"/>
+      <circle cx="140" cy="180" r="17" fill="#a8402c" opacity="0.55"/>
+      <circle cx="188" cy="152" r="17" fill="#a8402c" opacity="0.55"/>
+      <text x="222" y="126" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="currentColor">Sixteen contestants,</text>
+      <text x="222" y="146" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="currentColor">every agency, one</text>
+      <text x="222" y="166" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="currentColor">crowded vote base.</text>
+      <text x="34" y="232" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#a8402c">We sustain a presence here. We do not try to win it.</text>
+
+      <rect x="486" y="40" width="400" height="220" rx="10" fill="none" stroke="#2b6f52" stroke-width="2"/>
+      <text x="506" y="30" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.3" fill="#2b6f52">UNCONTESTED — AND IT IS HIS HOME</text>
+      <text x="506" y="70" font-family="Fraunces, Georgia, serif" font-size="20" font-weight="600" fill="currentColor">The Godavari belt</text>
+
+      <circle cx="556" cy="140" r="30" fill="#2b6f52" opacity="0.5"/>
+      <text x="556" y="190" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#2b6f52">RAZOLE</text>
+      <circle cx="636" cy="128" r="24" fill="#2b6f52" opacity="0.38"/>
+      <text x="636" y="176" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#2b6f52">KAKINADA</text>
+      <circle cx="704" cy="160" r="24" fill="#2b6f52" opacity="0.38"/>
+      <text x="704" y="206" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#2b6f52">RAJAHMUNDRY</text>
+      <circle cx="790" cy="120" r="21" fill="#2b6f52" opacity="0.3"/>
+      <text x="790" y="164" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#2b6f52">BHIMAVARAM</text>
+
+      <text x="506" y="232" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#2b6f52">Plus the Godavari diaspora — Gulf, US, Hyderabad families.</text>
+
+      <text x="450" y="286" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">Owning one district outright beats competing for a slice of another.</text>
+    </svg>
+    <figcaption><b>The strategic difference from a standard campaign.</b> The usual six-region structure spreads effort evenly. Weighting into the Godavari belt lets an organised campaign plausibly own a home district — and the diaspora attached to it is the single most underused vote base in the format.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">07</span>
+    <h2>The vote we can actually control</h2>
+    <p>Nobody outside the broadcaster knows how many votes are cast, and anyone who quotes you a total is guessing. So we do not model the electorate. We model the part we build and can measure, and we show you the arithmetic.</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 900 250" role="img" aria-label="A four-stage funnel from organised community members through check-in ratio and votes per person to a campaign-controlled vote floor per voting window.">
+      <defs>
+        <marker id="f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--s1)"/>
+        </marker>
+      </defs>
+
+      <rect x="14" y="66" width="176" height="76" rx="8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="102" y="96" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="26" font-weight="700" fill="currentColor">10,000</text>
+      <text x="102" y="116" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">organised members</text>
+      <text x="102" y="132" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="currentColor">TARGET BY WEEK 6</text>
+
+      <line x1="190" y1="104" x2="252" y2="104" stroke="var(--s1)" stroke-width="1.8" marker-end="url(#f1)"/>
+      <text x="221" y="94" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--s1)">× 40%</text>
+      <text x="221" y="124" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="currentColor" opacity="0.7">check-in</text>
+
+      <rect x="256" y="66" width="176" height="76" rx="8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="344" y="96" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="26" font-weight="700" fill="currentColor">4,000</text>
+      <text x="344" y="116" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">who actually vote</text>
+      <text x="344" y="132" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="currentColor">MEASURED WEEKLY</text>
+
+      <line x1="432" y1="104" x2="494" y2="104" stroke="var(--s1)" stroke-width="1.8" marker-end="url(#f1)"/>
+      <text x="463" y="94" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--s1)">× 60</text>
+      <text x="463" y="124" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="currentColor" opacity="0.7">per window</text>
+
+      <rect x="498" y="52" width="230" height="104" rx="8" fill="var(--s1)" fill-opacity="0.1" stroke="var(--s1)" stroke-width="2"/>
+      <text x="613" y="94" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="700" fill="currentColor">240,000</text>
+      <text x="613" y="116" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="currentColor">votes per voting window</text>
+      <text x="613" y="136" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--s1)">THE FLOOR WE CONTROL</text>
+
+      <text x="756" y="86" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">Not the total</text>
+      <text x="756" y="104" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">vote — the</text>
+      <text x="756" y="122" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">margin between</text>
+      <text x="756" y="140" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">the bottom two.</text>
+
+      <line x1="14" y1="186" x2="886" y2="186" stroke="currentColor" stroke-width="1" opacity="0.28"/>
+      <text x="14" y="32" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.3" fill="currentColor">A MODEL, NOT A MEASUREMENT — EVERY ASSUMPTION IS STATED BELOW</text>
+      <text x="14" y="212" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="currentColor">Eliminations are decided at the margin, not at the top. A controlled floor of this size is not the whole vote —</text>
+      <text x="14" y="232" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="currentColor">it is reliably larger than the gap between the bottom two contestants in any given week.</text>
+    </svg>
+    <figcaption><b>The only honest vote model is one you can audit.</b> Change any assumption and the number moves — which is the point. We report the middle box every week, so you can see whether the machine is real rather than taking our word for it.</figcaption>
+    <div class="assume">
+      <b>ASSUMPTIONS, STATED</b><br>
+      · <b>10,000 members</b> — the community target in the campaign plan, built across the Godavari belt by Week 6.<br>
+      · <b>40% check-in</b> — the share who reply VOTED in a given window. Conservative for a well-run community with active captains; this is a measured number, not an estimate, from Week 2 onward.<br>
+      · <b>60 votes per person per window</b> — Season 9 permitted roughly 50 votes per method per day across two methods, over a window of several days. Real people do not max out. Sixty is deliberately well under the theoretical ceiling.<br>
+      · <b>Season 10 limits are unconfirmed.</b> They are announced on air in Week 1, and every creative and this model are revised the same week.<br>
+      · <b>The total vote pool is unknown</b> and is never published by the broadcaster. Any agency quoting you a percentage share is quoting an unofficial poll.
+    </div>
+  </figure>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">08</span>
+    <h2>The audience is biggest exactly when the top three is decided</h2>
+    <p>The show runs on two platforms with different audiences. Star Maa carries the linear television audience — older, district-weighted, and the source of missed-call votes. JioHotstar carries the streaming audience, which is younger, urban and app-voting; the platform reported crossing roughly 280 to 300 million subscribers nationally during 2025, and it also carries the 24-hour feed that generates most clip material.</p>
+    <p>What matters strategically is the shape of the season. In healthy seasons the finale substantially outdraws the premiere.</p>
+  </div>
+
+  <figure>
+    <div class="legend">
+      <span><i style="background:var(--s1)"></i>Premiere rating</span>
+      <span><i style="background:var(--s2)"></i>Finale rating</span>
+    </div>
+    <svg viewBox="0 0 900 360" role="img" aria-label="Grouped bar chart of published Bigg Boss Telugu television ratings comparing premiere and finale for seasons 3 to 6. Season 3 rose from 17.9 to 22.4, season 4 from 18.5 to 21.7, season 5 from 18.0 to 18.4, and season 6 fell from 8.86 to 8.17.">
+      <line x1="70" y1="290" x2="860" y2="290" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+      <line x1="70" y1="227.5" x2="860" y2="227.5" stroke="currentColor" stroke-width="1" opacity="0.13"/>
+      <line x1="70" y1="165" x2="860" y2="165" stroke="currentColor" stroke-width="1" opacity="0.13"/>
+      <line x1="70" y1="102.5" x2="860" y2="102.5" stroke="currentColor" stroke-width="1" opacity="0.13"/>
+      <line x1="70" y1="40" x2="860" y2="40" stroke="currentColor" stroke-width="1" opacity="0.13"/>
+      <text x="58" y="294" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity="0.6">0</text>
+      <text x="58" y="231" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity="0.6">6</text>
+      <text x="58" y="169" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity="0.6">12</text>
+      <text x="58" y="106" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity="0.6">18</text>
+      <text x="58" y="44" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity="0.6">24</text>
+
+      <path d="M105.75,290 L105.75,107.5 Q105.75,103.5 109.75,103.5 L163.75,103.5 Q167.75,103.5 167.75,107.5 L167.75,290 Z" fill="var(--s1)"/>
+      <path d="M169.75,290 L169.75,60.7 Q169.75,56.7 173.75,56.7 L227.75,56.7 Q231.75,56.7 231.75,60.7 L231.75,290 Z" fill="var(--s2)"/>
+      <text x="136" y="95" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="currentColor">17.9</text>
+      <text x="200" y="48" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="currentColor">22.4</text>
+
+      <path d="M303.25,290 L303.25,101.3 Q303.25,97.3 307.25,97.3 L361.25,97.3 Q365.25,97.3 365.25,101.3 L365.25,290 Z" fill="var(--s1)"/>
+      <path d="M367.25,290 L367.25,68 Q367.25,64 371.25,64 L425.25,64 Q429.25,64 429.25,68 L429.25,290 Z" fill="var(--s2)"/>
+      <text x="334" y="89" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="currentColor">18.5</text>
+      <text x="398" y="56" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="currentColor">21.7</text>
+
+      <path d="M500.75,290 L500.75,106.5 Q500.75,102.5 504.75,102.5 L558.75,102.5 Q562.75,102.5 562.75,106.5 L562.75,290 Z" fill="var(--s1)"/>
+      <path d="M564.75,290 L564.75,102.3 Q564.75,98.3 568.75,98.3 L622.75,98.3 Q626.75,98.3 626.75,102.3 L626.75,290 Z" fill="var(--s2)"/>
+      <text x="531" y="94" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="currentColor">18.0</text>
+      <text x="595" y="90" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="currentColor">18.4</text>
+
+      <path d="M698.25,290 L698.25,201.7 Q698.25,197.7 702.25,197.7 L756.25,197.7 Q760.25,197.7 760.25,201.7 L760.25,290 Z" fill="var(--s1)"/>
+      <path d="M762.25,290 L762.25,208.9 Q762.25,204.9 766.25,204.9 L820.25,204.9 Q824.25,204.9 824.25,208.9 L824.25,290 Z" fill="var(--s2)"/>
+      <text x="729" y="189" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="currentColor">8.86</text>
+      <text x="793" y="196" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="currentColor">8.17</text>
+
+      <text x="168" y="312" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">Season 3</text>
+      <text x="366" y="312" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">Season 4</text>
+      <text x="563" y="312" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">Season 5</text>
+      <text x="761" y="312" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">Season 6</text>
+      <text x="761" y="330" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" opacity="0.7">weakest season on record</text>
+      <text x="70" y="24" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.3" fill="currentColor">PUBLISHED TELEVISION RATINGS · PREMIERE VS FINALE</text>
+    </svg>
+    <figcaption><b>In three of the four seasons shown, the finale drew as many or more viewers than the launch — by roughly four rating points in the strongest two.</b> The audience, and therefore the vote pool, is at its largest in exactly the weeks that decide the top three. That is why community capacity has to be built in September and held rather than spent: arriving at December with an exhausted list is the most common way a strong season ends badly. Season 6 is the counter-example and the reason nothing here is assumed.</figcaption>
+  </figure>
+
+  <div class="twocol">
+    <div class="panel">
+      <h3>Star Maa · linear television</h3>
+      <p>Older, district-weighted, family co-viewing. Carries the weekend host episodes, which are the highest-attention minutes of the week. This audience votes by missed call and decides close weeks. Our Gen X and Godavari-belt work is aimed entirely here.</p>
+    </div>
+    <div class="panel">
+      <h3>JioHotstar · streaming</h3>
+      <p>Younger, urban, app-voting, and the source of the 24-hour feed that most clip content is cut from. Reported at roughly 280–300 million subscribers nationally during 2025. High visibility, lower repeat-vote discipline — useful for momentum optics, not for survival.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">09</span>
+    <h2>Where this could realistically land</h2>
+    <p>We said we would not promise a position, and we are not going to. What we can do is name the three outcomes we consider plausible and tell you exactly what has to be true for each — so that in November you can check us against this page rather than against a memory of a meeting.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Scenario</th><th>What has to be true</th><th>Likely finish</th></tr></thead>
+      <tbody>
+        <tr class="rec"><td><strong>The machine works and the arc lands</strong></td><td>Godavari belt saturated by Week 4 · check-in ratio above 40% and holding through Week 9 · he survives a genuine Act III attack without breaking · at least one protector moment lands per fortnight.</td><td><strong>Top three in play</strong><span class="sm">Requires all four, not three of four</span></td></tr>
+        <tr><td><strong>The machine works, the arc stays flat</strong></td><td>District organisation is strong, but no protector moment lands and he is never seriously tested. He is widely liked and nobody feels responsible for him.</td><td>Fourth to sixth<span class="sm">Safe every week, capped at the finale</span></td></tr>
+        <tr><td><strong>The machine is underbuilt</strong></td><td>Captains not in place before the second nomination cycle, or the Godavari build is spread thin across all six regions. Recall never converts.</td><td>Evicted between Weeks 6 and 9<span class="sm">Despite good sentiment throughout</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col">
+    <p>The uncomfortable part of that table is that the difference between the first row and the third is decided in the next four days and again in Weeks 8 to 10 — not in December. By the finale, the outcome has already been built or it has not.</p>
+    <p>We would also rather say this plainly: a top-three finish is not the only outcome worth paying for. A contestant who survives to Week 11 with an organised, addressable community of ten thousand people and a restored public narrative has more commercial value on exit than one who reaches the final three with neither.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">10</span>
+    <h2>The file a rival team will open in Week 2</h2>
+    <p>We would rather raise this now than have you hear it from a screenshot on a nomination night. Everything below is already published and searchable. Rival contestant teams running negative PR against a threat is an established pattern in this show, and preparation is the only defence that works.</p>
+    <p>We have listed these because we have already drafted the responses — not as leverage, and not to be used in any campaign we run.</p>
+  </div>
+
+  <div class="panel risk">
+    <h3>The 2021 case</h3>
+    <p>A widely reported detention in Hyderabad in September 2021, resolved at the time. It is trivially searchable and it will resurface. <strong>What we need:</strong> the current legal status in writing from his own lawyer, and a three-sentence holding statement cleared before he enters. The posture is brief, factual, closed, and then silence — defending it at length keeps it alive.</p>
+  </div>
+
+  <div class="panel risk">
+    <h3>Two different origin stories in print</h3>
+    <p>Published sources carry incompatible accounts of his family background — one describes a farming family, another a landholding family that lost roughly 4,500 acres under the Land Ceiling Act. Both are in circulation. A rival team will place them side by side and call the underdog framing manufactured. <strong>What we need:</strong> Krishnudu tells us which is true, and we run only that version, everywhere, without exception. If the land-loss account is the true one it is the stronger story — told as loss and rebuilding, never as lineage.</p>
+  </div>
+
+  <div class="panel risk">
+    <h3>Political exposure</h3>
+    <p>He has been publicly associated with a party. In the current Andhra climate that divides the audience before he has said anything. <strong>What we need:</strong> his agreement to a strict rule — no politics inside the house, no party colours in any creative, no political amplification, and no party office-bearer as an official district captain. A political vote bloc looks like a shortcut in Week 2 and costs the finale.</p>
+  </div>
+
+  <div class="col">
+    <p>There may be other matters that are not in the public record. If anything exists that could surface during a fifteen-week season, we would ask to know it privately before Saturday. We are not asking in order to judge it. We are asking because a prepared response takes two hours and an unprepared one takes a week we will not have.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">11</span>
+    <h2>How the fifteen weeks are built</h2>
+    <p>Survival and winning are two different jobs. Survival is a weekly operational sprint that resets every Monday and is won by organisation. Winning is a fifteen-week story that has to have a shape. Running them as one is how a well-liked contestant is evicted in Week 9.</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 900 250" role="img" aria-label="Five-act season structure across fifteen weeks: recognition in weeks one to three, respect in weeks four to seven, the test in weeks eight to ten, ownership in weeks eleven to thirteen, and vindication in weeks fourteen and fifteen.">
+      <rect x="14" y="60" width="164" height="52" rx="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <rect x="184" y="60" width="218" height="52" rx="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <rect x="408" y="60" width="164" height="52" rx="6" fill="#a8402c" fill-opacity="0.14" stroke="#a8402c" stroke-width="2"/>
+      <rect x="578" y="60" width="164" height="52" rx="6" fill="none" stroke="#2b6f52" stroke-width="1.5"/>
+      <rect x="748" y="60" width="138" height="52" rx="6" fill="none" stroke="#2b6f52" stroke-width="1.5"/>
+
+      <text x="96" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor">ACT I · W1–3</text>
+      <text x="96" y="101" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">Recognition</text>
+      <text x="293" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor">ACT II · W4–7</text>
+      <text x="293" y="101" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="currentColor">Respect</text>
+      <text x="490" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#a8402c">ACT III · W8–10</text>
+      <text x="490" y="101" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="#a8402c">The test</text>
+      <text x="660" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#2b6f52">ACT IV · W11–13</text>
+      <text x="660" y="101" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="#2b6f52">Ownership</text>
+      <text x="817" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#2b6f52">ACT V · W14–15</text>
+      <text x="817" y="101" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="#2b6f52">Vindication</text>
+
+      <text x="96" y="140" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">"Where has</text>
+      <text x="96" y="157" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">he been?"</text>
+      <text x="293" y="140" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">He is the one holding</text>
+      <text x="293" y="157" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">this house together</text>
+      <text x="490" y="140" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">The house turns.</text>
+      <text x="490" y="157" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">The file is opened.</text>
+      <text x="660" y="140" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">"One of us"</text>
+      <text x="817" y="140" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="currentColor">"He came back"</text>
+
+      <line x1="14" y1="186" x2="886" y2="186" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+      <text x="14" y="206" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.2" fill="currentColor">6 SEP</text>
+      <text x="490" y="206" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.2" fill="#a8402c">DIWALI FALLS ON AN ELIMINATION SUNDAY — 8 NOV</text>
+      <text x="886" y="206" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.2" fill="currentColor">FINALE ≈ 20 DEC</text>
+
+      <text x="14" y="238" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="currentColor">Weeks 8 to 10 decide the season. Everything before is preparation; everything after is consolidation.</text>
+    </svg>
+    <figcaption><b>The low point in Act III is planned for, not feared.</b> Every winner on record has a week where the house turns and the audience is genuinely unsure they will survive — that is where "still standing" stops being a phrase and becomes something people watched happen. A season with no low point produces a pleasant contestant who finishes fifth.</figcaption>
+  </figure>
+
+  <div class="col">
+    <p>Two consequences we would ask you to plan around now. We need a named approver reachable within fifteen minutes during telecast hours across Weeks 8 to 10 specifically. And budget should be held back for that fortnight rather than spent evenly — a campaign that spreads its spend across fifteen weeks arrives at its hardest one with nothing left.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">12</span>
+    <h2>What we guarantee, and what we will not</h2>
+    <p>We would rather be believed in Week 12 than impressive in Week 1, so this section is deliberately blunt.</p>
+  </div>
+  <div class="panel">
+    <div class="promise will"><span class="m">WE WILL</span><span>Guarantee that within fifteen minutes of any voting window opening, thousands of organised people across the Godavari districts know exactly what to do.</span></div>
+    <div class="promise will"><span class="m">WE WILL</span><span>Publish episode clips within 30 to 60 minutes of telecast, every night, including nomination and weekend nights.</span></div>
+    <div class="promise will"><span class="m">WE WILL</span><span>Respond to any negative spike within two hours, with full-context video rather than argument, and never without your approver's sign-off.</span></div>
+    <div class="promise will"><span class="m">WE WILL</span><span>Report honestly in a bad week, including the numbers that look poor.</span></div>
+    <div class="promise wont"><span class="m">WE WON'T</span><span>Promise a top-three finish. Anyone who does is either guessing or lying, and the promise will be the only thing anyone remembers after a bad week.</span></div>
+    <div class="promise wont"><span class="m">WE WON'T</span><span>Quote official vote counts. The broadcaster does not publish them. Every number we report is a directional indicator and will be labelled as one.</span></div>
+    <div class="promise wont"><span class="m">WE WON'T</span><span>Abuse rival contestants, run brigading or mass-reporting, or manufacture victimhood. It becomes the story, and it is traceable to us and therefore to him.</span></div>
+    <div class="promise wont"><span class="m">WE WON'T</span><span>Build a political vote bloc, whatever the short-term temptation.</span></div>
+  </div>
+  <div class="col">
+    <p class="pull">We can guarantee the machine. Whether it is enough for the top three depends on what he does inside.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">13</span>
+    <h2>How we would work together</h2>
+    <p>Three structures, in ascending order of how much risk we carry with you. Paid media, if used, is always billed at actuals on his own ad accounts and sits outside these.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Structure</th><th>Shape</th><th>Suits you if</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Retainer</strong></td><td>Monthly fee across four months, covering the pre-entry build, the full season and post-show handover.<span class="sm">Simplest to administer</span></td><td>You want the cleanest arrangement and the season fee is already in hand.</td></tr>
+        <tr class="rec"><td><strong>Retainer plus milestones</strong> <span class="tag pick">Recommended</span></td><td>Lower monthly base, with defined bonuses on Week 5 survival, Week 10 survival, a top-five finish and a top-three finish.<span class="sm">We are paid more only if he goes further</span></td><td>You want our incentives locked to his result rather than to our output.</td></tr>
+        <tr><td><strong>Retainer plus post-show share</strong></td><td>Base fee plus an agreed share of brand, appearance and casting revenue for twelve months after his exit.<span class="sm">Highest upside on both sides</span></td><td>You see the real prize as the career restart rather than the prize money — in which case so do we.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col">
+    <p>Our recommendation is the second, and we are open to the third. For a contestant whose genuine upside is a return to work, taking a share of that return is the most honest way we can say we believe the strategy.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <span class="num">14</span>
+    <h2>The next four days</h2>
+    <p>The compressed timeline is not a negotiating tactic; it is the format. Once he enters on Saturday he cannot be reached, briefed or corrected for fifteen weeks. Everything that shapes his season has to be done before then.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>When</th><th>What happens</th><th>Needs you</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Wed 2 Sep</strong></td><td>This conversation. Agreement in principle and the engagement structure.</td><td>Decision</td></tr>
+        <tr><td><strong>Thu 3 Sep</strong></td><td>The three answers in writing. Positioning locked. Photoshoot, intro video and story interviews.</td><td>Krishnudu, half a day</td></tr>
+        <tr><td><strong>Fri 4 Sep</strong></td><td>Rehearsal session — five scenarios run aloud until his responses are automatic. Asset bank built.</td><td>Krishnudu, two hours</td></tr>
+        <tr><td><strong>Fri 4 – Sat 5 Sep</strong></td><td>District captains recruited and briefed across the Godavari belt. Channels live. Vote explainer ready with the number left blank.</td><td>Nothing</td></tr>
+        <tr><td><strong>Sat 6 Sep</strong></td><td>He enters. We take over completely.</td><td>Approver on call</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col">
+    <p>The rehearsal on Friday matters more than it sounds. Reading a briefing is not the same as having said the words out loud. We would run an attack, a badly lost task, a political question on air, a housemate being cornered, and a bad nomination night — until each answer comes without thinking. After Saturday, nobody can correct him.</p>
+  </div>
+</section>
+
+<section>
+  <div class="ask">
+    <h2>What we are asking for</h2>
+    <p>A decision in principle within 48 hours, and half a day of Krishnudu's time on Thursday. Everything else is ours to carry.</p>
+    <div class="asklist">
+      <div class="askrow"><span class="n">01</span><span>Agreement in principle, and which of the three engagement structures you prefer.</span></div>
+      <div class="askrow"><span class="n">02</span><span>One named approver, reachable within fifteen minutes during telecast hours, with authority to sign off crisis responses.</span></div>
+      <div class="askrow"><span class="n">03</span><span>One family spokesperson — and an agreement that no one else speaks to media during the season.</span></div>
+      <div class="askrow"><span class="n">04</span><span>The three written answers: legal status, the true origin story, and the no-politics rule.</span></div>
+      <div class="askrow"><span class="n">05</span><span>Half a day on Thursday and two hours on Friday with Krishnudu.</span></div>
+    </div>
+    <p style="margin-top:26px"><span class="te">మనవాడు</span> — <em>one of us</em>. That is the phrase we intend the Godavari districts to be using about him by November. Everything in this document is in service of it.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Prepared 2 September 2026 · Season fundamentals are confirmed; the contestant roster has not been officially announced by the broadcaster and all rival intelligence is re-scored within 48 hours of the premiere. The items in section 06 are drawn from published press reporting and require confirmation from Krishnudu and his legal counsel before any response is finalised. Official vote counts are never published by the broadcaster; all standings we report are directional indicators.</p>
+</footer>
+
+</div>
+</body>
+</html>

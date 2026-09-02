@@ -253,6 +253,44 @@ td strong{font-weight:600}
 footer{border-top:1px solid var(--line); background:var(--surface-2); padding:26px 0 40px; color:var(--text-3); font-size:12.5px}
 footer a{color:var(--text-2)}
 footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); font-size:11.5px}
+/* arc strip */
+.arcscroll{overflow-x:auto; padding-bottom:6px; margin-bottom:8px}
+.arcstrip{display:grid; grid-template-columns:repeat(15,minmax(58px,1fr)); gap:3px; min-width:760px}
+.arcweek{
+  border-radius:4px; padding:9px 6px 11px; text-align:center; border-top:3px solid var(--line-strong);
+  background:var(--surface-2); position:relative;
+}
+.arcweek .w{font-family:var(--mono); font-size:10px; color:var(--text-3); display:block}
+.arcweek .d{font-family:var(--mono); font-size:9.5px; color:var(--text-3); display:block; margin-top:2px}
+.arcweek.a1{border-top-color:var(--t3); background:var(--t3-soft)}
+.arcweek.a2{border-top-color:var(--accent); background:var(--accent-soft)}
+.arcweek.a3{border-top-color:var(--t1); background:var(--t1-soft)}
+.arcweek.a4{border-top-color:var(--ours); background:var(--ours-soft)}
+.arcweek.a5{border-top-color:var(--t2); background:var(--t2-soft)}
+.arcweek .flag{
+  display:block; margin-top:5px; font-family:var(--mono); font-size:9px; font-weight:600;
+  letter-spacing:.04em; text-transform:uppercase; color:var(--t1);
+}
+.arclabels{display:grid; grid-template-columns:repeat(15,minmax(58px,1fr)); gap:3px; min-width:760px; margin-top:6px}
+.arclabel{
+  font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+  padding:5px 7px; border-radius:4px; color:var(--text-2); background:var(--surface-2); text-align:center;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.streaks{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-bottom:28px}
+.streaks > div{padding:18px 20px}
+.streaks > div:first-child{border-right:1px solid var(--line)}
+.streaks h3{margin-bottom:4px}
+.streaks .met{
+  font-family:var(--mono); font-size:11px; color:var(--text-3); display:block; margin:10px 0 0;
+  padding-top:10px; border-top:1px dashed var(--line-strong);
+}
+.streaks p{margin:0; color:var(--text-2); font-size:13.5px}
+@media (max-width:720px){.streaks{grid-template-columns:1fr} .streaks > div:first-child{border-right:0; border-bottom:1px solid var(--line)}}
+td.wk{font-family:var(--mono); font-size:11px; white-space:nowrap; color:var(--text-3)}
+td.wk b{display:block; color:var(--text); font-size:12.5px; font-weight:600}
+tr.pivot td{background:var(--t1-soft)}
+tr.pivot:hover td{background:var(--t1-soft)}
 .caveat{
   font-family:var(--mono); font-size:11.5px; color:var(--text-2); background:var(--t2-soft);
   border-radius:5px; padding:9px 13px; margin:0 0 24px; line-height:1.6;
@@ -264,9 +302,9 @@ footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); fo
   <div class="wrap">
     <div class="mast-in">
       <div>
-        <p class="eyebrow">War room intelligence · Dasavatharam season</p>
+        <p class="eyebrow">War room intelligence · Krishnudu · Dasavatharam season</p>
         <h1>House Threat Map
-          <span class="sub">Who blocks our contestant's path to the top 3 — and how we get past each one.</span>
+          <span class="sub">Krishnudu's route to the top 3 — the lane we own, the file they will open on us, and how we get past every bloc in the house.</span>
         </h1>
       </div>
       <div class="countdown">
@@ -293,11 +331,13 @@ footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); fo
 <div class="tabrail">
   <div class="wrap">
     <div class="tabs" role="tablist" aria-label="Battlecard sections">
-      <button class="tab" role="tab" aria-selected="true" aria-controls="p-verdict" id="t-verdict">The top-3 formula</button>
+      <button class="tab" role="tab" aria-selected="true" aria-controls="p-ours" id="t-ours">Krishnudu</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-verdict" id="t-verdict">The top-3 formula</button>
       <button class="tab" role="tab" aria-selected="false" aria-controls="p-lanes" id="t-lanes">Lane map</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p-ledger" id="t-ledger">Threat ledger<span class="cnt">27</span></button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-ledger" id="t-ledger">Threat ledger<span class="cnt">26</span></button>
       <button class="tab" role="tab" aria-selected="false" aria-controls="p-blocs" id="t-blocs">Bloc battlecards<span class="cnt">7</span></button>
       <button class="tab" role="tab" aria-selected="false" aria-controls="p-plan" id="t-plan">Next 21 days</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-arc" id="t-arc">15-week arc</button>
       <button class="tab" role="tab" aria-selected="false" aria-controls="p-ops" id="t-ops">Voting &amp; rules</button>
     </div>
   </div>
@@ -305,8 +345,127 @@ footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); fo
 
 <main class="wrap">
 
+<!-- ============ OURS ============ -->
+<section class="panel" id="p-ours" role="tabpanel" aria-labelledby="t-ours">
+  <div class="thesis">
+    <p>Krishnudu is not a film actor entering a reality show. He is a working actor who fell out of work — and that single reframe moves him out of the bloc that never wins and into the arc that does.</p>
+    <p>The Film Actor bloc has the lowest top-3 conversion of any lane, because "he doesn't need it" is the fatal audience frame. Krishnudu is the exception the frame cannot touch: he demonstrably does need it, the trade press is already writing it, and every viewer who remembers his face from <em>Pokiri</em> and <em>Happy Days</em> can see for themselves that he stopped appearing. We do not hide the decline. The decline is the campaign.</p>
+  </div>
+
+  <div class="sec">
+    <p class="kicker">Locked · reassess only if the house forces it</p>
+    <h2>The lane: the Godavari elder who works</h2>
+    <div class="lanes">
+      <div class="lane pick"><span class="nm">Underdog by decline</span><span class="oc">Not poverty — loss. A man who was somebody, lost his run, and is rebuilding in public at 51.</span><span class="chip open">Owned</span></div>
+      <div class="lane pick"><span class="nm">Godavari identity</span><span class="oc">Razole · Konaseema · East Godavari. The open coastal lane, and it is genuinely his.</span><span class="chip open">Owned</span></div>
+      <div class="lane pick"><span class="nm">The elder who works</span><span class="oc">Likely among the oldest housemates. Takes the unglamorous task, stands between the aggressor and the cornered.</span><span class="chip open">Owned</span></div>
+    </div>
+    <p class="lede" style="margin-top:22px">These three stack into one sentence every person on the team should be able to recite without notes: <strong>the Godavari man who lost everything twice and is still standing.</strong> Twice is literal — the family land, and then the career. It is documented, it is his, and no other name in the pool can claim any part of it.</p>
+  </div>
+
+  <div class="sec">
+    <p class="kicker">What we are working with</p>
+    <h2>Asset inventory</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Asset</th><th>What it gives us</th><th>How we spend it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Two-decade face recall</strong><br><span style="color:var(--text-3);font-size:12.5px">Pokiri · Happy Days · Arya 2 · Gopala Gopala · Hello</span></td><td>Zero introduction cost. The audience recognises him on Day 1 without a single explainer post.</td><td>Skip the "who is he" content entirely. Go straight to "where has he been".</td></tr>
+          <tr><td><strong>Serial audience too</strong><br><span style="color:var(--text-3);font-size:12.5px">Yuva (Star Maa) · Gangato Ram Babu (Zee Telugu)</span></td><td>Rare crossover — film recall <em>and</em> daytime-serial recall. That second audience is the missed-call demographic.</td><td>Seed serial-audience fan pages separately from film ones. Different clips, different captions.</td></tr>
+          <tr><td><strong>A true second-chance story</strong><br><span style="color:var(--text-3);font-size:12.5px">Leg injury · two years immobile · rebuilt as a photographer · climbed back into films</span></td><td>Documented hardship that no one can call manufactured — the rarest asset in this house.</td><td>Release it in pieces across Weeks 2–6, never all at once, and never from him unprompted on camera.</td></tr>
+          <tr><td><strong>Lead-role proof</strong><br><span style="color:var(--text-3);font-size:12.5px">Vinayakudu · Villagelo Vinayakudu</span></td><td>He carried films. This is not a character actor reaching above himself — it is a man reclaiming something he had.</td><td>The comeback framing needs this or it reads as delusion. Establish it in Week 1.</td></tr>
+          <tr><td><strong>Comedy timing without being the clown</strong></td><td>He can hold a room. That makes him the natural foil for the Jabardasth bloc.</td><td>Foil, never punchline. See the Comedy bloc card.</td></tr>
+          <tr><td><strong>Age ~51</strong></td><td>Seniority is authority in this house, and the elder who works is the highest-converting behaviour pattern on record.</td><td>Never let him be framed as tired or slow. Physical tasks attempted, even when lost, are worth more than tasks avoided.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sec">
+    <p class="kicker">Assume a rival team opens this file in Week 1</p>
+    <h2>The vulnerability file</h2>
+    <p class="lede">Everything below is already public. Our advantage is only that we read it first. Each one needs a decision from the client before 6 September — not a response drafted after it lands.</p>
+
+    <div class="note" style="border-left:4px solid var(--t1); border-radius:0 8px 8px 0; margin-bottom:14px">
+      <h3>1 · The 2021 gambling arrest</h3>
+      <ul>
+        <li>Detained in a Miyapur raid in September 2021 under the Telangana Public Gaming Act, released on bail. Widely reported at the time and trivially searchable.</li>
+        <li>This will surface. The only question is whether it surfaces while we have a cleared statement ready or while we are improvising at 11 PM on a nomination night.</li>
+        <li><strong>Required before Day 1:</strong> the current legal status in writing, a lawyer-cleared holding statement of no more than three sentences, and one named family spokesperson. Nothing else.</li>
+        <li><strong>Posture:</strong> brief, factual, unapologetic about a closed matter, and then silence. Do not litigate it on social media, and do not let fan pages defend it — defence keeps it alive.</li>
+      </ul>
+    </div>
+
+    <div class="note" style="border-left:4px solid var(--t1); border-radius:0 8px 8px 0; margin-bottom:14px">
+      <h3>2 · Two incompatible origin stories in circulation</h3>
+      <ul>
+        <li>One published account describes a farmer family in Rajavolu. Another describes a Kshatriya Raju zamindari family in Razole, a grandfather who was zamindar of Chinchinada, and roughly 4,500 acres lost under the Land Ceiling Act.</li>
+        <li>Both are in print. A rival team will put them side by side and call the underdog framing fake — and on the face of it, they will have a point.</li>
+        <li><strong>Required before Day 1:</strong> Krishnudu tells us which is true, in his own words, and we run that version everywhere without exception.</li>
+        <li><strong>Our read:</strong> the land-loss version is the stronger story if it is the true one — a family that lost everything to a land ceiling and a son who rebuilt from a photo studio is a real Godavari story, and it makes "lost everything twice" literal. It must be told as loss and rebuilding, never as lineage or entitlement.</li>
+      </ul>
+    </div>
+
+    <div class="note" style="border-left:4px solid var(--t1); border-radius:0 8px 8px 0; margin-bottom:14px">
+      <h3>3 · Political affiliation</h3>
+      <ul>
+        <li>He has been publicly associated with a political party. In the current Andhra Pradesh climate that splits the audience roughly in half before he has said a word.</li>
+        <li><strong>Hard rule, no exceptions:</strong> no politics inside the house, no party symbols or colours in any creative, no political influencer amplification, and no party office-bearer serving as an official district captain.</li>
+        <li>If he is asked about politics on air, the answer is that he is here as an actor and nothing else. Rehearse that sentence with him until it is automatic.</li>
+        <li>A political vote bloc looks like a shortcut in Week 2 and costs the finale. The other half of the audience is larger than the half we would gain.</li>
+      </ul>
+    </div>
+
+    <div class="note" style="border-left:4px solid var(--t2); border-radius:0 8px 8px 0">
+      <h3>4 · Recall without an organised fan base</h3>
+      <ul>
+        <li>Everyone knows the face; nobody is currently organised to dial a number for it. Twenty years of goodwill is worth nothing on a two-hour voting window without captains.</li>
+        <li>This is exactly the gap the WhatsApp engine exists to close, and it is the reason the district build in the next four days matters more than any content decision.</li>
+        <li><strong>Watch for:</strong> strong poll standings paired with weak VOTED check-ins. That combination means affection without organisation, and it is how a well-liked contestant leaves in Week 9.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec">
+    <p class="kicker">Revised for his geography — this replaces the generic district plan</p>
+    <h2>Where his votes actually live</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Region</th><th>Why</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td><strong>East Godavari · Konaseema</strong><br><span style="color:var(--text-3);font-size:12.5px">Razole, Amalapuram, Kakinada, Rajahmundry</span></td><td>His home belt. Godavari regional pride is deep, real, and almost never contested in a Bigg Boss campaign because everyone chases Hyderabad.</td><td><span class="chip open">Saturate</span></td></tr>
+          <tr><td><strong>West Godavari</strong><br><span style="color:var(--text-3);font-size:12.5px">Bhimavaram, Tanuku, Narsapuram</span></td><td>Same cultural bloc, same pride, adjacent and cheap to organise once East Godavari is running.</td><td><span class="chip open">Saturate</span></td></tr>
+          <tr><td><strong>Godavari diaspora</strong><br><span style="color:var(--text-3);font-size:12.5px">Gulf, US, Hyderabad-resident Godavari families</span></td><td>The most underexploited vote base in Telugu reality TV. High app-voting discipline, strong regional sentiment, reachable entirely on WhatsApp.</td><td><span class="chip open">Saturate</span></td></tr>
+          <tr><td><strong>Hyderabad</strong></td><td>Film and serial recall concentrates here; also where trend volume and media coverage are decided.</td><td><span class="chip t2">Sustain</span></td></tr>
+          <tr><td><strong>Vizag · Uttarandhra</strong></td><td>Coastal affinity carries some of the Godavari sentiment without the home-district intensity.</td><td><span class="chip t2">Sustain</span></td></tr>
+          <tr><td><strong>Vijayawada · Guntur</strong></td><td>Large population, no natural claim. Recall-driven only.</td><td><span class="chip t2">Sustain</span></td></tr>
+          <tr><td><strong>Telangana districts</strong><br><span style="color:var(--text-3);font-size:12.5px">Warangal, Karimnagar, Nizamabad</span></td><td>He has no regional claim here and a folk-music rival would beat us outright. Do not over-invest.</td><td><span class="chip t3">Maintain</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lede" style="margin-top:18px">The shift from the generic plan is the point: the standard six-region structure spreads effort evenly across Telangana and coastal AP. Krishnudu's map is weighted hard into the Godavari belt, where an organised campaign can plausibly own a district outright rather than compete for a slice of Hyderabad.</p>
+  </div>
+
+  <div class="sec">
+    <p class="kicker">Hand this to him before he walks in</p>
+    <h2>Ten rules for inside the house</h2>
+    <div class="note">
+      <div class="rule yes"><span class="mark">01</span><span>Take the task nobody wants, every week, and never mention that you took it.</span></div>
+      <div class="rule yes"><span class="mark">02</span><span>Once a week, stand between someone being cornered and the person cornering them. That single behaviour is what the audience votes for.</span></div>
+      <div class="rule yes"><span class="mark">03</span><span>Say "I stopped getting work" out loud, once, early, without self-pity. Owning the decline disarms it permanently.</span></div>
+      <div class="rule yes"><span class="mark">04</span><span>Lose an argument gracefully in the first fortnight. Audiences distrust the housemate who never concedes.</span></div>
+      <div class="rule yes"><span class="mark">05</span><span>Attempt every physical task, including the ones you will lose. Trying and failing at 51 outperforms winning at 25.</span></div>
+      <div class="rule no"><span class="mark">06</span><span>Never be the punchline. Be the one the comedians play off — the straight man, not the joke.</span></div>
+      <div class="rule no"><span class="mark">07</span><span>Never claim the position out loud. The moment you say "I'm the only one working here", the whole lane collapses into self-pity.</span></div>
+      <div class="rule no"><span class="mark">08</span><span>Never mention politics, a party, or a leader. Not as a joke, not in a task, not in the confession room.</span></div>
+      <div class="rule no"><span class="mark">09</span><span>Never invoke family lineage, land or status. The story is what was lost and rebuilt, never what was owned.</span></div>
+      <div class="rule no"><span class="mark">10</span><span>Never dismiss a commoner's background, occupation or language. In this market that is not a bad week — it ends the campaign.</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ VERDICT ============ -->
-<section class="panel" id="p-verdict" role="tabpanel" aria-labelledby="t-verdict">
+<section class="panel" id="p-verdict" role="tabpanel" aria-labelledby="t-verdict" hidden>
   <div class="thesis">
     <p>Bigg Boss Telugu does not crown the best player. It crowns the housemate the audience feels personally responsible for protecting.</p>
     <p>Nine seasons of results say the same thing: emotional ownership converts into missed calls, and follower counts do not. Our contestant's top-3 slot will be won in the districts, not on the timeline — and the rivals who threaten it are the ones standing in the same emotional lane, not the ones making the most noise on screen.</p>
@@ -382,7 +541,7 @@ footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); fo
     <div class="lane"><span class="nm">House strategist / chief</span><span class="oc">Won S8, but demands perfect conflict handling for 15 weeks — no margin</span><span class="chip t2">High risk</span></div>
     <div class="lane"><span class="nm">Coastal AP · Rayalaseema · Uttarandhra pride</span><span class="oc">Rarely claimed while everyone crowds Telangana identity</span><span class="chip open">Open</span></div>
     <div class="lane"><span class="nm">Family / parent emotional anchor</span><span class="oc">Speaks directly to women 25–55, the largest missed-call demographic</span><span class="chip open">Open</span></div>
-    <div class="lane pick"><span class="nm">The worker who protects</span><span class="oc">Grinder plus house conscience — the composite that produced Siva Balaji, Abijeet, VJ Sunny and Kalyan Padala</span><span class="chip open">Recommended</span></div>
+    <div class="lane pick"><span class="nm">The worker who protects</span><span class="oc">Grinder plus house conscience — the composite that produced Siva Balaji, Abijeet, VJ Sunny and Kalyan Padala. Krishnudu's locked lane, fused with Godavari identity and underdog-by-decline.</span><span class="chip open">Taken · ours</span></div>
   </div>
 
   <div class="sec">
@@ -415,7 +574,7 @@ footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); fo
   <h2>Threat ledger</h2>
   <p class="lede">Every name currently circulating for Season 10, scored on the only question that matters — does this person cost us a top-3 slot? Weekly-survival danger is a separate and lesser problem.</p>
 
-  <p class="caveat">STATUS 02 SEP · Star Maa has confirmed no contestant. Every name below is press speculation from two overlapping rumour pools and several will not enter. Tier assignments hold regardless: they are assigned to the <em>bloc</em>, and the blocs are structural to the format. Re-score names within 48 hours of the premiere.</p>
+  <p class="caveat">STATUS 02 SEP · Star Maa has confirmed no contestant, Krishnudu included — his entry is reported by the trade press, not announced. Every name below is speculation from two overlapping rumour pools and several will not enter. Tier assignments hold regardless: they are assigned to the <em>bloc</em>, and the blocs are structural to the format. Re-score names within 48 hours of the premiere.</p>
 
   <div class="tablewrap">
     <table>
@@ -447,7 +606,6 @@ footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); fo
         <tr><td><strong>Uppal Balu</strong></td><td>Creator</td><td>Urban short-form</td><td><span class="chip t3">T3</span></td><td>Trend threat in Weeks 1–4, vote threat only in finale week</td></tr>
         <tr><td><strong>Sudheer Reddy</strong></td><td>Creator</td><td>YouTube</td><td><span class="chip t3">T3</span></td><td>As above — see Law 03</td></tr>
         <tr><td><strong>Adith Arun</strong></td><td>Film actor</td><td>Film audience, urban</td><td><span class="chip t3">T3</span></td><td>Most recognisable male actor rumoured; privilege framing is his ceiling</td></tr>
-        <tr><td><strong>Krishnudu</strong></td><td>Film actor</td><td>Legacy film recall</td><td><span class="chip t3">T3</span></td><td>Recall without an active fan base</td></tr>
         <tr><td><strong>Mukesh Gowda</strong></td><td>Film / TV actor</td><td>TV audience</td><td><span class="chip t3">T3</span></td><td>Unproven draw</td></tr>
         <tr><td><strong>Chandrahas</strong></td><td>Film actor</td><td>Film-family recall</td><td><span class="chip t3">T3</span></td><td>Star-kid framing is a liability in this house, not an asset</td></tr>
         <tr><td><strong>Pandu Master</strong></td><td>Dance</td><td>Dhee audience, mass</td><td><span class="chip t2">T2</span></td><td>Dance formats give recurring screen time and a genuine mass following</td></tr>
@@ -666,7 +824,7 @@ footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); fo
   <details class="bloc t3">
     <summary>
       <span class="name">The Film Actor Bloc</span>
-      <span class="who">Adith Arun · Krishnudu · Mukesh Gowda · Chandrahas</span>
+      <span class="who">Adith Arun · Mukesh Gowda · Chandrahas</span>
       <span class="chip t3">T3 noise rival</span><span class="mk"></span>
     </summary>
     <div class="bloc-body">
@@ -704,7 +862,9 @@ footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); fo
       <div class="tl-when">Now → 5 Sep · four days</div>
       <h3>Lock the lane and build the machine blind</h3>
       <ul>
-        <li>Choose the lane from the Lane Map and write it into one sentence every team member can recite. Everything else follows from it.</li>
+        <li><strong>Three answers from Krishnudu, in writing, before anything else ships:</strong> the current legal status of the 2021 case, which of the two published origin stories is true, and his agreement to the no-politics rule. Every creative decision below depends on all three.</li>
+        <li>Lock the lane sentence — "the Godavari man who lost everything twice and is still standing" — and make sure every team member can recite it without notes.</li>
+        <li>Weight the district build into East and West Godavari first. This is the change from the generic plan and it is where his season is won.</li>
         <li>Watch Agnipariksha 2 nightly at 10 PM and log every commoner's backstory, hometown and sympathy hook. This is free intelligence on our most dangerous bloc, and it stops the day they enter the house.</li>
         <li>Recruit and brief district captains across Hyderabad, Vijayawada–Guntur, Vizag, Warangal, Tirupati and the NRI group. Captains take days to train and hours to lose.</li>
         <li>Build the voting explainer creative with the missed-call number left blank — the number is only announced on air.</li>
@@ -749,6 +909,126 @@ footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); fo
         <li>Lock the weekly reporting rhythm with the client, including what we will not promise — official vote counts are never published, and every number we report is directional.</li>
         <li>Brief every captain on the conduct code before the season gets heated, not after.</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ARC ============ -->
+<section class="panel" id="p-arc" role="tabpanel" aria-labelledby="t-arc" hidden>
+  <div class="thesis">
+    <p>Survival and winning are two different jobs, and running them as one is how a well-liked contestant leaves in Week 9.</p>
+    <p>Survival is a weekly operational sprint — it is won by district organisation on a two-hour voting window, and it resets to zero every Monday. Winning is a fifteen-week story that has to have a shape: setup, respect, a genuine low point, the turn, and vindication. Neither substitutes for the other. The plan below runs both tracks in parallel and names, for each week, which one is doing the work.</p>
+  </div>
+
+  <div class="streaks">
+    <div>
+      <h3>The survival streak</h3>
+      <p>Never in the bottom two. Fifteen weeks, fifteen clean nomination cycles. This is what the WhatsApp machine exists for, and it is measurable every single week — unlike sentiment, which is not.</p>
+      <span class="met">TARGET 15/15 weeks clear · PRIMARY METRIC district VOTED check-in ratio, not follower growth · FAILURE SIGNAL two consecutive weeks in the bottom three</span>
+    </div>
+    <div>
+      <h3>The winning streak</h3>
+      <p>Cumulative emotional ownership — the audience moving from recognising him, to respecting him, to feeling responsible for him. It builds slowly, cannot be forced, and is the only thing that produces a large finale vote.</p>
+      <span class="met">TARGET "one of us" framing dominant by Week 11 · PRIMARY METRIC unprompted fan-made content volume and share of non-follower reach · FAILURE SIGNAL high polls with flat check-ins</span>
+    </div>
+  </div>
+
+  <div class="sec">
+    <p class="kicker">Five acts · premiere 6 Sep 2026 → finale approx. 20 Dec</p>
+    <h2>The shape of the season</h2>
+    <div class="arcscroll">
+      <div class="arcstrip">
+        <div class="arcweek a1"><span class="w">W1</span><span class="d">7 Sep</span></div>
+        <div class="arcweek a1"><span class="w">W2</span><span class="d">14 Sep</span></div>
+        <div class="arcweek a1"><span class="w">W3</span><span class="d">21 Sep</span></div>
+        <div class="arcweek a2"><span class="w">W4</span><span class="d">28 Sep</span></div>
+        <div class="arcweek a2"><span class="w">W5</span><span class="d">5 Oct</span></div>
+        <div class="arcweek a2"><span class="w">W6</span><span class="d">12 Oct</span></div>
+        <div class="arcweek a2"><span class="w">W7</span><span class="d">19 Oct</span><span class="flag">Dussehra</span></div>
+        <div class="arcweek a3"><span class="w">W8</span><span class="d">26 Oct</span><span class="flag">Pivot</span></div>
+        <div class="arcweek a3"><span class="w">W9</span><span class="d">2 Nov</span><span class="flag">Diwali</span></div>
+        <div class="arcweek a3"><span class="w">W10</span><span class="d">9 Nov</span><span class="flag">Pivot</span></div>
+        <div class="arcweek a4"><span class="w">W11</span><span class="d">16 Nov</span></div>
+        <div class="arcweek a4"><span class="w">W12</span><span class="d">23 Nov</span></div>
+        <div class="arcweek a4"><span class="w">W13</span><span class="d">30 Nov</span></div>
+        <div class="arcweek a5"><span class="w">W14</span><span class="d">7 Dec</span></div>
+        <div class="arcweek a5"><span class="w">W15</span><span class="d">14 Dec</span><span class="flag">Finale</span></div>
+      </div>
+      <div class="arclabels">
+        <div class="arclabel" style="grid-column:span 3">I · Recognition</div>
+        <div class="arclabel" style="grid-column:span 4">II · Respect</div>
+        <div class="arclabel" style="grid-column:span 3">III · The test</div>
+        <div class="arclabel" style="grid-column:span 3">IV · Ownership</div>
+        <div class="arclabel" style="grid-column:span 2">V · Vindication</div>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:20px">The low point in Act III is planned for, not feared. Every winner on record has a week where the house turns on them and the audience is genuinely unsure they will survive — that week is where "still standing" stops being a slogan and becomes something the audience watched happen. A season with no low point produces a pleasant contestant who finishes fifth.</p>
+  </div>
+
+  <div class="sec">
+    <p class="kicker">The operating plan · one row per week</p>
+    <h2>Week by week</h2>
+    <div class="tablewrap">
+      <table style="min-width:940px">
+        <thead><tr>
+          <th>Week</th><th>Story beat</th><th>His job inside</th><th>Our job outside</th><th>Watch this</th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="wk"><b>W1</b>7–13 Sep</td><td><strong>"Where has he been?"</strong> Recognition, not introduction.</td><td>Work quietly. One protector moment by Day 5. Do not campaign, do not strategise on camera.</td><td>Nostalgia clips cut against him doing dishes. Re-score the threat ledger with real names within 48h.</td><td>Screen time. If he is edited out of two consecutive episodes, he is being read as passive.</td></tr>
+          <tr><td class="wk"><b>W2</b>14–20 Sep</td><td>Curiosity converts to interest. The house starts sorting itself.</td><td>Say "I stopped getting work" once, plainly, without self-pity.</td><td>First full district activation. This cycle is a machine test, not a battle.</td><td>Baseline VOTED check-in ratio per district. Every later week is measured against this.</td></tr>
+          <tr><td class="wk"><b>W3</b>21–27 Sep</td><td>Position claimed by behaviour, never by statement.</td><td>Lose an argument gracefully. Identify his natural ally and his natural aggressor.</td><td>Fix the weakest district. Open the running file on the aggressor.</td><td>Which district under-delivered, and whether it is a captain problem or an audience problem.</td></tr>
+          <tr><td class="wk"><b>W4</b>28 Sep–4 Oct</td><td><strong>Respect begins.</strong> Alliances harden; the commoner bloc starts getting isolated.</td><td>Defend a commoner on camera when the celebrity bloc closes ranks.</td><td>Begin the transfer play — clip every moment he stands with a commoner.</td><td>Sentiment ratio in commoner-fan communities. Transfer shows up there first.</td></tr>
+          <tr><td class="wk"><b>W5</b>5–11 Oct</td><td>The injury story lands. First piece of the second-chance arc.</td><td>Let it come out in conversation, never in a confession-room monologue.</td><td>Release story piece one. Seed serial-audience fan pages separately from film ones.</td><td>Share of non-follower reach. This is the first week it should move.</td></tr>
+          <tr><td class="wk"><b>W6</b>12–18 Oct</td><td>First captaincy attempt. Authority tested.</td><td>Attempt every physical task, including the ones he will lose.</td><td>Effort footage with no caption claiming credit. Godavari captains hit full strength.</td><td>Whether the house nominates him <em>as a threat</em>. That is a promotion, not a problem.</td></tr>
+          <tr><td class="wk"><b>W7</b>19–25 Oct</td><td>Dussehra week — peak family viewing, hometown sentiment at its highest.</td><td>Speak about home, family and the Godavari without making it a speech.</td><td>Hometown activation begins: Razole, Amalapuram, Kakinada, Rajahmundry. Festival-week creative.</td><td>Godavari-belt group growth. Festival weeks recruit better than any other.</td></tr>
+          <tr class="pivot"><td class="wk"><b>W8</b>26 Oct–1 Nov</td><td><strong>The test opens.</strong> Mid-season fatigue; the house consolidates against someone.</td><td>Survive a targeted attack without breaking. Do not appeal to the host or the audience.</td><td>Crisis protocol live. Expect the vulnerability file to be opened this week. Full-context video, never argument.</td><td>Response time to negative spikes. Two hours, with approver sign-off.</td></tr>
+          <tr class="pivot"><td class="wk"><b>W9</b>2–8 Nov</td><td>Diwali falls on the Sunday. Biggest family-television night of the season, on an elimination night.</td><td>Keep working through the low point. This is the week "still standing" earns itself.</td><td>All-hands. Diwali creative plus the deepest voting push before the finale.</td><td>Whether the check-in ratio holds under pressure. This is the real test of the machine.</td></tr>
+          <tr class="pivot"><td class="wk"><b>W10</b>9–15 Nov</td><td><strong>The turn.</strong> Sympathy converts to protectiveness — or it does not, and we reassess everything.</td><td>Recover visibly. First moment of him mentoring a younger housemate.</td><td>Recut the season so far as one arc. This is the film that makes people vote in December.</td><td>Unprompted fan-made content volume. If it has not risen by now, ownership is not forming.</td></tr>
+          <tr><td class="wk"><b>W11</b>16–22 Nov</td><td><strong>"One of us."</strong> Ownership framing becomes dominant.</td><td>Mentor openly. Take responsibility for house outcomes without claiming credit.</td><td>Begin countering T2 volume rivals — the comedians and serial names — for the first time all season.</td><td>Poll standings versus check-ins. Both should now be rising together.</td></tr>
+          <tr><td class="wk"><b>W12</b>23–29 Nov</td><td>Wildcards and twists typically land here. Fresh threats, tired incumbents.</td><td>Do not treat a wildcard as an enemy. The audience punishes the incumbent who is hostile to a newcomer.</td><td>Re-score the ledger. A late entrant with an untested lane can take a finalist slot.</td><td>Any new entrant occupying the elder or protector position.</td></tr>
+          <tr><td class="wk"><b>W13</b>30 Nov–6 Dec</td><td>Finalist shortlist forms in the audience's mind, whether or not the show says so.</td><td>No new conflicts. Consolidate what is already built.</td><td>Family voice enters the campaign. Hometown ground activation and regional-pride creative.</td><td>Whether he is being discussed as a finalist in fan portals and analysis channels.</td></tr>
+          <tr><td class="wk"><b>W14</b>7–13 Dec</td><td><strong>Vindication.</strong> "He came back" becomes the season's summary of him.</td><td>Every task attempted. Visible effort is worth more now than any conversation.</td><td>Full arc recut and published. Optional paid surge — hometown hoardings, transit media. Daily reporting begins.</td><td>Diaspora app-voting activation. The Godavari diaspora is our most underused asset.</td></tr>
+          <tr><td class="wk"><b>W15</b>14–20 Dec</td><td>Finale week. Short, high-volume voting windows.</td><td>Nothing left to build. Be the person the audience has spent fifteen weeks deciding he is.</td><td>All-hands, every district, every window, every fifteen minutes. Inter-district leaderboards.</td><td>Absolute vote volume. Nothing else matters in this week.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>The three weeks that decide it</h2>
+    <div class="cols2">
+      <div class="note">
+        <h3>Weeks 8–10 are the season</h3>
+        <ul>
+          <li>Everything before them is preparation and everything after them is consolidation. If the machine holds through the low point and the arc turns, a top-3 finish becomes the likely outcome rather than the hoped-for one.</li>
+          <li>Book the client approver for full availability across these three weeks specifically. A 15-minute approval SLA matters more here than in the whole of October.</li>
+          <li>Hold budget back for them. A campaign that spends evenly across fifteen weeks arrives at its hardest fortnight with nothing left.</li>
+          <li>Diwali landing on an elimination Sunday in Week 9 is the single largest audience moment before the finale. Plan that creative in October, not in November.</li>
+        </ul>
+      </div>
+      <div class="note">
+        <h3>When to switch tracks</h3>
+        <ul>
+          <li><strong>Weeks 1–7 — survival first.</strong> The story is being built quietly. Do not spend energy on rivals; spend it on captains.</li>
+          <li><strong>Weeks 8–10 — both, at full intensity.</strong> The only period where crisis response, voting volume and narrative all run hot together.</li>
+          <li><strong>Weeks 11–13 — winning first.</strong> Survival should be comfortable by now. If it is not, the arc has failed and we go back to pure volume.</li>
+          <li><strong>Weeks 14–15 — volume only.</strong> No new narrative in the last fortnight. Nobody changes their mind about a contestant in the final week; they only turn up or fail to.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Two ways this plan fails</h2>
+    <div class="note" style="border-left:4px solid var(--t1); border-radius:0 8px 8px 0; margin-bottom:14px">
+      <h3>Affection without organisation</h3>
+      <p style="margin:0 0 8px; color:var(--text-2); font-size:13.5px">Strong poll standings, warm comments, rising followers — and a flat VOTED check-in ratio. This is the most common way a liked contestant is evicted, and it is invisible unless someone is watching the right number.</p>
+      <p style="margin:0; color:var(--text-2); font-size:13.5px"><strong>Detection:</strong> check-in ratio flat or falling for two consecutive weeks while sentiment rises. <strong>Response:</strong> stop making content, fix captains. The problem is never the content when this happens.</p>
+    </div>
+    <div class="note" style="border-left:4px solid var(--t1); border-radius:0 8px 8px 0">
+      <h3>A pleasant season with no low point</h3>
+      <p style="margin:0 0 8px; color:var(--text-2); font-size:13.5px">He is liked by everyone, in conflict with no one, and finishes fifth. Nothing ever happened to him, so the audience never had to decide they were on his side.</p>
+      <p style="margin:0; color:var(--text-2); font-size:13.5px"><strong>Detection:</strong> by Week 8 he has never been seriously nominated and has no identified aggressor. <strong>Response:</strong> he needs to take one real stand on a house issue. Not manufactured conflict — a genuine position, held publicly, that costs him something.</p>
     </div>
   </div>
 </section>
@@ -807,10 +1087,10 @@ footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); fo
 
 <footer>
   <div class="wrap">
-    <p style="margin:0">Compiled 2 September 2026 · Season fundamentals confirmed; contestant roster is press speculation and must be re-scored within 48 hours of the premiere. Companion documents: campaign playbook, war-room telecast SOP, WhatsApp captains activation, crisis holding statements.</p>
+    <p style="margin:0">Compiled 2 September 2026 for Krishnudu's campaign · Season fundamentals confirmed; the roster is press speculation and must be re-scored within 48 hours of the premiere. Everything in the vulnerability file is drawn from published reporting and requires confirmation from the contestant before it is acted on. Companion documents: campaign playbook, war-room telecast SOP, WhatsApp captains activation, crisis holding statements, pre-entry briefing.</p>
     <div class="srcs">
-      <span>Wikipedia — Bigg Boss Telugu seasons 8 &amp; 9 · Bigg Boss Agnipariksha</span>
-      <span>The Hans India · Sakshi Post · Deccan Chronicle · Siasat · Telugu Cinema · Filmibeat · TeluguBiggBossVoting</span>
+      <span>Wikipedia — Krishnudu · Bigg Boss Telugu seasons 8 &amp; 9 · Bigg Boss Agnipariksha</span>
+      <span>123telugu · The Hans India · Sakshi Post · Deccan Chronicle · Siasat · Telugu Cinema · Filmibeat · IBTimes · TeluguBiggBossVoting</span>
     </div>
   </div>
 </footer>
@@ -837,8 +1117,10 @@ footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); fo
   });
 
   try{
+    // calendar days between today and premiere day, in IST
+    function istDay(d){ return Math.floor((d + 5.5*3600000) / 86400000); }
     var premiere = new Date('2026-09-06T19:00:00+05:30').getTime();
-    var days = Math.ceil((premiere - Date.now()) / 86400000);
+    var days = istDay(premiere) - istDay(Date.now());
     var n = document.getElementById('cd'), l = document.getElementById('cdl');
     if(days > 1){ n.textContent = days; l.textContent = 'days to premiere'; }
     else if(days === 1){ n.textContent = '1'; l.textContent = 'day to premiere'; }
