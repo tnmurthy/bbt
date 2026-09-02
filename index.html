@@ -330,6 +330,38 @@
     font-size:12.5px; line-height:1.5; color:#E2E8F0;
   }
 
+  /* ===== STORYLINE & NARRATIVE ARCHITECTURE ===== */
+  .story-hero{
+    background:linear-gradient(135deg, #0B1329 0%, #1B2A4A 60%, #31180A 100%);
+    color:#fff; border-radius:14px; padding:28px 30px; margin-bottom:22px;
+    border:1.5px solid rgba(245,158,11,0.35); box-shadow:0 8px 30px rgba(0,0,0,0.12);
+  }
+  .story-hero .sh-tag{font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#FBBF24; margin-bottom:8px;}
+  .story-hero h2{font-size:26px; font-weight:900; color:#fff; margin-bottom:8px; line-height:1.2;}
+  .story-hero .sh-quote{font-size:16px; color:#FDE68A; font-style:italic; margin-bottom:12px; font-weight:600;}
+  .story-hero p{font-size:13.5px; color:#CBD5E1; line-height:1.6; max-width:82ch;}
+  
+  .act-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px; margin:16px 0;}
+  .act-card{
+    background:#fff; border:1.5px solid #E2E8F0; border-radius:12px; padding:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.03); border-top:5px solid; transition:all .2s;
+  }
+  .act-card:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(27,42,74,0.08);}
+  .act-card.act1{border-top-color:#3B82F6;}
+  .act-card.act2{border-top-color:#D9541E;}
+  .act-card.act3{border-top-color:#F59E0B;}
+  .act-badge{font-size:10.5px; font-weight:800; padding:3px 8px; border-radius:12px; display:inline-block; margin-bottom:8px;}
+  .act-card h3{font-size:16.5px; font-weight:800; color:var(--navy); margin-bottom:4px;}
+  .act-theme{font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px;}
+  .act-card p{font-size:12.5px; color:#475569; line-height:1.5; margin-bottom:10px;}
+  .act-soundbite{background:#FFFBEB; border-left:3px solid #F59E0B; padding:8px 12px; border-radius:4px; font-size:12px; color:#92400E; font-weight:600;}
+
+  .hook-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:12px; margin-top:14px;}
+  .hook-card{background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:14px 16px;}
+  .hook-context{font-size:11px; font-weight:700; color:var(--mut); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;}
+  .hook-telugu{font-size:14.5px; font-weight:800; color:var(--navy); margin-bottom:4px;}
+  .hook-sub{font-size:12px; color:#475569; line-height:1.4;}
+
   /* Global Utilities */
   footer{padding:26px 0 46px; color:var(--mut); font-size:12px;}
   svg text{font-family:'Segoe UI',system-ui,sans-serif;}
@@ -538,12 +570,13 @@
 
 <nav><div class="wrap">
   <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('tab-sim', this)">📊 P&amp;L Simulator &amp; Overview</button>
-    <button class="tab-btn" onclick="switchTab('tab-cal', this)">🗓️ 15-Week Campaign Calendar <span class="tab-badge">19 Wks</span></button>
-    <button class="tab-btn" onclick="switchTab('tab-maps', this)">🗺️ Strategy Maps &amp; Charts</button>
-    <button class="tab-btn" onclick="switchTab('tab-ops', this)">⚡ Team Ops &amp; Winner Playbooks</button>
+    <button class="tab-btn active" onclick="switchTab('tab-story', this)">🎭 Storyline &amp; Narrative Strategy</button>
     <button class="tab-btn" onclick="switchTab('tab-threat', this)">🎯 House Threat Map <span class="tab-badge">S10</span></button>
-    <button class="tab-btn" onclick="switchTab('tab-mandate', this)">🤝 Client Mandate</button>
+    <button class="tab-btn" onclick="switchTab('tab-maps', this)">🗺️ Strategy Maps &amp; Flywheels</button>
+    <button class="tab-btn" onclick="switchTab('tab-ops', this)">⚡ Team Ops &amp; Winner Playbooks</button>
+    <button class="tab-btn" onclick="switchTab('tab-cal', this)">🗓️ 15-Week Master Calendar <span class="tab-badge">19 Wks</span></button>
+    <button class="tab-btn" onclick="switchTab('tab-mandate', this)">🤝 Client Mandate &amp; Directives</button>
+    <button class="tab-btn" onclick="switchTab('tab-sim', this)">💰 Financial Models &amp; P&amp;L Simulator</button>
     <button class="tab-btn" onclick="switchTab('tab-docs', this)">📁 Document Library</button>
   </div>
   <button class="logout-btn" onclick="logout()">🔒 Lock Portal</button>
@@ -551,119 +584,136 @@
 
 <div class="wrap">
 
-<!-- TAB 1: P&L SIMULATOR & OVERVIEW -->
-<div id="tab-sim" class="tab-pane active">
-  <section id="overview">
-    <h2>Campaign at a Glance</h2>
-    <p class="sub">The engagement this P&amp;L models — underdog positioning, five channels, war-room cadence, WhatsApp voting machine.</p>
-    <div class="grid g4">
-      <div class="card"><span class="tag">Strategy</span><h3>People's Underdog</h3><p>Sympathy drives votes, pride drives recruitment. 7-beat season story arc from "Who is this?" to "One of us."</p></div>
-      <div class="card"><span class="tag">Core weapon</span><h3>WhatsApp Engine</h3><p>Channel &rarr; 6 regional Communities &rarr; district groups. Target: ~10,000 organized voters, 60+ captains by finale.</p></div>
-      <div class="card"><span class="tag">Channels</span><h3>IG · FB · YT · X · WA</h3><p>Reels within 60 min of telecast; FB mass reach; YT analysis ecosystem; X trend storms 2–3&times;/week.</p></div>
-      <div class="card"><span class="tag">Defense</span><h3>Crisis Protocol</h3><p>3-tier severity matrix, 2-hour T2 response, pre-approved holding statements, fan conduct code.</p></div>
-    </div>
-    <div class="timeline">
-      <div class="ph"><b>Pre-entry · W-2 to W0</b><span>Asset bank, channels, positioning workshop, community seeding</span></div>
-      <div class="ph"><b>Establish · W1–3</b><span>Story lock-in, follower base, first voting cycles</span></div>
-      <div class="ph"><b>Machine · W4–10</b><span>Scale communities, win polls, manage rival PR</span></div>
-      <div class="ph"><b>Surge · W11–15</b><span>Max vote volume, finale narrative, paid surge</span></div>
-      <div class="ph"><b>Handover · +2 wks</b><span>Gratitude arc, asset handover, brand roadmap (unpaid)</span></div>
-    </div>
-    <div class="card" style="margin-top:14px;">
-      <h3>Execution Gantt — 19-week engagement (responds to the survival slider)</h3>
-      <svg id="gantt" width="100%" height="340" viewBox="0 0 760 340" preserveAspectRatio="xMidYMid meet"></svg>
-    </div>
-  </section>
+<!-- TAB 1: STORYLINE & NARRATIVE ARCHITECTURE -->
+<div id="tab-story" class="tab-pane active">
+  <div class="story-hero">
+    <div class="sh-tag">🎭 Narrative Architecture · కథానాయకుడి ప్రయాణం</div>
+    <h2>The Underdog &amp; Protector Arc — మనవాడు</h2>
+    <div class="sh-quote">"Bigg Boss audiences do not vote to admire celebrity perfection; they vote to protect someone who feels like family."</div>
+    <p>A 15-week psychological transformation framework designed to convert 2000s Telugu cinema nostalgia, Godavari soil warmth (<span style="color:#FDE68A; font-weight:700;">మట్టి మనుషులు</span>), and personal resilience into the season's most emotionally unstoppable voting wave.</p>
+  </div>
 
-  <section id="simulator" style="margin-top:20px;">
-    <h2>P&amp;L Simulator — Agency View, Full Engagement (up to 19 weeks)</h2>
-    <p class="sub">Revenue = retainers + fees + bonuses. Costs = team + tools + overhead. Paid media &amp; influencer spends are pass-through; the agency earns only the management fee / markup on them.</p>
-    <noscript><div><b>JavaScript is blocked in this viewer.</b> Download this file and open it directly in Chrome, Edge, or Firefox to use the simulator.</div></noscript>
-    <div class="jsnote"><b>Tip:</b> if the numbers below stay blank, your file preview is blocking scripts — download the file and open it directly in a browser.</div>
-    <div id="err"></div>
-
-    <div class="sim">
-      <div class="controls">
-        <h3>Presets</h3>
-        <div class="presets">
-          <button type="button" onclick="preset('lean')">Lean Ops</button>
-          <button type="button" onclick="preset('war')">Full War Room</button>
-          <button type="button" onclick="preset('premium')">Premium</button>
+  <section>
+    <h2>01 · The Three-Act Emotional Odyssey</h2>
+    <p class="sub">How a humble screen veteran evolves from an underestimated elder into the undisputed voice of the Telugu audience.</p>
+    
+    <div class="act-grid">
+      <div class="act-card act1">
+        <span class="act-badge" style="background:#DBEAFE; color:#1E40AF;">ACT I · WEEKS 1–4</span>
+        <h3>The Forgotten Friend &amp; Quiet Dignity</h3>
+        <div class="act-theme">Theme: Nostalgia, Humility &amp; The Kitchen Anchor</div>
+        <p>Enters without celebrity entitlement. While younger contestants fight for screentime, he listens, feeds the house, and absorbs early nominations with stoic warmth.</p>
+        <p><b>Audience Psychological Hook:</b> <i>"This is the friend from our childhood movies (Happy Days, Pokiri). Look at how genuine and grounded he is."</i></p>
+        <div class="act-soundbite">
+          <b>Key Dialogue Beat:</b><br>
+          "గెలుపోటములు ఎన్నో చూశాను... ఇక్కడ నేను వెతుకుతున్నది అధికారం కాదు, మనుషుల ప్రేమను మాత్రమే."
         </div>
-
-        <h3>Engagement</h3>
-        <div class="ctl"><label>Weeks contestant survives <output id="o-survived"></output></label>
-          <input type="range" id="survived" min="2" max="15" step="1" value="15"></div>
-        <div class="chk"><input type="checkbox" id="titleWin"> <span>Title win (adds title bonus)</span></div>
-
-        <h3>Revenue</h3>
-        <div class="ctl"><label>Weekly retainer <output id="o-retainer"></output></label>
-          <input type="range" id="retainer" min="20000" max="120000" step="2500" value="50000"></div>
-        <div class="ctl"><label>Pre-entry fixed fee <output id="o-preFee"></output></label>
-          <input type="range" id="preFee" min="50000" max="400000" step="10000" value="150000"></div>
-        <div class="ctl"><label>Survival bonus / week (from W4) <output id="o-survBonus"></output></label>
-          <input type="range" id="survBonus" min="0" max="50000" step="2500" value="15000"></div>
-        <div class="ctl"><label>Finale bonus <output id="o-finaleBonus"></output></label>
-          <input type="range" id="finaleBonus" min="0" max="500000" step="25000" value="100000"></div>
-        <div class="ctl"><label>Title bonus <output id="o-titleBonus"></output></label>
-          <input type="range" id="titleBonus" min="0" max="500000" step="25000" value="200000"></div>
-
-        <h3>Managed budgets (pass-through)</h3>
-        <div class="ctl"><label>Paid media budget <output id="o-mediaBudget"></output></label>
-          <input type="range" id="mediaBudget" min="100000" max="1500000" step="50000" value="500000"></div>
-        <div class="ctl"><label>Media management fee % <output id="o-mediaFee"></output></label>
-          <input type="range" id="mediaFee" min="0" max="20" step="1" value="12"></div>
-        <div class="ctl"><label>Influencer budget <output id="o-inflBudget"></output></label>
-          <input type="range" id="inflBudget" min="0" max="600000" step="25000" value="200000"></div>
-        <div class="ctl"><label>Influencer markup % <output id="o-inflMarkup"></output></label>
-          <input type="range" id="inflMarkup" min="0" max="25" step="1" value="15"></div>
-
-        <h3>Costs</h3>
-        <div class="ctl"><label>Team cost / month <output id="o-teamMonthly"></output></label>
-          <input type="range" id="teamMonthly" min="60000" max="400000" step="5000" value="180000"></div>
-        <div class="ctl"><label>Tools &amp; software / month <output id="o-toolsMonthly"></output></label>
-          <input type="range" id="toolsMonthly" min="0" max="60000" step="2500" value="15000"></div>
-        <div class="ctl"><label>Overhead % on direct cost <output id="o-overhead"></output></label>
-          <input type="range" id="overhead" min="0" max="30" step="1" value="15"></div>
       </div>
 
-      <div>
-        <div class="headline" id="headline">Loading simulator…</div>
-        <div class="grid g4" style="margin-bottom:14px;">
-          <div class="stat"><div class="k">Total revenue</div><div class="v" id="s-rev">—</div><div class="n" id="s-rev-n"></div></div>
-          <div class="stat"><div class="k">Total cost</div><div class="v" id="s-cost">—</div><div class="n" id="s-cost-n"></div></div>
-          <div class="stat"><div class="k">Net profit</div><div class="v" id="s-profit">—</div><div class="n" id="s-margin"></div></div>
-          <div class="stat"><div class="k">Break-even</div><div class="v" id="s-breakeven">—</div><div class="n">earliest profitable week</div></div>
+      <div class="act-card act2">
+        <span class="act-badge" style="background:#FEE2E2; color:#991B1B;">ACT II · WEEKS 5–10</span>
+        <h3>The Agnipariksha &amp; The Shield</h3>
+        <div class="act-theme">Theme: The Gang-up, Task Grit &amp; The Lone Warrior</div>
+        <p>House cliques attempt an organized boycott. Arrogant contenders corner younger housemates; he steps in as an immovable protector. In physical tasks, sheer stubborn willpower overpowers athletic ego.</p>
+        <p><b>Audience Psychological Hook:</b> <i>"They are cornering him because they fear him! Our answer is not arguments — it is a flood of Hotstar votes!"</i></p>
+        <div class="act-soundbite">
+          <b>Key Dialogue Beat:</b><br>
+          "గ్రూపులు కట్టి నన్ను తొక్కేయాలనుకుంటే... పైకి లేవడం తప్ప నాకు వేరే దారి తెలీదు."
         </div>
-        <div class="grid g3" style="margin-bottom:14px;">
-          <div class="stat"><div class="k">Scenario: out in W6</div><div class="v" id="sc-early">—</div><div class="n">retainer stops; 2-wk unpaid handover</div></div>
-          <div class="stat"><div class="k">Scenario: finale (W15)</div><div class="v" id="sc-finale">—</div><div class="n">all survival + finale bonuses</div></div>
-          <div class="stat"><div class="k">Scenario: title win</div><div class="v" id="sc-title">—</div><div class="n">finale + title bonus</div></div>
+      </div>
+
+      <div class="act-card act3">
+        <span class="act-badge" style="background:#FEF3C7; color:#92400E;">ACT III · WEEKS 11–15</span>
+        <h3>The People's Coronation</h3>
+        <div class="act-theme">Theme: Family Unification, Godavari Pride &amp; Victory</div>
+        <p>Family Week triggers a statewide emotional outpouring. The entire Godavari belt, middle-class families, and the global diaspora unite into a disciplined voting monolith.</p>
+        <p><b>Audience Psychological Hook:</b> <i>"He represents every ordinary person who lost everything and rose again through self-respect."</i></p>
+        <div class="act-soundbite">
+          <b>Key Dialogue Beat:</b><br>
+          "ఇది నా ఒక్కడి గెలుపు కాదు... కిందపడి మళ్లీ నిలబడిన ప్రతి సామాన్యుడి ఆత్మగౌరవం!"
         </div>
-        <div class="card" style="margin-bottom:14px;">
-          <h3>Financial waterfall — where the money comes from and goes</h3>
-          <svg id="wf" width="100%" height="260" viewBox="0 0 720 260" preserveAspectRatio="xMidYMid meet"></svg>
-        </div>
-        <div class="card" style="margin-bottom:14px;">
-          <h3>Cumulative cash position by week</h3>
-          <svg id="chart" width="100%" height="180" viewBox="0 0 720 180" preserveAspectRatio="none"></svg>
-        </div>
-        <div class="tscroll"><table>
-          <thead><tr><th>Week</th><th>Phase</th><th>Revenue</th><th>Cost</th><th>Net</th><th>Cumulative</th></tr></thead>
-          <tbody id="rows"></tbody>
-        </table></div>
-        <p class="legend">
-          <span class="chip" style="background:#FDF3EC;"></span>Pre-entry (fixed fee)
-          <span class="chip" style="background:#fff; border:1px solid #DDE3EC;"></span>Season (retainer + bonuses)
-          <span class="chip" style="background:#EAF6EF;"></span>Finale week
-          <span class="chip" style="background:#F0F2F7;"></span>Unpaid handover
-          <span class="chip" style="background:#FAFBFD; border:1px solid #E5E9F1;"></span>Not engaged (post-elimination)
-        </p>
       </div>
     </div>
   </section>
-</div>
 
+  <section style="margin-top:24px;">
+    <h2>02 · Underdog Jiu-Jitsu: Conflict-to-Vote Reframe Matrix</h2>
+    <p class="sub">How our 24x7 War Room converts every live telecast clash into an instant voting surge within 30 minutes.</p>
+    
+    <div class="itbl-wrap"><table class="itbl">
+      <thead>
+        <tr>
+          <th>House Scenario</th>
+          <th>Rival / House Trap</th>
+          <th>Our Strategic Reframe</th>
+          <th>Fan Army Action (WhatsApp &amp; Reels)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="warn">
+          <td><b>Nomination Gang-Up</b><span class="sm">8 housemates target him simultaneously</span></td>
+          <td>Make him look isolated, friendless, and unwanted.</td>
+          <td><b>The Gautam Gulati Doctrine:</b> "1 vs All confirms him as the sole real threat in the house."</td>
+          <td>Deploy 9:16 reel with mass BGM: <i>"సింహం ఎప్పుడూ సింగిల్ గానే వస్తుంది!"</i> + Instant 8-vote Hotstar sprint.</td>
+        </tr>
+        <tr>
+          <td><b>Physical Task Defeat</b><span class="sm">Outmuscled by younger gym-trained contestants</span></td>
+          <td>Label him unfit or passive for task-based gameplay.</td>
+          <td><b>The Spirit of Eklavya:</b> Highlight bleeding effort, refusal to quit, and respect for fair play.</td>
+          <td>Highlight reel focusing on heart and sweat: <i>"శరీరం అలసిపోయినా... గుండె ధైర్యం తగ్గలేదు."</i></td>
+        </tr>
+        <tr class="hi">
+          <td><b>Kitchen / Food Disputes</b><span class="sm">Arguments over cooking duties or portion sizes</span></td>
+          <td>Bait him into losing temper over petty domestic issues.</td>
+          <td><b>The Annadata / Generous Elder:</b> He willingly gives his food portion to younger contestants with a smile.</td>
+          <td>Emotional family byte: <i>"తాను ఆకలితో ఉన్నా పక్కవాడికి అన్నం పెట్టే మనస్తత్వం మనోడిది."</i></td>
+        </tr>
+        <tr class="warn">
+          <td><b>Host Nagarjuna Critique</b><span class="sm">Weekend episode host puts him on the spot</span></td>
+          <td>Contestant gets defensive or argumentative with host.</td>
+          <td><b>The Humble Gentleman:</b> Fold hands, accept feedback with supreme grace, and promise to rise.</td>
+          <td>Positive character card: <i>"తప్పును హుందాగా ఒప్పుకుని సరిదిద్దుకునేవాడే నిజమైన లీడర్!"</i></td>
+        </tr>
+        <tr>
+          <td><b>Dark PR Smears Online</b><span class="sm">Rival teams leak out-of-context 2021 clips</span></td>
+          <td>Damage character reputation to alienate family voters.</td>
+          <td><b>The Transparent Phoenix:</b> Full uncut context video released within 2 hours + legal warning.</td>
+          <td>Channel anger into discipline: <i>"కుట్రలకు మన సమాధానం బూతులు కాదు... ఓట్ల వర్షం!"</i></td>
+        </tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section style="margin-top:24px;">
+    <h2>03 · High-Impact Telugu Dialogue &amp; Soundbite Library</h2>
+    <p class="sub">Pre-cleared vernacular catchphrases seeded across Instagram Reels, YouTube Shorts, and WhatsApp Community broadcasts.</p>
+
+    <div class="hook-grid">
+      <div class="hook-card">
+        <div class="hook-context">🔥 Resilience &amp; Solo Fight</div>
+        <div class="hook-telugu">"వెనుక నుంచి పొడిచే వాళ్ళు ఉన్నంత కాలం... ముందే ఉండి నడిపించే దేవుడూ ఉంటాడు!"</div>
+        <div class="hook-sub">Used during unfair nomination grouping and captaincy backstabbing.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="hook-context">🌾 Rooted Soil Pride</div>
+        <div class="hook-telugu">"గోదావరి నీళ్లు తాగినోళ్ళకి భయం ఉండదు... మంచితనం మాత్రమే ఉంటుంది!"</div>
+        <div class="hook-sub">Anchors the East &amp; West Godavari regional voting bloc.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="hook-context">🛡️ Silence over Ego</div>
+        <div class="hook-telugu">"అరిస్తే గెలిచేది ఆట కాదు... గుండెల్లో నిలిచేదే నిజమైన గెలుపు!"</div>
+        <div class="hook-sub">Contrasts dignified calm against loud, abusive opponents.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="hook-context">🗳️ Voting Call to Action</div>
+        <div class="hook-telugu">"మన వాడిని కాపాడుకోవాల్సిన బాధ్యత మనదే... ఈ వారం ఒక్క ఓటు కూడా వృథా కావద్దు!"</div>
+        <div class="hook-sub">Midnight closing broadcast copy for WhatsApp District Captains.</div>
+      </div>
+    </div>
+  </section>
 <!-- TAB 2: 15-WEEK MASTER CAMPAIGN CALENDAR -->
 <div id="tab-cal" class="tab-pane">
   <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
@@ -1787,54 +1837,7 @@ flowchart TD
   </section>
 </div>
 
-<!-- TAB 4: DOCUMENT LIBRARY & OPERATIONAL VAULT -->
-<div id="tab-docs" class="tab-pane">
-  <section id="documents">
-    <h2>Document Library &amp; Operational Vault</h2>
-    <p class="sub">The complete client-facing agreements and internal war-room operating manuals generated for this campaign.</p>
-    <div class="grid g3">
-      <div class="card"><span class="tag gold">Live Operations</span><h3>War Room Telecast SOP (MD)</h3><p>Minute-by-minute run-sheet (9:30 PM–2:00 AM), 6 war room seat checklists, 8-min rapid approval triage tree, and weekend Nagarjuna episode checklists.</p></div>
-      <div class="card"><span class="tag gold">AI Intelligence</span><h3>Reality TV Master Playbook &amp; AI Ingestion (MD)</h3><p>Cross-franchise doctrines (Gautam Gulati 1-vs-all, Sidharth Shukla task intensity, Dan Gheesling funeral pivot) + automated Whisper Telugu script ingestion pipeline.</p></div>
-      <div class="card"><span class="tag gold">Live Operations</span><h3>Bilingual Crisis Statements (MD)</h3><p>Pre-cleared, turnkey scripts in Telugu script, Romanized Telugu, and English covering task clashes, host rebukes, smear leaks, caste trolls, and copyright counter-notices.</p></div>
-      <div class="card"><span class="tag gold">Live Operations</span><h3>WhatsApp Captains Playbook (MD)</h3><p>Turnkey copy vault: T-0 Nomination drop, T+15m Hotstar visual guide, mid-week push, and T-2h closing blitz, plus District Leaderboard scoring engine.</p></div>
-      <div class="card"><span class="tag blue">Media Buying</span><h3>Meme &amp; Influencer Matrix (MD)</h3><p>Telugu creator rate card (₹1k–35k), Tier A/B/C distribution grid, zero-PR organic briefing SOP, and dark PR bot detection audit.</p></div>
-      <div class="card"><span class="tag blue">Commercial</span><h3>Post-Show Handover Roadmap (MD)</h3><p>30-day post-finale transition, hometown welcome rally guide, YouTube interview media shield, brand deal rate card (₹1.5L–5L), and 2FA digital asset transfer.</p></div>
-      <div class="card"><span class="tag green">Client Strategy</span><h3>Positioning Canvas Guide (MD)</h3><p>3-hour pre-entry workshop guide: story-mining interview, 16/20 canvas kill-threshold, catchphrase sprint, red-line register, and approvals matrix.</p></div>
-      <div class="card"><span class="tag green">Client Strategy</span><h3>Campaign Proposal (MD)</h3><p>Commercial offer: scope, 4 phases, deliverables, paid media plan, 3 pricing tiers + performance bonuses, terms &amp; compliance, acceptance block.</p></div>
-      <div class="card"><span class="tag green">Client Strategy</span><h3>Client Summary (MD)</h3><p>The 2-page quick read: underdog positioning, three engines, negative-PR approach, weekly scorecard, what we need from the client.</p></div>
-      <div class="card"><span class="tag gold">War Room Intelligence</span><h3>House Threat Map (HTML)</h3><p>Krishnudu's route to the top three: nine-finale winner ledger, lane map, 26-name threat ledger tiered T1–T3, seven bloc battlecards, the 15-week arc, and ten rules for inside the house. <b>See the House Threat Map tab.</b></p></div>
-      <div class="card"><span class="tag green">Client Strategy</span><h3>Mandate Proposal (HTML)</h3><p>The manager-facing case: the reframe, cohort and platform vote intelligence, an auditable vote model, the 30/60/90 plan with decision gates, risk file, guarantees and engagement terms. <b>See the Client Mandate tab.</b></p></div>
-      <div class="card"><span class="tag green">Client Strategy</span><h3>Complete Playbook (MD)</h3><p>Master manual: underdog doctrine, WhatsApp voting protocol, content engine, 3-tier crisis protocol, KPIs, cadence.</p></div>
-    </div>
-  </section>
-
-  <section id="assumptions" style="margin-top:20px;">
-    <h2>Assumptions &amp; Notes</h2>
-    <div class="grid g3">
-      <div class="card"><h3>Revenue logic</h3><ul>
-        <li>Pre-entry (2 weeks) billed as a fixed one-time fee</li>
-        <li>Retainer earned only for weeks the contestant is in the house</li>
-        <li>Survival bonus accrues from Week 4; finale bonus at W15; title bonus only if the win toggle is on</li>
-        <li>Paid media &amp; influencer budgets are client money passed through at actuals — the agency books only the fee/markup as revenue</li>
-      </ul></div>
-      <div class="card"><h3>Cost logic</h3><ul>
-        <li>Costs run for pre-entry + in-house weeks + 2-week unpaid handover (per proposal terms)</li>
-        <li>Team cost = fully-loaded salaries (strategist, Telugu editor, designer, community manager, trend coordinator)</li>
-        <li>Default ₹1.8L/month ≈ 5-person Hyderabad war room; Lean preset ≈ 3 people</li>
-        <li>Overhead covers office, admin, internet, misc.</li>
-      </ul></div>
-      <div class="card"><h3>Honest caveats</h3><ul>
-        <li>All figures ex-GST; TDS/withholding not modeled</li>
-        <li>Season length and voting rules follow broadcaster announcements</li>
-        <li>Salaries are indicative Hyderabad market rates — replace with your actuals</li>
-        <li>Benchmarks used in pricing docs: Indian full-service SMM retainers ₹1–3L+/mo; BB Telugu S9 finalists earned ₹15–20L; post-BB endorsement benchmark ₹5–8L/post</li>
-      </ul></div>
-    </div>
-  </section>
-</div>
-
-
-<!-- TAB 6: HOUSE THREAT MAP -->
+<!-- TAB 2: HOUSE THREAT MAP -->
 <div id="tab-threat" class="tab-pane">
   <section id="threatmap">
     <div class="intel-hero">
@@ -2704,6 +2707,163 @@ flowchart TD
     </div>
 
     <div class="card" style="margin-top:16px; background:#F8FAFC;"><p style="font-size:12px; color:var(--mut); line-height:1.6;">Prepared 2 September 2026 · Season fundamentals are confirmed; the contestant roster has not been officially announced by the broadcaster and all rival intelligence is re-scored within 48 hours of the premiere. The items in section 10 are drawn from published press reporting and require confirmation from Krishnudu and his legal counsel before any response is finalised. Official vote counts are never published by the broadcaster; all standings reported are directional indicators.</p></div>
+  </section>
+<!-- TAB 7: FINANCIAL MODELS & P&L SIMULATOR -->
+<div id="tab-sim" class="tab-pane">
+  <section id="overview">
+    <h2>Campaign Financial Overview &amp; Gantt</h2>
+    <p class="sub">The engagement this P&amp;L models — underdog positioning, five channels, war-room cadence, WhatsApp voting machine.</p>
+    <div class="grid g4">
+      <div class="card"><span class="tag">Strategy</span><h3>People's Underdog</h3><p>Sympathy drives votes, pride drives recruitment. 7-beat season story arc from "Who is this?" to "One of us."</p></div>
+      <div class="card"><span class="tag">Core weapon</span><h3>WhatsApp Engine</h3><p>Channel &rarr; 6 regional Communities &rarr; district groups. Target: ~10,000 organized voters, 60+ captains by finale.</p></div>
+      <div class="card"><span class="tag">Channels</span><h3>IG · FB · YT · X · WA</h3><p>Reels within 60 min of telecast; FB mass reach; YT analysis ecosystem; X trend storms 2–3&times;/week.</p></div>
+      <div class="card"><span class="tag">Defense</span><h3>Crisis Protocol</h3><p>3-tier severity matrix, 2-hour T2 response, pre-approved holding statements, fan conduct code.</p></div>
+    </div>
+    <div class="timeline">
+      <div class="ph"><b>Pre-entry · W-2 to W0</b><span>Asset bank, channels, positioning workshop, community seeding</span></div>
+      <div class="ph"><b>Establish · W1–3</b><span>Story lock-in, follower base, first voting cycles</span></div>
+      <div class="ph"><b>Machine · W4–10</b><span>Scale communities, win polls, manage rival PR</span></div>
+      <div class="ph"><b>Surge · W11–15</b><span>Max vote volume, finale narrative, paid surge</span></div>
+      <div class="ph"><b>Handover · +2 wks</b><span>Gratitude arc, asset handover, brand roadmap (unpaid)</span></div>
+    </div>
+    <div class="card" style="margin-top:14px;">
+      <h3>Execution Gantt — 19-week engagement (responds to the survival slider)</h3>
+      <svg id="gantt" width="100%" height="340" viewBox="0 0 760 340" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+  </section>
+
+  <section id="simulator" style="margin-top:20px;">
+    <h2>P&amp;L Simulator — Agency View, Full Engagement (up to 19 weeks)</h2>
+    <p class="sub">Revenue = retainers + fees + bonuses. Costs = team + tools + overhead. Paid media &amp; influencer spends are pass-through; the agency earns only the management fee / markup on them.</p>
+    <noscript><div><b>JavaScript is blocked in this viewer.</b> Download this file and open it directly in Chrome, Edge, or Firefox to use the simulator.</div></noscript>
+    <div class="jsnote"><b>Tip:</b> if the numbers below stay blank, your file preview is blocking scripts — download the file and open it directly in a browser.</div>
+    <div id="err"></div>
+
+    <div class="sim">
+      <div class="controls">
+        <h3>Presets</h3>
+        <div class="presets">
+          <button type="button" onclick="preset('lean')">Lean Ops</button>
+          <button type="button" onclick="preset('war')">Full War Room</button>
+          <button type="button" onclick="preset('premium')">Premium</button>
+        </div>
+
+        <h3>Engagement</h3>
+        <div class="ctl"><label>Weeks contestant survives <output id="o-survived"></output></label>
+          <input type="range" id="survived" min="2" max="15" step="1" value="15"></div>
+        <div class="chk"><input type="checkbox" id="titleWin"> <span>Title win (adds title bonus)</span></div>
+
+        <h3>Revenue</h3>
+        <div class="ctl"><label>Weekly retainer <output id="o-retainer"></output></label>
+          <input type="range" id="retainer" min="20000" max="120000" step="2500" value="50000"></div>
+        <div class="ctl"><label>Pre-entry fixed fee <output id="o-preFee"></output></label>
+          <input type="range" id="preFee" min="50000" max="400000" step="10000" value="150000"></div>
+        <div class="ctl"><label>Survival bonus / week (from W4) <output id="o-survBonus"></output></label>
+          <input type="range" id="survBonus" min="0" max="50000" step="2500" value="15000"></div>
+        <div class="ctl"><label>Finale bonus <output id="o-finaleBonus"></output></label>
+          <input type="range" id="finaleBonus" min="0" max="500000" step="25000" value="100000"></div>
+        <div class="ctl"><label>Title bonus <output id="o-titleBonus"></output></label>
+          <input type="range" id="titleBonus" min="0" max="500000" step="25000" value="200000"></div>
+
+        <h3>Managed budgets (pass-through)</h3>
+        <div class="ctl"><label>Paid media budget <output id="o-mediaBudget"></output></label>
+          <input type="range" id="mediaBudget" min="100000" max="1500000" step="50000" value="500000"></div>
+        <div class="ctl"><label>Media management fee % <output id="o-mediaFee"></output></label>
+          <input type="range" id="mediaFee" min="0" max="20" step="1" value="12"></div>
+        <div class="ctl"><label>Influencer budget <output id="o-inflBudget"></output></label>
+          <input type="range" id="inflBudget" min="0" max="600000" step="25000" value="200000"></div>
+        <div class="ctl"><label>Influencer markup % <output id="o-inflMarkup"></output></label>
+          <input type="range" id="inflMarkup" min="0" max="25" step="1" value="15"></div>
+
+        <h3>Costs</h3>
+        <div class="ctl"><label>Team cost / month <output id="o-teamMonthly"></output></label>
+          <input type="range" id="teamMonthly" min="60000" max="400000" step="5000" value="180000"></div>
+        <div class="ctl"><label>Tools &amp; software / month <output id="o-toolsMonthly"></output></label>
+          <input type="range" id="toolsMonthly" min="0" max="60000" step="2500" value="15000"></div>
+        <div class="ctl"><label>Overhead % on direct cost <output id="o-overhead"></output></label>
+          <input type="range" id="overhead" min="0" max="30" step="1" value="15"></div>
+      </div>
+
+      <div>
+        <div class="headline" id="headline">Loading simulator…</div>
+        <div class="grid g4" style="margin-bottom:14px;">
+          <div class="stat"><div class="k">Total revenue</div><div class="v" id="s-rev">—</div><div class="n" id="s-rev-n"></div></div>
+          <div class="stat"><div class="k">Total cost</div><div class="v" id="s-cost">—</div><div class="n" id="s-cost-n"></div></div>
+          <div class="stat"><div class="k">Net profit</div><div class="v" id="s-profit">—</div><div class="n" id="s-margin"></div></div>
+          <div class="stat"><div class="k">Break-even</div><div class="v" id="s-breakeven">—</div><div class="n">earliest profitable week</div></div>
+        </div>
+        <div class="grid g3" style="margin-bottom:14px;">
+          <div class="stat"><div class="k">Scenario: out in W6</div><div class="v" id="sc-early">—</div><div class="n">retainer stops; 2-wk unpaid handover</div></div>
+          <div class="stat"><div class="k">Scenario: finale (W15)</div><div class="v" id="sc-finale">—</div><div class="n">all survival + finale bonuses</div></div>
+          <div class="stat"><div class="k">Scenario: title win</div><div class="v" id="sc-title">—</div><div class="n">finale + title bonus</div></div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>Financial waterfall — where the money comes from and goes</h3>
+          <svg id="wf" width="100%" height="260" viewBox="0 0 720 260" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>Cumulative cash position by week</h3>
+          <svg id="chart" width="100%" height="180" viewBox="0 0 720 180" preserveAspectRatio="none"></svg>
+        </div>
+        <div class="tscroll"><table>
+          <thead><tr><th>Week</th><th>Phase</th><th>Revenue</th><th>Cost</th><th>Net</th><th>Cumulative</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table></div>
+        <p class="legend">
+          <span class="chip" style="background:#FDF3EC;"></span>Pre-entry (fixed fee)
+          <span class="chip" style="background:#fff; border:1px solid #DDE3EC;"></span>Season (retainer + bonuses)
+          <span class="chip" style="background:#EAF6EF;"></span>Finale week
+          <span class="chip" style="background:#F0F2F7;"></span>Unpaid handover
+          <span class="chip" style="background:#FAFBFD; border:1px solid #E5E9F1;"></span>Not engaged (post-elimination)
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TAB 8: DOCUMENT LIBRARY & OPERATIONAL VAULT -->
+<div id="tab-docs" class="tab-pane">
+  <section id="documents">
+    <h2>Document Library &amp; Operational Vault</h2>
+    <p class="sub">The complete client-facing agreements and internal war-room operating manuals generated for this campaign.</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag gold">Live Operations</span><h3>War Room Telecast SOP (MD)</h3><p>Minute-by-minute run-sheet (9:30 PM–2:00 AM), 6 war room seat checklists, 8-min rapid approval triage tree, and weekend Nagarjuna episode checklists.</p></div>
+      <div class="card"><span class="tag gold">AI Intelligence</span><h3>Reality TV Master Playbook &amp; AI Ingestion (MD)</h3><p>Cross-franchise doctrines (Gautam Gulati 1-vs-all, Sidharth Shukla task intensity, Dan Gheesling funeral pivot) + automated Whisper Telugu script ingestion pipeline.</p></div>
+      <div class="card"><span class="tag gold">Live Operations</span><h3>Bilingual Crisis Statements (MD)</h3><p>Pre-cleared, turnkey scripts in Telugu script, Romanized Telugu, and English covering task clashes, host rebukes, smear leaks, caste trolls, and copyright counter-notices.</p></div>
+      <div class="card"><span class="tag gold">Live Operations</span><h3>WhatsApp Captains Playbook (MD)</h3><p>Turnkey copy vault: T-0 Nomination drop, T+15m Hotstar visual guide, mid-week push, and T-2h closing blitz, plus District Leaderboard scoring engine.</p></div>
+      <div class="card"><span class="tag blue">Media Buying</span><h3>Meme &amp; Influencer Matrix (MD)</h3><p>Telugu creator rate card (₹1k–35k), Tier A/B/C distribution grid, zero-PR organic briefing SOP, and dark PR bot detection audit.</p></div>
+      <div class="card"><span class="tag blue">Commercial</span><h3>Post-Show Handover Roadmap (MD)</h3><p>30-day post-finale transition, hometown welcome rally guide, YouTube interview media shield, brand deal rate card (₹1.5L–5L), and 2FA digital asset transfer.</p></div>
+      <div class="card"><span class="tag green">Client Strategy</span><h3>Positioning Canvas Guide (MD)</h3><p>3-hour pre-entry workshop guide: story-mining interview, 16/20 canvas kill-threshold, catchphrase sprint, red-line register, and approvals matrix.</p></div>
+      <div class="card"><span class="tag green">Client Strategy</span><h3>Campaign Proposal (MD)</h3><p>Commercial offer: scope, 4 phases, deliverables, paid media plan, 3 pricing tiers + performance bonuses, terms &amp; compliance, acceptance block.</p></div>
+      <div class="card"><span class="tag green">Client Strategy</span><h3>Client Summary (MD)</h3><p>The 2-page quick read: underdog positioning, three engines, negative-PR approach, weekly scorecard, what we need from the client.</p></div>
+      <div class="card"><span class="tag gold">War Room Intelligence</span><h3>House Threat Map (HTML)</h3><p>Krishnudu's route to the top three: nine-finale winner ledger, lane map, 26-name threat ledger tiered T1–T3, seven bloc battlecards, the 15-week arc, and ten rules for inside the house. <b>See the House Threat Map tab.</b></p></div>
+      <div class="card"><span class="tag green">Client Strategy</span><h3>Mandate Proposal (HTML)</h3><p>The manager-facing case: the reframe, cohort and platform vote intelligence, an auditable vote model, the 30/60/90 plan with decision gates, risk file, guarantees and engagement terms. <b>See the Client Mandate tab.</b></p></div>
+      <div class="card"><span class="tag green">Client Strategy</span><h3>Complete Playbook (MD)</h3><p>Master manual: underdog doctrine, WhatsApp voting protocol, content engine, 3-tier crisis protocol, KPIs, cadence.</p></div>
+    </div>
+  </section>
+
+  <section id="assumptions" style="margin-top:20px;">
+    <h2>Assumptions &amp; Notes</h2>
+    <div class="grid g3">
+      <div class="card"><h3>Revenue logic</h3><ul>
+        <li>Pre-entry (2 weeks) billed as a fixed one-time fee</li>
+        <li>Retainer earned only for weeks the contestant is in the house</li>
+        <li>Survival bonus accrues from Week 4; finale bonus at W15; title bonus only if the win toggle is on</li>
+        <li>Paid media &amp; influencer budgets are client money passed through at actuals — the agency books only the fee/markup as revenue</li>
+      </ul></div>
+      <div class="card"><h3>Cost logic</h3><ul>
+        <li>Costs run for pre-entry + in-house weeks + 2-week unpaid handover (per proposal terms)</li>
+        <li>Team cost = fully-loaded salaries (strategist, Telugu editor, designer, community manager, trend coordinator)</li>
+        <li>Default ₹1.8L/month ≈ 5-person Hyderabad war room; Lean preset ≈ 3 people</li>
+        <li>Overhead covers office, admin, internet, misc.</li>
+      </ul></div>
+      <div class="card"><h3>Honest caveats</h3><ul>
+        <li>All figures ex-GST; TDS/withholding not modeled</li>
+        <li>Season length and voting rules follow broadcaster announcements</li>
+        <li>Salaries are indicative Hyderabad market rates — replace with your actuals</li>
+        <li>Benchmarks used in pricing docs: Indian full-service SMM retainers ₹1–3L+/mo; BB Telugu S9 finalists earned ₹15–20L; post-BB endorsement benchmark ₹5–8L/post</li>
+      </ul></div>
+    </div>
   </section>
 </div>
 
