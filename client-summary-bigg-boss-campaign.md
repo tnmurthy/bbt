@@ -76,4 +76,13 @@ The full crisis protocol with scenario-by-scenario playbooks is in the playbook 
 
 ---
 
+## 🎯 Proposal Strategist Directives for Pitch Execution
+
+1. **The 2-Hour Pre-Entry Rehearsal Drill:** Make the Friday pre-entry rehearsal non-negotiable. Simulate live attacks, hostile nominations, and weekend Nagarjuna feedback until the humble, dignified persona is instinctual.
+2. **Dual-Spokesperson Family Media Firewall:** Enforce a single-spokesperson agreement in writing. Exactly **one** family member is authorized to approve crisis statements or talk to YouTube tabloids (SumanTV, iDream).
+3. **Phased Budgeting (40% Act III Climax Reserve):** Do not spend creator and media budgets evenly. Reserve **40% of the war chest specifically for Weeks 8–10 (The Climax / Test Phase)** and Week 15 Grand Finale surge.
+4. **Deploy the Interactive Command Portal Live:** Walk through the live P&L Simulator, 6-Seat War Room RACI, and Mathematical Vote Floor Model during meetings to establish quantitative authority over traditional PR agencies.
+
+---
+
 *Full operational detail: see the accompanying document — "Campaign Playbook: Underdog Strategy, WhatsApp Engine & Crisis Protocol."*
