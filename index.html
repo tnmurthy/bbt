@@ -3079,6 +3079,8 @@ function drawGantt(surv){
 
 function drawChart(rows){
   var svg = $('chart'); if(!svg) return;
+  var p = readInputs();
+  var surv = p.survived || 15;
   var W = 720, H = 180, padL = 14, padR = 14, padT = 14, padB = 22;
   var vals = rows.map(function(r){ return r.cum; });
   var min = Math.min.apply(null, [0].concat(vals)), max = Math.max.apply(null, [1].concat(vals));
@@ -3088,17 +3090,19 @@ function drawChart(rows){
   var d = '';
   vals.forEach(function(v, i){ d += (i ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(v).toFixed(1); });
   var fill = d + 'L' + x(vals.length-1) + ',' + zero + 'L' + x(0) + ',' + zero + 'Z';
-  var finIdx = rows.findIndex(function(r){ return r.w === 15; });
-  if (finIdx < 0) finIdx = 0;
+  var targetWk = Math.min(surv, 15);
+  var pinIdx = rows.findIndex(function(r){ return r.w === targetWk; });
+  if (pinIdx < 0) pinIdx = 0;
+  var pinLabel = (surv < 15) ? 'exit W' + surv : 'finale W15';
   svg.innerHTML =
     '<line x1="'+padL+'" y1="'+zero+'" x2="'+(W-padR)+'" y2="'+zero+'" stroke="#DDE3EC" stroke-width="1"/>' +
     '<path d="'+fill+'" fill="rgba(217,84,30,0.12)" stroke="none"/>' +
     '<path d="'+d+'" fill="none" stroke="#D9541E" stroke-width="2.5"/>' +
-    '<circle cx="'+x(finIdx)+'" cy="'+y(vals[finIdx])+'" r="4" fill="#1B2A4A"/>' +
-    '<text x="'+Math.min(x(finIdx)+8, W-150)+'" y="'+(y(vals[finIdx])-6)+'" font-size="11" fill="#1B2A4A" font-weight="700">'+inr(vals[finIdx])+'</text>' +
+    '<circle cx="'+x(pinIdx)+'" cy="'+y(vals[pinIdx])+'" r="4.5" fill="#1B2A4A"/>' +
+    '<text x="'+Math.min(x(pinIdx)+8, W-140)+'" y="'+(y(vals[pinIdx])-6)+'" font-size="11" fill="#1B2A4A" font-weight="700">'+inr(vals[pinIdx])+'</text>' +
     '<text x="'+padL+'" y="'+(H-6)+'" font-size="10" fill="#6B7386">W-2</text>' +
     '<text x="'+(W-padR-26)+'" y="'+(H-6)+'" font-size="10" fill="#6B7386">+2</text>' +
-    '<text x="'+(W-padR-90)+'" y="'+(H-6)+'" font-size="10" fill="#6B7386">finale W15</text>';
+    '<text x="'+(W-padR-90)+'" y="'+(H-6)+'" font-size="10" fill="#6B7386">'+pinLabel+'</text>';
 }
 
 // STRATEGY CHARTS RENDERING ENGINE
@@ -3273,6 +3277,9 @@ if (document.readyState === 'loading'){
     },
     flowchart: { curve: 'basis', useMaxWidth: true }
   });
+  if (typeof window.renderMermaid === 'function') {
+    window.renderMermaid();
+  }
 </script>
 </body>
 </html>
