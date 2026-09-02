@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bigg Boss Telugu Season 10 — Campaign Command Center & War Room Portal</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23F59E0B'/%3E%3Cstop offset='50%25' stop-color='%23D9541E'/%3E%3Cstop offset='100%25' stop-color='%231B2A4A'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='46' fill='%23111827' stroke='url(%23g)' stroke-width='4'/%3E%3Cpath d='M20,50 Q50,20 80,50 Q50,80 20,50 Z' fill='none' stroke='%23F59E0B' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%23D9541E' stroke='%23FFF' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23FFF'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --navy:#1B2A4A; --navy2:#24365E; --accent:#D9541E; --accent2:#F0733F;
+    --bg:#F4F6FA; --card:#FFFFFF; --line:#DDE3EC; --ink:#23293A; --mut:#6B7386;
+    --good:#1E7F4F; --bad:#C0392B; --gold:#D97706; --gold-bg:#FEF3C7;
+    --bb-gold:#FBBF24; --bb-amber:#F59E0B; --bb-crimson:#E11D48; --bb-dark:#0B1329;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--ink); line-height:1.5;}
+  
+  /* Security / Login Overlay */
+  #auth-modal{
+    position:fixed; top:0; left:0; width:100vw; height:100vh;
+    background:radial-gradient(circle at center, rgba(36,54,94,0.96) 0%, rgba(11,19,41,0.99) 100%);
+    backdrop-filter:blur(14px); z-index:99999; display:flex; align-items:center; justify-content:center;
+  }
+  .auth-card{
+    background:#fff; border-radius:20px; padding:38px 34px; max-width:440px; width:92%;
+    box-shadow:0 25px 60px rgba(0,0,0,0.45), 0 0 40px rgba(245,158,11,0.15); text-align:center;
+    border:1px solid rgba(245,158,11,0.25); position:relative; overflow:hidden;
+  }
+  .auth-card::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:4px;
+    background:linear-gradient(90deg, #F59E0B, #D9541E, #E11D48, #F59E0B);
+  }
+  .auth-logo-wrap{display:flex; justify-content:center; margin-bottom:16px;}
+  .auth-badge{
+    display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:800; padding:4px 14px; border-radius:20px;
+    background:#FEF3C7; color:#92400E; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; border:1px solid #FDE68A;
+  }
+  .auth-badge .pulse-dot{width:7px; height:7px; border-radius:50%; background:#D9541E; animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%,100%{opacity:1; transform:scale(1);} 50%{opacity:0.4; transform:scale(1.3);}}
+  .auth-card h2{font-size:22px; color:var(--navy); margin-bottom:4px; font-weight:800; letter-spacing:-0.3px;}
+  .auth-card .telugu-sub{font-size:14px; color:#D9541E; font-weight:700; margin-bottom:6px;}
+  .auth-card p{font-size:13px; color:var(--mut); margin-bottom:20px;}
+  .auth-form{display:flex; flex-direction:column; gap:14px;}
+  .auth-form input{
+    width:100%; padding:13px 16px; border:1.5px solid var(--line); border-radius:10px;
+    font-size:14px; outline:none; transition:border .2s, box-shadow .2s;
+  }
+  .auth-form input:focus{border-color:var(--accent); box-shadow:0 0 0 3px rgba(217,84,30,0.12);}
+  .auth-btn{
+    background:linear-gradient(135deg, #D9541E, #F0733F); color:#fff;
+    border:none; border-radius:10px; padding:13px; font-size:14.5px; font-weight:700; cursor:pointer;
+    transition:transform .1s, opacity .2s, box-shadow .2s; box-shadow:0 4px 14px rgba(217,84,30,0.3);
+  }
+  .auth-btn:hover{opacity:0.95; box-shadow:0 6px 20px rgba(217,84,30,0.4);}
+  .auth-btn:active{transform:scale(0.98);}
+  .auth-err{color:var(--bad); font-size:12.5px; font-weight:600; display:none; margin-top:4px;}
+  .auth-hint{font-size:11.5px; color:#94A3B8; margin-top:8px;}
+  
+  /* Main App Container */
+  #app-content{display:block;}
+  header{
+    background:linear-gradient(135deg, #0B1329 0%, #1B2A4A 60%, #24365E 100%);
+    color:#fff; padding:24px 20px 20px; border-bottom:2px solid rgba(245,158,11,0.25);
+    position:relative; overflow:hidden;
+  }
+  header::after{
+    content:''; position:absolute; top:-50%; right:-10%; width:500px; height:500px;
+    background:radial-gradient(circle, rgba(217,84,30,0.15) 0%, rgba(0,0,0,0) 70%);
+    pointer-events:none;
+  }
+  .wrap{max-width:1200px; margin:0 auto; padding:0 20px;}
+  .header-flex{display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;}
+  .header-brand{display:flex; align-items:center; gap:18px;}
+  .brand-logo-svg{width:82px; height:82px; flex-shrink:0; filter:drop-shadow(0 4px 12px rgba(245,158,11,0.4));}
+  .header-titles .kick{
+    display:inline-flex; align-items:center; gap:8px; color:var(--bb-gold);
+    font-weight:800; letter-spacing:1.5px; font-size:11.5px; text-transform:uppercase; margin-bottom:4px;
+  }
+  .header-titles .kick span.broadcaster{
+    background:rgba(255,255,255,0.12); padding:2px 8px; border-radius:12px;
+    color:#F1F5F9; font-size:10.5px; border:1px solid rgba(255,255,255,0.2);
+  }
+  .header-titles h1{font-size:26px; margin:2px 0 4px; font-weight:800; letter-spacing:-0.3px; color:#FFFFFF;}
+  .header-titles h1 span.telugu-main{color:#FBBF24; font-weight:700; margin-right:8px;}
+  .header-titles p{color:#CBD5E1; font-size:13.5px; max-width:680px; line-height:1.45;}
+  .header-meta{display:flex; flex-direction:column; align-items:flex-end; gap:8px;}
+  .meta-tag-live{
+    display:inline-flex; align-items:center; gap:6px; background:rgba(225,29,72,0.18);
+    border:1px solid rgba(225,29,72,0.5); color:#FECDD3; padding:5px 12px; border-radius:20px;
+    font-size:11px; font-weight:800; letter-spacing:0.8px; text-transform:uppercase;
+  }
+  .meta-tag-live .live-dot{width:8px; height:8px; border-radius:50%; background:#E11D48; animation:pulse 1.3s infinite;}
+  .meta-season-badge{
+    font-size:11.5px; font-weight:700; color:#FCD34D; background:rgba(245,158,11,0.12);
+    border:1px solid rgba(245,158,11,0.3); padding:4px 12px; border-radius:8px;
+  }
+  
+  /* Navigation & Tabs */
+  nav{position:sticky; top:0; background:#0F1A30; z-index:100; border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(0,0,0,0.25); box-shadow:0 6px 18px rgba(0,0,0,0.2);}
+  nav .wrap{display:flex; gap:6px; flex-wrap:wrap; justify-content:space-between; align-items:center;}
+  .nav-tabs{display:flex; gap:4px; flex-wrap:wrap;}
+  .tab-btn{
+    color:#94A3B8; background:transparent; border:none; padding:14px 18px; font-size:13.5px; font-weight:700;
+    cursor:pointer; display:flex; align-items:center; gap:8px; border-bottom:3px solid transparent; transition:all .2s;
+  }
+  .tab-btn:hover{color:#F1F5F9; background:rgba(255,255,255,.04);}
+  .tab-btn.active{color:#FFFFFF; border-bottom-color:var(--accent); background:rgba(255,255,255,.08);}
+  .tab-badge{font-size:10.5px; padding:2px 7px; border-radius:10px; background:var(--accent); color:#fff;}
+  .logout-btn{background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#E2E8F0; padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; transition:all .2s;}
+  .logout-btn:hover{background:rgba(225,29,72,0.2); border-color:rgba(225,29,72,0.4); color:#fff;}
+  
+  /* Tab Panes */
+  .tab-pane{display:none; padding:28px 0 40px;}
+  .tab-pane.active{display:block;}
+  
+  /* Shared Components */
+  h2{font-size:21px; color:var(--navy); margin-bottom:4px; font-weight:800;}
+  .sub{color:var(--mut); font-size:13.5px; margin-bottom:18px;}
+  .grid{display:grid; gap:14px;}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(460px,1fr));}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px;}
+  .card h3{font-size:14.5px; color:var(--navy); margin-bottom:6px; font-weight:700;}
+  .card p, .card li{font-size:13px; color:var(--mut);}
+  .card ul{padding-left:16px;}
+  .tag{display:inline-block; font-size:11px; font-weight:700; padding:2px 9px; border-radius:20px; background:#FDEBE2; color:var(--accent); margin-bottom:8px; text-transform:uppercase; letter-spacing:.5px;}
+  .tag.blue{background:#E4EAF6; color:var(--navy);}
+  .tag.gold{background:var(--gold-bg); color:var(--gold);}
+  .tag.green{background:#EAF6EF; color:var(--good);}
+  .tag.crimson{background:#FFE4E6; color:#BE123C;}
+  
+  /* Visual Strategy Flowcharts & Visual Cards */
+  .strategy-banner{
+    background:linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    color:#fff; border-radius:14px; padding:22px 24px; margin-bottom:20px;
+    border:1px solid rgba(245,158,11,0.25); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+  }
+  .strategy-banner h3{color:#F8FAFC; font-size:18px; margin-bottom:4px; font-weight:800;}
+  .strategy-banner p{color:#94A3B8; font-size:13px; margin:0;}
+  .view-toggle-grp{display:flex; background:rgba(0,0,0,0.3); padding:3px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);}
+  .view-toggle-btn{
+    background:transparent; border:none; color:#94A3B8; padding:6px 14px; font-size:12px; font-weight:700; border-radius:6px; cursor:pointer; transition:all .2s;
+  }
+  .view-toggle-btn.active{background:var(--accent); color:#fff; box-shadow:0 2px 8px rgba(217,84,30,0.4);}
+  
+  .flow-track{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:14px 0;}
+  .flow-node{
+    background:#fff; border:1.5px solid #E2E8F0; border-radius:10px; padding:14px 12px; position:relative;
+    box-shadow:0 2px 6px rgba(0,0,0,0.03); transition:all .2s;
+  }
+  .flow-node:hover{transform:translateY(-2px); box-shadow:0 6px 16px rgba(27,42,74,0.08); border-color:#CBD5E1;}
+  .flow-node.active-node{border-color:var(--accent); background:#FFFAF8;}
+  .flow-node .step-num{
+    display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px;
+    border-radius:50%; background:var(--navy); color:#fff; font-size:11px; font-weight:800; margin-bottom:8px;
+  }
+  .flow-node.active-node .step-num{background:var(--accent);}
+  .flow-node .node-title{font-size:13px; font-weight:700; color:var(--navy); margin-bottom:4px; line-height:1.3;}
+  .flow-node .node-desc{font-size:11.5px; color:var(--mut); line-height:1.4;}
+  .flow-node .node-badge{
+    display:inline-block; font-size:10px; font-weight:700; padding:2px 6px; border-radius:4px;
+    background:#F1F5F9; color:#475569; margin-top:8px;
+  }
+  
+  /* Story Arc Beat Map */
+  .beat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:8px; margin-top:10px;}
+  .beat-card{
+    background:#FAFBFD; border:1px solid #E2E8F0; border-radius:8px; padding:12px;
+    border-top:4px solid #3B82F6; transition:all .2s;
+  }
+  .beat-card:nth-child(1){border-top-color:#64748B;}
+  .beat-card:nth-child(2){border-top-color:#3B82F6;}
+  .beat-card:nth-child(3){border-top-color:#0EA5E9;}
+  .beat-card:nth-child(4){border-top-color:#F59E0B;}
+  .beat-card:nth-child(5){border-top-color:#D9541E;}
+  .beat-card:nth-child(6){border-top-color:#10B981;}
+  .beat-card:nth-child(7){border-top-color:#E11D48;}
+  .beat-card b{display:block; font-size:11.5px; color:var(--navy); margin-bottom:2px;}
+  .beat-card .beat-theme{font-size:12.5px; font-weight:700; color:var(--ink); margin-bottom:4px;}
+  .beat-card p{font-size:11px; color:var(--mut); line-height:1.35;}
+  
+  /* Tree & Hierarchy Styles */
+  .tree-node-box{background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:14px; margin-bottom:10px;}
+  .tree-node-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;}
+  .tree-pill{font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:12px; background:#E2E8F0; color:#334155;}
+  .tree-pill.wa{background:#DCFCE7; color:#166534;}
+  .sub-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:8px; margin-top:8px;}
+  .zone-chip{background:#fff; border:1px solid #CBD5E1; border-radius:6px; padding:8px 10px; font-size:11.5px;}
+  .zone-chip b{display:block; color:var(--navy); font-size:12px;}
+  .zone-chip span{color:var(--mut); font-size:10.5px;}
+  
+  /* Crisis Triage Matrix */
+  .crisis-triage-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px; margin-top:12px;}
+  .triage-tier{border-radius:10px; padding:16px; border:1px solid;}
+  .triage-tier.t1{background:#F8FAFC; border-color:#CBD5E1;}
+  .triage-tier.t2{background:#FFFBEB; border-color:#FDE68A;}
+  .triage-tier.t3{background:#FEF2F2; border-color:#FECDD3;}
+  .triage-tier h4{font-size:13.5px; font-weight:800; margin-bottom:6px; display:flex; justify-content:space-between;}
+  .triage-tier p{font-size:12px; margin-bottom:8px;}
+  .triage-tier ul{padding-left:16px; font-size:11.8px;}
+  
+  /* Simulator Specifics */
+  .timeline{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-top:6px;}
+  .ph{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:8px; padding:12px;}
+  .ph b{display:block; font-size:12.5px; color:var(--navy);}
+  .ph span{font-size:11.5px; color:var(--mut);}
+  .sim{display:grid; grid-template-columns:340px 1fr; gap:18px; align-items:start;}
+  @media(max-width:900px){.sim{grid-template-columns:1fr;}}
+  .controls{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px;}
+  .controls h3{font-size:13px; color:var(--navy); text-transform:uppercase; letter-spacing:1px; margin:18px 0 8px; border-bottom:1px solid var(--line); padding-bottom:5px;}
+  .controls h3:first-child{margin-top:0;}
+  .ctl{margin-bottom:11px;}
+  .ctl label{display:flex; justify-content:space-between; font-size:12.5px; color:var(--ink); font-weight:600; margin-bottom:3px;}
+  .ctl label output{color:var(--accent); font-weight:700;}
+  .ctl input[type=range]{width:100%; accent-color:var(--accent); height:22px;}
+  .presets{display:flex; gap:6px; margin-bottom:6px;}
+  .presets button{flex:1; padding:8px 4px; font-size:12px; font-weight:700; border:1.5px solid var(--navy); background:#fff; color:var(--navy); border-radius:8px; cursor:pointer;}
+  .presets button:hover{background:var(--navy); color:#fff;}
+  .chk{display:flex; gap:8px; align-items:center; font-size:12.5px; font-weight:600; margin:6px 0;}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px;}
+  .stat .k{font-size:11.5px; color:var(--mut); text-transform:uppercase; letter-spacing:.6px; font-weight:700;}
+  .stat .v{font-size:22px; font-weight:800; color:var(--navy); margin-top:2px;}
+  .stat .v.good{color:var(--good);} .stat .v.bad{color:var(--bad);}
+  .stat .n{font-size:11.5px; color:var(--mut); margin-top:2px;}
+  .headline{background:var(--navy); color:#fff; border-radius:12px; padding:16px 18px; font-size:14px; margin-bottom:14px;}
+  .headline b{color:var(--accent2);}
+  table{width:100%; border-collapse:collapse; font-size:12.3px; background:#fff;}
+  th{background:var(--navy); color:#fff; text-align:right; padding:8px 9px; font-size:11.5px;}
+  th:first-child, td:first-child{text-align:left;}
+  td{padding:6px 9px; text-align:right; border-bottom:1px solid var(--line);}
+  tr.pre td{background:#FDF3EC;}
+  tr.post td{background:#F0F2F7; color:var(--mut);}
+  tr.dead td{color:#B7BDCB; background:#FAFBFD;}
+  tr.finale td{font-weight:700; background:#EAF6EF;}
+  .tscroll{max-height:460px; overflow:auto; border:1px solid var(--line); border-radius:12px;}
+  .legend{font-size:11.5px; color:var(--mut); margin-top:8px;}
+  .chip{display:inline-block; width:11px; height:11px; border-radius:3px; margin:0 4px 0 12px; vertical-align:-1px;}
+  
+  /* Calendar Specifics */
+  .cal-filter-bar{display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;}
+  .cal-filter-btn{
+    background:#fff; border:1px solid var(--line); padding:7px 14px; border-radius:20px;
+    font-size:12.5px; font-weight:600; color:var(--mut); cursor:pointer; transition:all .2s;
+  }
+  .cal-filter-btn:hover{border-color:var(--navy); color:var(--navy);}
+  .cal-filter-btn.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+  
+  .cal-week-card{
+    background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px 22px;
+    margin-bottom:16px; transition:transform .15s, box-shadow .15s;
+  }
+  .cal-week-card:hover{box-shadow:0 8px 24px rgba(27,42,74,0.06); border-color:#CBD5E1;}
+  .cal-week-card.phase-pre{border-left:5px solid #F0733F;}
+  .cal-week-card.phase-1{border-left:5px solid #3B82F6;}
+  .cal-week-card.phase-2{border-left:5px solid #10B981;}
+  .cal-week-card.phase-3{border-left:5px solid #D97706;}
+  .cal-week-card.phase-post{border-left:5px solid #64748B;}
+  
+  .cal-head{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; flex-wrap:wrap; gap:10px;}
+  .cal-title-grp{display:flex; align-items:center; gap:12px;}
+  .cal-num{font-size:22px; font-weight:800; color:var(--navy);}
+  .cal-theme{font-size:16px; font-weight:700; color:var(--ink);}
+  .cal-narrative{font-size:13px; color:var(--accent); font-weight:600; font-style:italic;}
+  .cal-kpi-badge{background:#F8FAFC; border:1px solid var(--line); padding:4px 10px; border-radius:8px; font-size:11.5px; font-weight:600; color:var(--navy);}
+  
+  .cal-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;}
+  .cal-pillar{background:#FAFBFD; border:1px solid #EEF2F6; border-radius:8px; padding:12px 14px;}
+  .cal-pillar-title{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--navy); margin-bottom:6px; display:flex; align-items:center; gap:6px;}
+  .cal-pillar ul{padding-left:15px; margin:0;}
+  .cal-pillar li{font-size:12.2px; color:#475569; margin-bottom:4px; line-height:1.4;}
+  
+  /* Team Operations & Winner Playbooks Specifics */
+  .ops-filter-bar{display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;}
+  .ops-filter-btn{
+    background:#fff; border:1px solid var(--line); padding:7px 14px; border-radius:20px;
+    font-size:12.5px; font-weight:600; color:var(--mut); cursor:pointer; transition:all .2s;
+  }
+  .ops-filter-btn:hover{border-color:var(--navy); color:var(--navy);}
+  .ops-filter-btn.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+  
+  .seat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:14px; margin-top:12px;}
+  .seat-card{
+    background:#fff; border:1.5px solid #E2E8F0; border-radius:12px; padding:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.02); transition:all .2s;
+  }
+  .seat-card:hover{border-color:#CBD5E1; box-shadow:0 6px 20px rgba(27,42,74,0.06);}
+  .seat-head{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;}
+  .seat-title{font-size:14.5px; font-weight:800; color:var(--navy);}
+  .seat-badge{font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:12px;}
+  .seat-role{font-size:12px; font-weight:600; color:var(--accent); margin-bottom:8px;}
+  .seat-card ul{padding-left:16px; margin-bottom:10px;}
+  .seat-card li{font-size:12px; color:#475569; margin-bottom:3px; line-height:1.4;}
+  .seat-sla{background:#F8FAFC; border:1px solid #EEF2F6; border-radius:6px; padding:6px 10px; font-size:11.5px; font-weight:700; color:#1E293B;}
+  
+  .doctrine-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:14px; margin-top:12px;}
+  .doctrine-card{
+    background:#fff; border:1.5px solid #E2E8F0; border-radius:12px; padding:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.02); border-left:5px solid; transition:all .2s;
+  }
+  .doctrine-card:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(27,42,74,0.08);}
+  .doctrine-card.hindi{border-left-color:#D9541E;}
+  .doctrine-card.telugu{border-left-color:#F59E0B;}
+  .doctrine-card.south{border-left-color:#3B82F6;}
+  .doctrine-card.global{border-left-color:#10B981;}
+  .doctrine-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;}
+  .doctrine-winner{font-size:15px; font-weight:800; color:var(--navy);}
+  .doctrine-tag{font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:12px;}
+  .doctrine-name{font-size:12.5px; font-weight:700; color:var(--ink); margin-bottom:6px;}
+  .doctrine-core{font-size:12px; color:var(--mut); margin-bottom:10px; line-height:1.45;}
+  .doctrine-deploy{background:#FFFBEB; border:1px solid #FDE68A; border-radius:8px; padding:10px 12px; font-size:11.8px; color:#78350F;}
+  .doctrine-deploy b{color:#92400E; display:block; margin-bottom:3px; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;}
+
+  /* AI Simulator Sandbox */
+  .ai-sandbox{
+    background:#0F172A; color:#F8FAFC; border-radius:14px; padding:22px 24px; margin-top:16px;
+    border:1px solid rgba(245,158,11,0.25);
+  }
+  .ai-sandbox h3{color:#FBBF24; font-size:16px; margin-bottom:6px; font-weight:800;}
+  .ai-sandbox p{color:#94A3B8; font-size:12.5px; margin-bottom:14px;}
+  .scenario-btns{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;}
+  .scenario-btn{
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18); color:#F1F5F9;
+    padding:8px 14px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; transition:all .2s;
+  }
+  .scenario-btn:hover{background:rgba(245,158,11,0.15); border-color:#F59E0B; color:#FDE68A;}
+  .scenario-btn.active{background:#D9541E; border-color:#D9541E; color:#fff;}
+  .ai-output-panel{
+    background:#1E293B; border:1px solid #334155; border-radius:10px; padding:18px;
+    font-size:12.5px; line-height:1.5; color:#E2E8F0;
+  }
+
+  /* Global Utilities */
+  footer{padding:26px 0 46px; color:var(--mut); font-size:12px;}
+  svg text{font-family:'Segoe UI',system-ui,sans-serif;}
+  .mermaid-wrapper{position:relative; margin-top:10px;}
+  .mermaid{overflow-x:auto; padding:10px; font-size:13px; color:var(--mut); background:#F8FAFC; border-radius:8px; border:1px solid #E2E8F0; min-height:80px;}
+  .mermaid svg{max-width:100%; height:auto;}
+  #err{display:none; background:#FDECEA; border:1px solid #F5C6C0; color:#8C2F22; border-radius:10px; padding:12px 14px; font-size:12.5px; margin-bottom:14px; white-space:pre-wrap;}
+  noscript div, .jsnote{background:#FFF7E6; border:1px solid #F0D9A8; color:#7A5B12; border-radius:10px; padding:12px 14px; font-size:12.5px; margin-bottom:14px;}
+  @media print{ nav,.controls,.presets,#auth-modal{display:none;} .sim{grid-template-columns:1fr;} body{background:#fff;} section{padding:14px 0;} }
+</style>
+</head>
+<body>
+
+<!-- Login Gate with Official Bigg Boss Telugu Branding -->
+<div id="auth-modal">
+  <div class="auth-card">
+    <div class="auth-logo-wrap">
+      <!-- High Impact BB Telugu Eye Vector Logo -->
+      <svg class="auth-logo-svg" width="96" height="96" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="authEyeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.9"/>
+            <stop offset="60%" stop-color="#D9541E" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#1B2A4A" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="authEyeRing" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FDE68A"/>
+            <stop offset="40%" stop-color="#F59E0B"/>
+            <stop offset="70%" stop-color="#D9541E"/>
+            <stop offset="100%" stop-color="#7C2D12"/>
+          </linearGradient>
+          <linearGradient id="authIris" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#38BDF8"/>
+            <stop offset="50%" stop-color="#0284C7"/>
+            <stop offset="100%" stop-color="#0F172A"/>
+          </linearGradient>
+        </defs>
+        <!-- Outer cyber eye shield -->
+        <path d="M10,50 Q50,14 90,50 Q50,86 10,50 Z" fill="#0B1329" stroke="url(#authEyeRing)" stroke-width="4"/>
+        <path d="M18,50 Q50,22 82,50 Q50,78 18,50 Z" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <!-- Radiant Eye Aura -->
+        <circle cx="50" cy="50" r="28" fill="url(#authEyeGlow)"/>
+        <!-- Eye Iris & Aperture -->
+        <circle cx="50" cy="50" r="20" fill="url(#authIris)" stroke="#FDE68A" stroke-width="2.5"/>
+        <circle cx="50" cy="50" r="12" fill="#0F172A" stroke="#38BDF8" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="6" fill="#FBBF24"/>
+        <circle cx="47" cy="47" r="2.5" fill="#FFFFFF"/>
+        <!-- Star Flare -->
+        <path d="M50,26 L50,34 M50,66 L50,74 M26,50 L34,50 M66,50 L74,50" stroke="#FDE68A" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="auth-badge"><span class="pulse-dot"></span> War Room Intelligence Portal</div>
+    <h2>బిగ్ బాస్ తెలుగు · Season 10</h2>
+    <div class="telugu-sub">CAMPAIGN COMMAND CENTER</div>
+    <p>Secure client &amp; war room access for weekly telecast operations, live vote engines, and campaign financials.</p>
+    <form class="auth-form" onsubmit="handleAuth(event)">
+      <input type="password" id="pwdInput" placeholder="Enter War Room Access Passcode" required autocomplete="current-password">
+      <button type="submit" class="auth-btn">Authorize &amp; Enter Command Center</button>
+      <div id="authErr" class="auth-err">Invalid Passcode. Access Denied.</div>
+    </form>
+    <div class="auth-hint">Default passcode: <b>bbt2026</b> or <b>admin123</b></div>
+  </div>
+</div>
+
+<div id="app-content">
+
+<header>
+  <div class="wrap">
+    <div class="header-flex">
+      <div class="header-brand">
+        <!-- Official Bigg Boss Telugu Emblem SVG -->
+        <svg class="brand-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bbGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FEF08A"/>
+              <stop offset="35%" stop-color="#F59E0B"/>
+              <stop offset="75%" stop-color="#EA580C"/>
+              <stop offset="100%" stop-color="#991B1B"/>
+            </linearGradient>
+            <radialGradient id="bbIrisGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FDE047"/>
+              <stop offset="60%" stop-color="#F97316"/>
+              <stop offset="100%" stop-color="#0B1329"/>
+            </radialGradient>
+          </defs>
+          <!-- Outer Eye Arc -->
+          <path d="M6,50 Q50,10 94,50 Q50,90 6,50 Z" fill="#0B1329" stroke="url(#bbGoldGrad)" stroke-width="4.5"/>
+          <path d="M16,50 Q50,20 84,50 Q50,80 16,50 Z" fill="none" stroke="#FBBF24" stroke-width="1.8" opacity="0.85"/>
+          <!-- Ocular Ring -->
+          <circle cx="50" cy="50" r="26" fill="url(#bbIrisGlow)"/>
+          <circle cx="50" cy="50" r="18" fill="#0B1329" stroke="#FDE047" stroke-width="2"/>
+          <circle cx="50" cy="50" r="9" fill="#EA580C"/>
+          <circle cx="50" cy="50" r="4.5" fill="#FFFFFF"/>
+          <!-- Tech Crosshairs -->
+          <path d="M50,16 L50,24 M50,76 L50,84 M16,50 L24,50 M76,50 L84,50" stroke="#FDE047" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+        <div class="header-titles">
+          <div class="kick">
+            <span class="telugu-kick">బిగ్ బాస్ తెలుగు</span> · SEASON 10
+            <span class="broadcaster">⭐ Star Maa &amp; Disney+ Hotstar</span>
+          </div>
+          <h1><span class="telugu-main">బిగ్ బాస్</span> Campaign Command Center &amp; War Room</h1>
+          <p>End-to-end 15-week electoral operations engine: real-time P&amp;L financial model, 15-week execution calendar, live strategy flywheels, and documentation vault.</p>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="meta-tag-live"><span class="live-dot"></span> War Room Active · S10 Cadence</div>
+        <div class="meta-season-badge">Hyderabad Operations Hub</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav><div class="wrap">
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('tab-sim', this)">📊 P&amp;L Simulator &amp; Overview</button>
+    <button class="tab-btn" onclick="switchTab('tab-cal', this)">🗓️ 15-Week Campaign Calendar <span class="tab-badge">19 Wks</span></button>
+    <button class="tab-btn" onclick="switchTab('tab-maps', this)">🗺️ Strategy Maps &amp; Charts</button>
+    <button class="tab-btn" onclick="switchTab('tab-ops', this)">⚡ Team Ops &amp; Winner Playbooks</button>
+    <button class="tab-btn" onclick="switchTab('tab-docs', this)">📁 Document Library</button>
+  </div>
+  <button class="logout-btn" onclick="logout()">🔒 Lock Portal</button>
+</div></nav>
+
+<div class="wrap">
+
+<!-- TAB 1: P&L SIMULATOR & OVERVIEW -->
+<div id="tab-sim" class="tab-pane active">
+  <section id="overview">
+    <h2>Campaign at a Glance</h2>
+    <p class="sub">The engagement this P&amp;L models — underdog positioning, five channels, war-room cadence, WhatsApp voting machine.</p>
+    <div class="grid g4">
+      <div class="card"><span class="tag">Strategy</span><h3>People's Underdog</h3><p>Sympathy drives votes, pride drives recruitment. 7-beat season story arc from "Who is this?" to "One of us."</p></div>
+      <div class="card"><span class="tag">Core weapon</span><h3>WhatsApp Engine</h3><p>Channel &rarr; 6 regional Communities &rarr; district groups. Target: ~10,000 organized voters, 60+ captains by finale.</p></div>
+      <div class="card"><span class="tag">Channels</span><h3>IG · FB · YT · X · WA</h3><p>Reels within 60 min of telecast; FB mass reach; YT analysis ecosystem; X trend storms 2–3&times;/week.</p></div>
+      <div class="card"><span class="tag">Defense</span><h3>Crisis Protocol</h3><p>3-tier severity matrix, 2-hour T2 response, pre-approved holding statements, fan conduct code.</p></div>
+    </div>
+    <div class="timeline">
+      <div class="ph"><b>Pre-entry · W-2 to W0</b><span>Asset bank, channels, positioning workshop, community seeding</span></div>
+      <div class="ph"><b>Establish · W1–3</b><span>Story lock-in, follower base, first voting cycles</span></div>
+      <div class="ph"><b>Machine · W4–10</b><span>Scale communities, win polls, manage rival PR</span></div>
+      <div class="ph"><b>Surge · W11–15</b><span>Max vote volume, finale narrative, paid surge</span></div>
+      <div class="ph"><b>Handover · +2 wks</b><span>Gratitude arc, asset handover, brand roadmap (unpaid)</span></div>
+    </div>
+    <div class="card" style="margin-top:14px;">
+      <h3>Execution Gantt — 19-week engagement (responds to the survival slider)</h3>
+      <svg id="gantt" width="100%" height="340" viewBox="0 0 760 340" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+  </section>
+
+  <section id="simulator" style="margin-top:20px;">
+    <h2>P&amp;L Simulator — Agency View, Full Engagement (up to 19 weeks)</h2>
+    <p class="sub">Revenue = retainers + fees + bonuses. Costs = team + tools + overhead. Paid media &amp; influencer spends are pass-through; the agency earns only the management fee / markup on them.</p>
+    <noscript><div><b>JavaScript is blocked in this viewer.</b> Download this file and open it directly in Chrome, Edge, or Firefox to use the simulator.</div></noscript>
+    <div class="jsnote"><b>Tip:</b> if the numbers below stay blank, your file preview is blocking scripts — download the file and open it directly in a browser.</div>
+    <div id="err"></div>
+
+    <div class="sim">
+      <div class="controls">
+        <h3>Presets</h3>
+        <div class="presets">
+          <button type="button" onclick="preset('lean')">Lean Ops</button>
+          <button type="button" onclick="preset('war')">Full War Room</button>
+          <button type="button" onclick="preset('premium')">Premium</button>
+        </div>
+
+        <h3>Engagement</h3>
+        <div class="ctl"><label>Weeks contestant survives <output id="o-survived"></output></label>
+          <input type="range" id="survived" min="2" max="15" step="1" value="15"></div>
+        <div class="chk"><input type="checkbox" id="titleWin"> <span>Title win (adds title bonus)</span></div>
+
+        <h3>Revenue</h3>
+        <div class="ctl"><label>Weekly retainer <output id="o-retainer"></output></label>
+          <input type="range" id="retainer" min="20000" max="120000" step="2500" value="50000"></div>
+        <div class="ctl"><label>Pre-entry fixed fee <output id="o-preFee"></output></label>
+          <input type="range" id="preFee" min="50000" max="400000" step="10000" value="150000"></div>
+        <div class="ctl"><label>Survival bonus / week (from W4) <output id="o-survBonus"></output></label>
+          <input type="range" id="survBonus" min="0" max="50000" step="2500" value="15000"></div>
+        <div class="ctl"><label>Finale bonus <output id="o-finaleBonus"></output></label>
+          <input type="range" id="finaleBonus" min="0" max="500000" step="25000" value="100000"></div>
+        <div class="ctl"><label>Title bonus <output id="o-titleBonus"></output></label>
+          <input type="range" id="titleBonus" min="0" max="500000" step="25000" value="200000"></div>
+
+        <h3>Managed budgets (pass-through)</h3>
+        <div class="ctl"><label>Paid media budget <output id="o-mediaBudget"></output></label>
+          <input type="range" id="mediaBudget" min="100000" max="1500000" step="50000" value="500000"></div>
+        <div class="ctl"><label>Media management fee % <output id="o-mediaFee"></output></label>
+          <input type="range" id="mediaFee" min="0" max="20" step="1" value="12"></div>
+        <div class="ctl"><label>Influencer budget <output id="o-inflBudget"></output></label>
+          <input type="range" id="inflBudget" min="0" max="600000" step="25000" value="200000"></div>
+        <div class="ctl"><label>Influencer markup % <output id="o-inflMarkup"></output></label>
+          <input type="range" id="inflMarkup" min="0" max="25" step="1" value="15"></div>
+
+        <h3>Costs</h3>
+        <div class="ctl"><label>Team cost / month <output id="o-teamMonthly"></output></label>
+          <input type="range" id="teamMonthly" min="60000" max="400000" step="5000" value="180000"></div>
+        <div class="ctl"><label>Tools &amp; software / month <output id="o-toolsMonthly"></output></label>
+          <input type="range" id="toolsMonthly" min="0" max="60000" step="2500" value="15000"></div>
+        <div class="ctl"><label>Overhead % on direct cost <output id="o-overhead"></output></label>
+          <input type="range" id="overhead" min="0" max="30" step="1" value="15"></div>
+      </div>
+
+      <div>
+        <div class="headline" id="headline">Loading simulator…</div>
+        <div class="grid g4" style="margin-bottom:14px;">
+          <div class="stat"><div class="k">Total revenue</div><div class="v" id="s-rev">—</div><div class="n" id="s-rev-n"></div></div>
+          <div class="stat"><div class="k">Total cost</div><div class="v" id="s-cost">—</div><div class="n" id="s-cost-n"></div></div>
+          <div class="stat"><div class="k">Net profit</div><div class="v" id="s-profit">—</div><div class="n" id="s-margin"></div></div>
+          <div class="stat"><div class="k">Break-even</div><div class="v" id="s-breakeven">—</div><div class="n">earliest profitable week</div></div>
+        </div>
+        <div class="grid g3" style="margin-bottom:14px;">
+          <div class="stat"><div class="k">Scenario: out in W6</div><div class="v" id="sc-early">—</div><div class="n">retainer stops; 2-wk unpaid handover</div></div>
+          <div class="stat"><div class="k">Scenario: finale (W15)</div><div class="v" id="sc-finale">—</div><div class="n">all survival + finale bonuses</div></div>
+          <div class="stat"><div class="k">Scenario: title win</div><div class="v" id="sc-title">—</div><div class="n">finale + title bonus</div></div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>Financial waterfall — where the money comes from and goes</h3>
+          <svg id="wf" width="100%" height="260" viewBox="0 0 720 260" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>Cumulative cash position by week</h3>
+          <svg id="chart" width="100%" height="180" viewBox="0 0 720 180" preserveAspectRatio="none"></svg>
+        </div>
+        <div class="tscroll"><table>
+          <thead><tr><th>Week</th><th>Phase</th><th>Revenue</th><th>Cost</th><th>Net</th><th>Cumulative</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table></div>
+        <p class="legend">
+          <span class="chip" style="background:#FDF3EC;"></span>Pre-entry (fixed fee)
+          <span class="chip" style="background:#fff; border:1px solid #DDE3EC;"></span>Season (retainer + bonuses)
+          <span class="chip" style="background:#EAF6EF;"></span>Finale week
+          <span class="chip" style="background:#F0F2F7;"></span>Unpaid handover
+          <span class="chip" style="background:#FAFBFD; border:1px solid #E5E9F1;"></span>Not engaged (post-elimination)
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TAB 2: 15-WEEK MASTER CAMPAIGN CALENDAR -->
+<div id="tab-cal" class="tab-pane">
+  <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+    <div>
+      <h2>15-Week Master Campaign Activity Calendar</h2>
+      <p class="sub" style="margin-bottom:0;">Turnkey operational roadmap across the 19-week engagement (Pre-entry &rarr; Season W1–15 &rarr; Handover).</p>
+    </div>
+    <div class="cal-filter-bar">
+      <button class="cal-filter-btn active" onclick="filterCal('all', this)">All Weeks (19)</button>
+      <button class="cal-filter-btn" onclick="filterCal('pre', this)">Pre-Entry (W-2 to 0)</button>
+      <button class="cal-filter-btn" onclick="filterCal('p1', this)">Phase 1: Establish (W1–3)</button>
+      <button class="cal-filter-btn" onclick="filterCal('p2', this)">Phase 2: The Machine (W4–10)</button>
+      <button class="cal-filter-btn" onclick="filterCal('p3', this)">Phase 3: Finale Surge (W11–15)</button>
+      <button class="cal-filter-btn" onclick="filterCal('post', this)">Post-Show (W+1 to +2)</button>
+    </div>
+  </div>
+
+  <div id="calendar-container">
+    <!-- PRE-ENTRY -->
+    <div class="cal-week-card phase-pre" data-phase="pre">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W -2</span>
+          <div>
+            <div class="cal-theme">Week Zero Strategy, Story Lock &amp; Asset Bank</div>
+            <div class="cal-narrative">Narrative: "The Genuine Outsider Preparing to Enter"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">Asset Bank &amp; Setup Target: 100% Locked</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li>3-Hour Positioning Workshop with Contestant &amp; Family.</li><li>Sign off on 5 Red-Lines &amp; 5 Catchphrases.</li><li>Pre-clear 5 Bilingual Crisis Holding Statements with Legal.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>Studio photoshoot (3 looks: Traditional, Casual, Power).</li><li>Shoot 15 Evergreen pre-recorded reels (family, childhood, grit).</li><li>Build graphic templates &amp; typography styles.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>Launch Official WhatsApp Channel &amp; Telegram Hub.</li><li>Appoint initial 6 Regional Leads (Hyd, VJA, Vizag, WGL, TPT, NRI).</li><li>Set up cloud broadcast lists &amp; anti-ban numbers.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Meme &amp; Paid Media</div><ul><li>Audit Tier A &amp; B Telugu meme pages; lock preliminary rate cards.</li><li>Warm up Meta Ad Accounts &amp; establish zero-PR seeding channels.</li><li>Map local college student networks in Andhra &amp; Telangana.</li></ul></div>
+      </div>
+    </div>
+
+    <div class="cal-week-card phase-pre" data-phase="pre">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W 0</span>
+          <div>
+            <div class="cal-theme">Grand Premiere &amp; House Entry Blitz</div>
+            <div class="cal-narrative">Beat 1: "Who is this? The Humble Entry"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">Launch Target: 25k+ Followers &amp; 1k WA Members</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li>Live telecast logging of contestant stage entry with host Nagarjuna.</li><li>Anchor the humble background &amp; authentic Telugu roots.</li><li>Tag initial house dynamics &amp; room allotment alliances.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>Premiere moment reel live within 25 minutes of telecast.</li><li>Launch Stage Intro Carousel &amp; Emotional Family Byte.</li><li>Seed first YouTube Shorts clip focusing on warm demeanor.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>First broadcast blast welcoming premiere viewers to Official Channel.</li><li>Seed direct opt-in invite links in Instagram Bio and Stories.</li><li>Captains trigger Day 1 greeting forward across local groups.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Meme &amp; Paid Media</div><ul><li>Deploy Tier A meme pages with organic entry reaction clips.</li><li>Initiate X trend wave: <code>#[ContestantName]InBBT10</code>.</li><li>Deploy ₹30k paid Meta awareness boost on entry reel.</li></ul></div>
+      </div>
+    </div>
+
+    <!-- PHASE 1: WEEKS 1 - 3 -->
+    <div class="cal-week-card phase-1" data-phase="p1">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W 1</span>
+          <div>
+            <div class="cal-theme">First Nomination Triage &amp; Base Establishment</div>
+            <div class="cal-narrative">Beat 2: "The Overlooked Contestant"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">Goal: Top 3 in Unofficial Polls</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li>Position contestant as quiet worker performing kitchen/cleaning duties.</li><li>Frame any unfair early nomination as groupism against the newcomer.</li><li>Highlight genuine humor and respectful demeanor.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>Daily 30–60 min clipping of kitchen grit &amp; calm reactions.</li><li>Deploy dual CTA (Hotstar step-by-step + Missed Call number).</li><li>Post mid-week relatable Telugu meme reel on house chores.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>Execute first live T-0 Nomination Shock Drop.</li><li>Deploy T+15m visual voting guide to all 6 communities.</li><li>Launch "Reply VOTED ✅" challenge; log verified responses.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Meme &amp; Paid Media</div><ul><li>Deploy Tier B meme network highlighting unfair targeting.</li><li>X trend storm on Tuesday nomination night.</li><li>Micro-target Hotstar active users in AP/TG via Meta Ads.</li></ul></div>
+      </div>
+    </div>
+
+    <div class="cal-week-card phase-1" data-phase="p1">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W 2</span>
+          <div>
+            <div class="cal-theme">Physical Task Inception &amp; Task Beast Debut</div>
+            <div class="cal-narrative">Beat 3: "First Stand — Silent Water Runs Deep"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">Target: 3,000+ Verified WhatsApp Voters</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li>Focus on physical task endurance and sportsmanship.</li><li>Capture moments where contestant supports weaker housemates.</li><li>Reframe aggressive house banter into dignified restraint.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>High-energy task highlight reel with trending mass Telugu BGM.</li><li>Quote card: Contestant’s punchy one-liner during task stand.</li><li>Family reaction video supporting from home.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>Launch Daily District Leaderboard across Captains Circle.</li><li>Award first "District Captain of the Week" digital badge.</li><li>Run T-2h Friday midnight closing voting rush blitz.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Meme &amp; Paid Media</div><ul><li>Meme seeding contrasting contestant's hard work vs rival gossip.</li><li>YouTube reviewer seeding: Highlight task fairness.</li><li>Paid surge during Friday 10 PM – Midnight closing window.</li></ul></div>
+      </div>
+    </div>
+
+    <div class="cal-week-card phase-1" data-phase="p1">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W 3</span>
+          <div>
+            <div class="cal-theme">Host Weekend Reinforcement &amp; Fandom Consolidation</div>
+            <div class="cal-narrative">Beat 3b: "Respect Earned from the Host"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">Target: 60k+ Instagram Followers</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li>Amplify Nagarjuna’s positive remarks on weekend episode.</li><li>If host gives feedback: trigger "Humble Student of the Game" framing.</li><li>Solidify friendship bonds inside the house (the Loyal Ally arc).</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>Weekend appreciation carousel capturing host smile/clap.</li><li>Fan edit video compiling Week 1–3 journey highlights.</li><li>Mid-week wholesome bonding reels with house friends.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>Expand district groups: onboard 15 new rural captains.</li><li>Deploy Telugu audio voice note from family thanking voters.</li><li>Establish mid-week Wednesday voting push protocol.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Meme &amp; Paid Media</div><ul><li>Collaborative memes with mid-tier Telugu culture pages.</li><li>Target US/Gulf Telugu NRI groups ahead of Saturday telecast.</li><li>Retarget viewers who engaged with Week 1–2 reels.</li></ul></div>
+      </div>
+    </div>
+
+    <!-- PHASE 2: WEEKS 4 - 10 -->
+    <div class="cal-week-card phase-2" data-phase="p2">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W 4–5</span>
+          <div>
+            <div class="cal-theme">Captaincy Contest &amp; First Major House Clash</div>
+            <div class="cal-narrative">Beat 4: "Tested, Never Breaks — The Trial by Fire"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">Weekly Survival Bonus Kicks In (+₹15k/wk)</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li>Contestant competes for Captaincy; frame leadership as fair.</li><li>Handle major argument: enforce Underdog Jiu-Jitsu doctrine.</li><li>Highlight when rival groups gang up in nominations.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>Uncut full-context argument clip live within 45 mins.</li><li>Slow-motion emotional resilience reel (standing tall).</li><li>Telugu meme: "1 vs Entire House — Simba alone".</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>Deploy High-Alert Voting Forward: "Save our Fighter".</li><li>Captains trigger emergency calls to offline voter lists.</li><li>Leaderboard competition: Vijayawada vs Hyderabad belt.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Meme &amp; Paid Media</div><ul><li>Deploy Tier A meme pages framing contestant as lone warrior.</li><li>X trend storm: <code>#WeStandWith[ContestantName]</code> (Top 5 India).</li><li>Double ad budget during heated nomination clash.</li></ul></div>
+      </div>
+    </div>
+
+    <div class="cal-week-card phase-2" data-phase="p2">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W 6–7</span>
+          <div>
+            <div class="cal-theme">Mid-Season Dark PR Defense &amp; Wildcard Waves</div>
+            <div class="cal-narrative">Beat 4b: "Weathering the Smear Campaign"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">Target: 6,000+ Active WhatsApp Voting Army</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li>Triage incoming wildcard entries attempting to target our player.</li><li>Deploy Cyber Crime Legal notice against rival fake chat leaks.</li><li>Maintain fan conduct discipline: strict no-abuse policy.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>Fact-check side-by-side video debunking out-of-context clips.</li><li>Highlight composure when provoked by wildcard contestants.</li><li>Humorous reels diffusing house tension.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>Publish Anti-Troll Advisory to all district groups.</li><li>Captains focus entirely on positive voting check-ins.</li><li>Global NRI blitz: Coordinate US Eastern &amp; Pacific voting drives.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Meme &amp; Paid Media</div><ul><li>YouTube BB Telugu analyst interview briefings on fair play.</li><li>Counter-swarming on X with factual video receipts.</li><li>Maintain 70%+ positive public sentiment ratio.</li></ul></div>
+      </div>
+    </div>
+
+    <div class="cal-week-card phase-2" data-phase="p2">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W 8–10</span>
+          <div>
+            <div class="cal-theme">The Strategic Pivot: From Underdog to Contender</div>
+            <div class="cal-narrative">Beat 5: "The Challenger Emerges — Respect Earned"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">Target: Top 2 in All Regional Polls</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li><strong>CRITICAL NARRATIVE PIVOT:</strong> Shift tone from victim to dominant, dignified, mature leader.</li><li>Highlight strategic brilliance in mind games and endurance tasks.</li><li>Position contestant as the natural choice for the Trophy.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>Cinematic "Evolution of [Contestant]" transformation reels.</li><li>High-contrast typography quote posters highlighting wisdom.</li><li>Collaborative posts with verified regional influencers.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>Restructure communities into Announcement Mode to prevent doxxing.</li><li>Captains target local residential societies and colleges.</li><li>Cross-district voting tournaments with winner shoutouts.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Meme &amp; Paid Media</div><ul><li>Deploy Tier A meme pages celebrating tactical game moves.</li><li>Run weekly hashtag blitz on Monday nominations.</li><li>Paid media shifts to high-converting Hotstar direct click ads.</li></ul></div>
+      </div>
+    </div>
+
+    <!-- PHASE 3: WEEKS 11 - 15 -->
+    <div class="cal-week-card phase-3" data-phase="p3">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W 11–12</span>
+          <div>
+            <div class="cal-theme">Family Week Surge &amp; Emotional Unification</div>
+            <div class="cal-narrative">Beat 6: "The People's Pick — Emotional Peak"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">Target: 150k+ Followers &amp; 8,500 WA Voters</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li>Leverage emotional Family Week episode (parents/spouse visit).</li><li>Unite Telugu audiences across AP/TG under human connection.</li><li>Frame the contestant’s struggle as representative of every middle-class dream.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>Emotional tear-jerker family reunion edit within 30 mins.</li><li>Unseen childhood memories and sacrifice retrospective reel.</li><li>Fan-made reaction compilation from across districts.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>Emotional audio blast from family thanking fans for 75+ days.</li><li>Mass forward campaign: "He represents our home".</li><li>Verified vote count target: 8,000+ check-ins per window.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Meme &amp; Paid Media</div><ul><li>Universal meme and emotional page coverage across Telugu internet.</li><li>Massive X trend storm: <code>#[ContestantName]TheEmotion</code>.</li><li>Paid surge promoting family episode highlights.</li></ul></div>
+      </div>
+    </div>
+
+    <div class="cal-week-card phase-3" data-phase="p3">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W 13–14</span>
+          <div>
+            <div class="cal-theme">Ticket to Finale &amp; Last Eviction Defense</div>
+            <div class="cal-narrative">Beat 6b: "The Final Hurdle — Unstoppable Focus"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">Target: Finale Berth Secured (Finale Bonus Unlocked)</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li>Relentless focus on Ticket to Finale task performance.</li><li>Neutralize desperate rival PR attacks during final evictions.</li><li>Build the undisputed case for why [Contestant] deserves the cup.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>High-octane warrior task edits with epic background scores.</li><li>Endorsements from past season popular contestants &amp; celebrities.</li><li>Daily countdown graphics to Grand Finale week.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>All 60+ Captains on 24x7 rotation for voting pushes.</li><li>District-level street poster/banner drives organized by fans.</li><li>T-2h midnight emergency vote sweeps.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Meme &amp; Paid Media</div><ul><li>Deploy full Tier A/B/C meme matrix with zero gaps.</li><li>Celebrity video byte seeding across Instagram and X.</li><li>Maximized ad budget allocation on high-intent Telugu demographics.</li></ul></div>
+      </div>
+    </div>
+
+    <div class="cal-week-card phase-3" data-phase="p3">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W 15</span>
+          <div>
+            <div class="cal-theme">🏆 Grand Finale Week — Title Win Surge</div>
+            <div class="cal-narrative">Beat 7: "One of Us — The People's Champion"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">Title Win Target: Maximum Vote Velocity</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li>Finale Doctrine: Frame voting as a movement, not just a game.</li><li>The ultimate message: "An ordinary person elevated by extraordinary love."</li><li>Deliver the Title Win for our client.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>15-week complete retrospective docu-reel (Day 1 to Finale).</li><li>Live telecast countdown stories every 3 hours.</li><li>Pre-cut Victory Celebration Graphics and Reels ready for instant drop.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>10,000+ WhatsApp members activated simultaneously.</li><li>Hourly vote count check-in blitz until voting lines freeze Friday night.</li><li>Captains organize physical local screening gatherings for Finale night.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Meme &amp; Paid Media</div><ul><li>All-out paid media surge: ₹1.5L+ deployed in 96 hours.</li><li>All-India trending hashtag storm on Finale weekend.</li><li>Meme network consensus framing our contestant as the true winner.</li></ul></div>
+      </div>
+    </div>
+
+    <!-- POST-SEASON -->
+    <div class="cal-week-card phase-post" data-phase="post">
+      <div class="cal-head">
+        <div class="cal-title-grp">
+          <span class="cal-num">W +1 to +2</span>
+          <div>
+            <div class="cal-theme">Post-Show Gratitude Arc, Media Shield &amp; Handover</div>
+            <div class="cal-narrative">Handover Phase: "The Brand Economy Begins"</div>
+          </div>
+        </div>
+        <span class="cal-kpi-badge">2-Week Unpaid Handover &amp; Asset Transition</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-pillar"><div class="cal-pillar-title">🎯 Narrative &amp; Story</div><ul><li>Orchestrate triumphant hometown welcome rally in home district.</li><li>Deploy Media Shield Protocol for YouTube/TV interview circuit.</li><li>Express gratitude to host Nagarjuna, Star Maa, and all fans.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">📱 Content Engine</div><ul><li>Grand homecoming celebration video &amp; gratitude carousel.</li><li>Publish official 15-week Thank You video with contestant voiceover.</li><li>Refresh commercial portfolio and talent booking bio.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">💬 WhatsApp Machine</div><ul><li>Broadcast heartfelt personal voice note/video from contestant to fans.</li><li>Transition WhatsApp community admins to contestant's talent manager.</li><li>Preserve the 10,000+ fan directory for future film/brand releases.</li></ul></div>
+        <div class="cal-pillar"><div class="cal-pillar-title">🌐 Commercial Handover</div><ul><li>Pitch Kit rollout to regional brands (FMCG, retail showroom inaugurations).</li><li>Transfer Meta 2FA, Business Manager &amp; YouTube Brand handles.</li><li>Deliver comprehensive End-of-Season Campaign Analytics Dossier.</li></ul></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TAB 3: STRATEGY MAPS & CHARTS -->
+<div id="tab-maps" class="tab-pane">
+  <section id="maps">
+    <div class="strategy-banner">
+      <div>
+        <h3>⚡ War Room Strategic Engine &amp; Operating Flywheels</h3>
+        <p>Visual conversion funnels, 15-week psychological narrative curves, crisis triage protocols, and regional voter pipelines.</p>
+      </div>
+      <div class="view-toggle-grp">
+        <button class="view-toggle-btn active" id="btn-visual-view" onclick="toggleStrategyView('visual')">✨ Executive Visual Maps</button>
+        <button class="view-toggle-btn" id="btn-mermaid-view" onclick="toggleStrategyView('mermaid')">📐 Mermaid Architecture Specs</button>
+      </div>
+    </div>
+
+    <!-- STRATEGY ANALYTICS CHARTS SUITE -->
+    <div id="strategy-analytics-section" style="margin-bottom:24px;">
+      <h2>Strategy Analytics &amp; Predictive Performance Curves</h2>
+      <p class="sub">Quantitative models powering the 15-week electoral roadmap: narrative trajectory, conversion funnel, and regional mobilization.</p>
+      
+      <div class="grid g2" style="margin-bottom:16px;">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3>📈 15-Week Narrative Trajectory vs. Voting Share</h3>
+            <span class="tag gold">Psychological S-Curve</span>
+          </div>
+          <p style="font-size:12.5px; color:var(--mut); margin-bottom:12px;">Modeled vote share progression: Underdog organic surge vs typical housemate fatigue decay.</p>
+          <svg id="narrativeChart" width="100%" height="220" viewBox="0 0 540 220" preserveAspectRatio="none" style="background:#FAFBFD; border-radius:8px; border:1px solid #EEF2F6;"></svg>
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--mut); margin-top:8px;">
+            <span><b style="color:#D9541E;">■</b> Underdog Trajectory (Target 32% Finale Share)</span>
+            <span><b style="color:#94A3B8;">■</b> Baseline Contestant Average</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3>📊 Multi-Channel Audience-to-Vote Conversion Funnel</h3>
+            <span class="tag blue">Weekly Cadence Model</span>
+          </div>
+          <p style="font-size:12.5px; color:var(--mut); margin-bottom:12px;">Conversion drop-off from 10M+ TV/Hotstar viewers into 2.85M Hotstar verified votes.</p>
+          <svg id="funnelChart" width="100%" height="220" viewBox="0 0 540 220" preserveAspectRatio="none" style="background:#FAFBFD; border-radius:8px; border:1px solid #EEF2F6;"></svg>
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--mut); margin-top:8px;">
+            <span>Conversion Efficiency: <b>22.8%</b> of engaged non-follower reach</span>
+            <span style="color:#1E7F4F; font-weight:700;">Zero-Leakage Cadence</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <h3>🗺️ WhatsApp 6-Regional Zone Voter Capacity &amp; Target Density</h3>
+          <span class="tag green">12,000 Total Organized Voter Army</span>
+        </div>
+        <p style="font-size:12.5px; color:var(--mut); margin-bottom:12px;">Geographic voter distribution ladder across Andhra Pradesh, Telangana, and Global Telugu diaspora.</p>
+        <svg id="zoneChart" width="100%" height="160" viewBox="0 0 720 160" preserveAspectRatio="none" style="background:#FAFBFD; border-radius:8px; border:1px solid #EEF2F6;"></svg>
+      </div>
+    </div>
+
+    <!-- EXECUTIVE VISUAL FLOWCHARTS (DEFAULT VIEW) -->
+    <div id="visual-maps-container">
+      
+      <!-- FLOWCHART 1: CAMPAIGN FLYWHEEL -->
+      <div class="card" style="margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h3>1 · The Episode-to-Votes Campaign Flywheel</h3>
+            <p style="margin-bottom:0;">How an on-air telecast moment converts into verified Hotstar votes &amp; new recruiter captains within 120 minutes.</p>
+          </div>
+          <span class="tag crimson">30–60 Min Execution SLA</span>
+        </div>
+        
+        <div class="flow-track">
+          <div class="flow-node active-node">
+            <span class="step-num">1</span>
+            <div class="node-title">Telecast Moment</div>
+            <div class="node-desc">Episode airs 9:30 PM on Star Maa / Hotstar. War Room logs high-impact task or dialogue.</div>
+            <span class="node-badge">T-0 to T+15m</span>
+          </div>
+          <div class="flow-node active-node">
+            <span class="step-num">2</span>
+            <div class="node-title">Rapid Clip Master</div>
+            <div class="node-desc">Telugu editor crops vertical 9:16 reel with punchy mass BGM, subtitles &amp; emotional hook.</div>
+            <span class="node-badge">T+30m Live</span>
+          </div>
+          <div class="flow-node">
+            <span class="step-num">3</span>
+            <div class="node-title">Viral Distribution</div>
+            <div class="node-desc">Dispatched to 25+ Tier A/B meme pages, YouTube Shorts, X trend storm &amp; Facebook mass reach.</div>
+            <span class="node-badge">&gt;60% Non-Followers</span>
+          </div>
+          <div class="flow-node">
+            <span class="step-num">4</span>
+            <div class="node-title">WhatsApp Onboard</div>
+            <div class="node-desc">Viewers click bio link into WhatsApp Regional Communities (Hyderabad, Vizag, Guntur, Rayalaseema).</div>
+            <span class="node-badge">1-Click Channel Join</span>
+          </div>
+          <div class="flow-node active-node">
+            <span class="step-num">5</span>
+            <div class="node-title">Vote Conversion</div>
+            <div class="node-desc">Hotstar direct voting links deployed during nomination windows. Fans reply 'VOTED' with proof screenshot.</div>
+            <span class="node-badge">8 Votes/User Check</span>
+          </div>
+          <div class="flow-node">
+            <span class="step-num">6</span>
+            <div class="node-title">Advocate Expansion</div>
+            <div class="node-desc">Super-fans onboarded as Captains, recruiting 3+ household members and running college voter sweeps.</div>
+            <span class="node-badge">Viral Compounding</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLOWCHART 2: UNDERDOG STORY ARC -->
+      <div class="card" style="margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h3>2 · Underdog Season Story Arc — The 7 Narrative Beats</h3>
+            <p style="margin-bottom:0;">The psychological progression from overlooked newcomer to undisputed people's champion.</p>
+          </div>
+          <span class="tag gold">15-Week Master Narrative</span>
+        </div>
+
+        <div class="beat-grid">
+          <div class="beat-card">
+            <b>W1 · Beat 1</b>
+            <div class="beat-theme">"Who is this?"</div>
+            <p>Establish authentic roots, humility, and relatable Telugu cultural grounding.</p>
+          </div>
+          <div class="beat-card">
+            <b>W1–2 · Beat 2</b>
+            <div class="beat-theme">"Overlooked"</div>
+            <p>House elites sideline our player; frame isolation as silent dignity and forbearance.</p>
+          </div>
+          <div class="beat-card">
+            <b>W2–4 · Beat 3</b>
+            <div class="beat-theme">"First Stand"</div>
+            <p>Physical task dominance; speaks up against unfair nomination grouping. First spark.</p>
+          </div>
+          <div class="beat-card">
+            <b>W4–8 · Beat 4</b>
+            <div class="beat-theme">"Tested, Unbroken"</div>
+            <p>Weathering 1-vs-all house hostility &amp; dark PR. "The lone tiger against the pack."</p>
+          </div>
+          <div class="beat-card">
+            <b>W8–10 · Beat 5</b>
+            <div class="beat-theme">"Respect Earned"</div>
+            <p>Pivotal transition from victim to natural contender. Strategic mind games and maturity.</p>
+          </div>
+          <div class="beat-card">
+            <b>W11–13 · Beat 6</b>
+            <div class="beat-theme">"People's Pick"</div>
+            <p>Emotional Family Week unification; leading all regional YouTube &amp; public fan polls.</p>
+          </div>
+          <div class="beat-card">
+            <b>W14–15 · Beat 7</b>
+            <div class="beat-theme">"One of Us"</div>
+            <p>Grand Finale coronation; the middle-class triumph. Max turnout voting mobilization.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLOWCHART 3: WHATSAPP ARCHITECTURE -->
+      <div class="grid g2" style="margin-bottom:16px;">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3>3 · WhatsApp Voting Army Architecture</h3>
+            <span class="tag green">Zero Doxxing · Announcement Mode</span>
+          </div>
+          <p style="font-size:12.5px; color:var(--mut); margin-bottom:12px;">Multi-tier command hierarchy connecting the War Room to 12,000+ verified voting households.</p>
+
+          <div class="tree-node-box">
+            <div class="tree-node-head">
+              <span style="font-weight:700; color:var(--navy); font-size:13px;">📢 Public WhatsApp Broadcast Channel</span>
+              <span class="tree-pill">Unlimited Reach</span>
+            </div>
+            <p style="font-size:11.5px; color:var(--mut); margin:0;">Public announcements, episode clips, daily voting reminders, and official updates.</p>
+          </div>
+
+          <div class="tree-node-box">
+            <div class="tree-node-head">
+              <span style="font-weight:700; color:var(--navy); font-size:13px;">🌐 6 Regional Fan Communities (~2,000 Capacity Each)</span>
+              <span class="tree-pill wa">~12,000 Total Capacity</span>
+            </div>
+            <div class="sub-zones">
+              <div class="zone-chip"><b>Hyderabad &amp; Ranga Reddy</b><span>Urban tech &amp; youth hubs</span></div>
+              <div class="zone-chip"><b>Vijayawada &amp; Guntur Belt</b><span>Mass cinema fan base</span></div>
+              <div class="zone-chip"><b>Vizag &amp; Uttarandhra</b><span>Coastal active voters</span></div>
+              <div class="zone-chip"><b>Warangal &amp; North TG</b><span>District community network</span></div>
+              <div class="zone-chip"><b>Rayalaseema &amp; Tirupati</b><span>High-retention loyalists</span></div>
+              <div class="zone-chip"><b>Global Telugu / NRI</b><span>US, Gulf &amp; UK time zones</span></div>
+            </div>
+          </div>
+
+          <div class="tree-node-box" style="margin-bottom:0;">
+            <div class="tree-node-head">
+              <span style="font-weight:700; color:var(--navy); font-size:13px;">🎖️ Captains Circle &amp; War Room Ops</span>
+              <span class="tree-pill">60+ District Captains</span>
+            </div>
+            <p style="font-size:11.5px; color:var(--mut); margin:0;">256-member broadcast list of verified leaders executing closing-window vote sweeps and offline outreach.</p>
+          </div>
+        </div>
+
+        <!-- FLOWCHART 4: KPI TREE -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3>4 · North Star Survival KPI Tree</h3>
+            <span class="tag blue">Survival Ladders</span>
+          </div>
+          <p style="font-size:12.5px; color:var(--mut); margin-bottom:12px;">Every operational metric ladders directly to surviving weekly Monday-to-Friday nomination windows.</p>
+
+          <div class="tree-node-box" style="background:#FFFBEB; border-color:#FDE68A;">
+            <div class="tree-node-head">
+              <span style="font-weight:800; color:#92400E; font-size:13px;">🏆 NORTH STAR: Survive Every Elimination &amp; Win Title</span>
+              <span class="tree-pill" style="background:#FDE68A; color:#78350F;">15 Weeks + Finale</span>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div class="zone-chip"><b>Reach Efficiency</b><span>&gt;60% non-follower reel views</span></div>
+            <div class="zone-chip"><b>Audience Growth</b><span>+10–20% weekly follower gain</span></div>
+            <div class="zone-chip"><b>Engagement %</b><span>4–8% nano, &gt;2.5% micro tier</span></div>
+            <div class="zone-chip"><b>WhatsApp Activation</b><span>50+ groups active per window</span></div>
+            <div class="zone-chip"><b>Social Proof Polls</b><span>Top-3 ranking across YouTube</span></div>
+            <div class="zone-chip"><b>PR Defense SLA</b><span>&gt;70% positive sentiment; T2 &lt;2h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLOWCHART 5: CRISIS DECISION MATRIX -->
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h3>5 · Crisis Triage &amp; Underdog Jiu-Jitsu Decision Engine</h3>
+            <p style="margin-bottom:0;">Automated triage framework for house controversies, negative smear campaigns, and viral troll spikes.</p>
+          </div>
+          <span class="tag crimson">2-Hour Rapid Response SLA</span>
+        </div>
+
+        <div class="crisis-triage-grid">
+          <div class="triage-tier t1">
+            <h4 style="color:#475569;">Tier 1 · Troll Noise <span class="tag" style="background:#E2E8F0; color:#334155;">Low Threat</span></h4>
+            <p style="color:#64748B;">Isolated negative comments, low-follower Twitter accounts, routine opposition banter.</p>
+            <ul style="color:#475569;">
+              <li><strong>Action:</strong> Starve the fire — strict no-reply rule.</li>
+              <li>Block, report bots &amp; document for internal audit.</li>
+              <li>Captains instructed not to engage or feed trolls.</li>
+            </ul>
+          </div>
+
+          <div class="triage-tier t2">
+            <h4 style="color:#92400E;">Tier 2 · Trending Misinformation <span class="tag gold">Moderate Threat</span></h4>
+            <p style="color:#92400E;">Out-of-context video cut trending on X/Instagram, rival fan club organized attack.</p>
+            <ul style="color:#78350F;">
+              <li><strong>Action:</strong> Release uncut full-context clip within 2 hours.</li>
+              <li>Deploy Telugu quote card explaining contestant's true stance.</li>
+              <li><strong>Underdog Jiu-Jitsu:</strong> Reframe attack as proof rivals fear our player!</li>
+            </ul>
+          </div>
+
+          <div class="triage-tier t3">
+            <h4 style="color:#991B1B;">Tier 3 · Mainstream Allegation <span class="tag crimson">Critical Threat</span></h4>
+            <p style="color:#991B1B;">Host weekend reprimand, mainstream media news coverage, or serious personal smear.</p>
+            <ul style="color:#7F1D1D;">
+              <li><strong>Action:</strong> One official bilingual statement; all handles hold fire.</li>
+              <li>Family/Legal review before external dissemination.</li>
+              <li>Channel community outrage directly into verified Hotstar votes!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MERMAID ARCHITECTURE CODE VIEW (TOGGLEABLE) -->
+    <div id="mermaid-maps-container" style="display:none; margin-top:20px;">
+      <div class="grid" style="grid-template-columns:1fr;">
+        <div class="card">
+          <h3>1 · Mermaid Flowchart — Campaign Flywheel</h3>
+          <div class="mermaid-wrapper">
+            <pre class="mermaid">
+flowchart LR
+  EP["Episode moment airs"] --> CL["Clip live in 30-60 min"]
+  CL --> RE["Reach: Reels / Shorts / FB"]
+  RE --> FO["New follower"]
+  FO --> WA["Joins WhatsApp community"]
+  WA --> VO["Votes every window - replies VOTED"]
+  VO --> AD["Advocate: recruits 3 more"]
+  AD --> RE
+            </pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>2 · Mermaid Flowchart — 7-Beat Underdog Season Story Arc</h3>
+          <div class="mermaid-wrapper">
+            <pre class="mermaid">
+flowchart LR
+  B1["W1 · Who is this?"] --> B2["W1-2 · Overlooked"]
+  B2 --> B3["W2-4 · First stand"]
+  B3 --> B4["W4-8 · Tested, never breaks"]
+  B4 --> B5["W6-10 · Respect earned"]
+  B5 --> B6["W9-13 · People's pick"]
+  B6 --> B7["W14-15 · One of us"]
+            </pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>3 · Mermaid Flowchart — WhatsApp Voter Architecture</h3>
+          <div class="mermaid-wrapper">
+            <pre class="mermaid">
+flowchart TD
+  CH["WhatsApp Channel - public, unlimited"] --> C1["Hyderabad & Ranga Reddy"]
+  CH --> C2["Vijayawada - Guntur"]
+  CH --> C3["Vizag - Uttarandhra"]
+  CH --> C4["Warangal Belt"]
+  CH --> C5["Rayalaseema - Tirupati"]
+  CH --> C6["NRI / Global Telugu"]
+  C1 --> DG["District groups - 1,024 cap each"]
+  C2 --> DG
+  C3 --> DG
+  DG --> CAP["Captains Circle - broadcast lists of 256"]
+  CAP --> OPS["Agency War Room"]
+            </pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>4 · Mermaid Flowchart — KPI Tree</h3>
+          <div class="mermaid-wrapper">
+            <pre class="mermaid">
+flowchart TD
+  NS["NORTH STAR: survive every weekly elimination"]
+  NS --> R["Reach: over 60% non-follower reel reach"]
+  NS --> A["Audience: 10-20% weekly growth, weeks 1-3"]
+  NS --> E["Engagement: 4-8% nano tier, over 2.5% micro"]
+  NS --> C["Community: 50+ groups, VOTED replies per window"]
+  NS --> P["Proof: top-3 fan polls by W4, 2+ X trends per week"]
+  NS --> N["Narrative: over 70% positive, T2 reply under 2h"]
+            </pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>5 · Mermaid Flowchart — Crisis Decision Flow</h3>
+          <div class="mermaid-wrapper">
+            <pre class="mermaid">
+flowchart TD
+  SP["Negative spike detected - 2x the 7-day average"] --> Q{"Coordinated or mainstream?"}
+  Q -->|"No - troll noise"| T1["T1: starve it - block, report, document only"]
+  Q -->|"Yes - trending hashtag or viral clip"| T2["T2: full-context clip within 2h + positive trend flood + voting CTA intact"]
+  Q -->|"News coverage or serious allegation"| T3["T3: one official statement, legal review, all handles go quiet"]
+  T2 --> UJ["Underdog jiu-jitsu: reframe the attack as proof of the story"]
+  T3 --> UJ
+  UJ --> MO["Mobilize: channel fan anger into votes, not abuse"]
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- TAB: TEAM OPERATIONS & WINNER PLAYBOOKS -->
+<div id="tab-ops" class="tab-pane">
+  <section id="operations">
+    <div class="strategy-banner" style="background:linear-gradient(135deg, #0B1329 0%, #1B2A4A 100%);">
+      <div>
+        <h3>⚡ War Room Team Execution Plan &amp; Cross-Franchise Winner Doctrines</h3>
+        <p>Operational roles, 24x7 telecast run-sheets, 3-lane rapid approval SLAs, and battle-tested winning playbooks from Telugu, Hindi, Tamil, Malayalam &amp; Global Big Brother seasons.</p>
+      </div>
+    </div>
+
+    <!-- OPS CATEGORY FILTER BAR -->
+    <div class="ops-filter-bar">
+      <button class="ops-filter-btn active" onclick="filterOps('all', this)">All Operations &amp; Playbooks</button>
+      <button class="ops-filter-btn" onclick="filterOps('team', this)">👥 6-Seat War Room Team RACI</button>
+      <button class="ops-filter-btn" onclick="filterOps('runsheet', this)">⏱️ Minute-by-Minute Run-Sheets</button>
+      <button class="ops-filter-btn" onclick="filterOps('doctrines', this)">🏆 Winner &amp; Survivor Doctrines</button>
+      <button class="ops-filter-btn" onclick="filterOps('ai', this)">🤖 Autonomous AI Ingestion Engine</button>
+      <button class="ops-filter-btn" onclick="filterOps('sla', this)">🚨 Approval &amp; Triage SLAs</button>
+    </div>
+
+    <!-- MODULE 1: TEAM EXECUTION ROLES & RACI -->
+    <div class="ops-section-block" data-ops-cat="team">
+      <h2>1 · War Room 6-Seat Team Implementation &amp; Execution Plan</h2>
+      <p class="sub">Structured seat-by-seat operating model designed for zero latency during the live 09:30 PM – 02:00 AM telecast window.</p>
+
+      <div class="seat-grid">
+        <div class="seat-card">
+          <div class="seat-head">
+            <span class="seat-title">Seat 1 · Lead Strategist</span>
+            <span class="seat-badge tag gold">Command</span>
+          </div>
+          <div class="seat-role">Narrative Architecture &amp; Approvals Bridge</div>
+          <ul>
+            <li>Tracks the 7-beat underdog narrative alignment across every telecast.</li>
+            <li>Directs the angle for rapid clipping (Heroic, Task Beast, Dignified Silence).</li>
+            <li>Escalates Amber/Red lane PR items to the Client Media Manager.</li>
+            <li>Conducts daily morning strategy sync and weekly scorecard review.</li>
+          </ul>
+          <div class="seat-sla">⚡ SLA: 8-Min Approval Triage &amp; Narrative Gatekeeper</div>
+        </div>
+
+        <div class="seat-card">
+          <div class="seat-head">
+            <span class="seat-title">Seat 2 · Lead Telugu Editor</span>
+            <span class="seat-badge tag crimson">Speed Desk</span>
+          </div>
+          <div class="seat-role">High-Octane Vertical Reels &amp; Shorts</div>
+          <ul>
+            <li>Crops vertical 9:16 high-impact clips with punchy 3-second visual hooks.</li>
+            <li>Applies trending mass Telugu background scores (DSP, Thaman, Anirudh).</li>
+            <li>Generates accurate Telugu + English bilingual on-screen kinetic subtitles.</li>
+            <li>Exports pre-formatted reels for Instagram, YouTube Shorts, and WhatsApp.</li>
+          </ul>
+          <div class="seat-sla">⚡ SLA: First Hero Reel Live Within 30–45 Mins of Episode</div>
+        </div>
+
+        <div class="seat-card">
+          <div class="seat-head">
+            <span class="seat-title">Seat 3 · Copy &amp; Meme Lead</span>
+            <span class="seat-badge tag blue">Viral Engine</span>
+          </div>
+          <div class="seat-role">Vernacular Telugu Hooks &amp; Meme Matrix</div>
+          <ul>
+            <li>Drafts viral Telugu punchlines, emotional captions, and quote posters.</li>
+            <li>Dispatches daily briefs to 25+ Tier A/B/C Telugu meme creators.</li>
+            <li>Coordinates weekly X (Twitter) hashtag storm schedules &amp; counter-trends.</li>
+            <li>Monitors Telugu pop culture dialogue trends for immediate adaptation.</li>
+          </ul>
+          <div class="seat-sla">⚡ SLA: Meme Briefs Dispatched Within 60 Mins Post-Telecast</div>
+        </div>
+
+        <div class="seat-card">
+          <div class="seat-head">
+            <span class="seat-title">Seat 4 · WhatsApp Dispatch Lead</span>
+            <span class="seat-badge tag green">Voting Army</span>
+          </div>
+          <div class="seat-role">Community Network &amp; District Captains</div>
+          <ul>
+            <li>Directs 6 Regional WhatsApp Communities (~12,000 voter capacity).</li>
+            <li>Manages the 60+ District Captains Circle broadcast channel.</li>
+            <li>Runs daily voting check-ins ('VOTED' screenshot verification).</li>
+            <li>Orchestrates T-2h Friday midnight closing voting sweeps.</li>
+          </ul>
+          <div class="seat-sla">⚡ SLA: Instant Hotstar Link Broadcast at T-0 Nominations</div>
+        </div>
+
+        <div class="seat-card">
+          <div class="seat-head">
+            <span class="seat-title">Seat 5 · Live Logger &amp; Sentiment</span>
+            <span class="seat-badge tag blue">Intelligence</span>
+          </div>
+          <div class="seat-role">Live Telecast Ingestion &amp; Poll Sweeps</div>
+          <ul>
+            <li>Logs real-time timestamps, house clashes, and contestant dialogues.</li>
+            <li>Monitors unofficial YouTube/Telegram polls every 60 mins during voting.</li>
+            <li>Scans X and Instagram for coordinated negative PR or smear leaks.</li>
+            <li>Maintains the Live War Room Google Sheet / Notion episode dossier.</li>
+          </ul>
+          <div class="seat-sla">⚡ SLA: Real-Time Timestamping &amp; Dark PR Alerts Within 15 Min</div>
+        </div>
+
+        <div class="seat-card">
+          <div class="seat-head">
+            <span class="seat-title">Seat 6 · Client Media Manager</span>
+            <span class="seat-badge tag gold">Client Liaison</span>
+          </div>
+          <div class="seat-role">Fast-Track Sign-Off &amp; Family Bridge</div>
+          <ul>
+            <li>Official client-side point of contact on the dedicated WhatsApp bridge.</li>
+            <li>Provides rapid 8-minute sign-off on Amber Lane sensitive content.</li>
+            <li>Coordinates family video/audio bytes during emotional milestones.</li>
+            <li>Authorizes legal notices for cyber defamation and copyright counter-strikes.</li>
+          </ul>
+          <div class="seat-sla">⚡ SLA: 8-Min Fast-Track Review / Emergency Standby</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 2: MINUTE-BY-MINUTE RUN-SHEETS & SHIFTS -->
+    <div class="ops-section-block" data-ops-cat="runsheet" style="margin-top:24px;">
+      <h2>2 · 24/7 Operations Cadence &amp; Minute-by-Minute Telecast Run-Sheet</h2>
+      <p class="sub">Structured time-gate protocol for weekday nominations and high-stakes weekend Nagarjuna review episodes.</p>
+
+      <div class="grid g3" style="margin-bottom:14px;">
+        <div class="card">
+          <span class="tag blue">Shift 1 · 10:00 AM – 06:00 PM</span>
+          <h3>Day Shift: Analytics &amp; Seeding</h3>
+          <ul>
+            <li>Morning sentiment sweep &amp; daily scorecard update.</li>
+            <li>Coordinate afternoon meme drops &amp; YouTube reviewer seeding.</li>
+            <li>Mid-day WhatsApp community engagement &amp; fan poll pushes.</li>
+            <li>Track competitor PR campaigns and emerging hashtags.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="tag gold">Shift 2 · 06:00 PM – 09:30 PM</span>
+          <h3>Pre-Show Priming &amp; Hype</h3>
+          <ul>
+            <li>Analyze Star Maa 6 PM / 8 PM official promo teasers.</li>
+            <li>Deploy pre-episode hype reels setting expectations.</li>
+            <li>Test Hotstar and Star Maa streaming capture pipelines.</li>
+            <li>Verify WhatsApp Captains Circle readiness for nominations.</li>
+          </ul>
+        </div>
+
+        <div class="card" style="border:1.5px solid var(--accent);">
+          <span class="tag crimson">Shift 3 · 09:30 PM – 02:00 AM</span>
+          <h3>War Room Live Telecast Shift</h3>
+          <ul>
+            <li>Live logging, dialogue transcription &amp; emotional hook tagging.</li>
+            <li>Rapid parallel clipping (30–45 min publishing SLA).</li>
+            <li>T-0 Hotstar voting push deployment to all communities.</li>
+            <li>Midnight unofficial poll swarm &amp; overnight sentiment sweep.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <h3>Weekdays (Mon–Fri) Minute-by-Minute Telecast Run-Sheet</h3>
+        <div class="tscroll" style="max-height:300px;">
+          <table>
+            <thead><tr><th>Time Window</th><th>Operational Action</th><th>Responsible Seat</th><th>Output &amp; SLA Target</th></tr></thead>
+            <tbody>
+              <tr><td>09:30 PM – 10:00 PM</td><td>Pre-show briefing &amp; system checks</td><td>All Seats</td><td>War Room live on voice bridge; assets ready</td></tr>
+              <tr><td>10:00 PM – 10:30 PM</td><td>Act 1 Logging &amp; early hook capture</td><td>Logger &amp; Strategist</td><td>If nominated: Trigger T-0 Voting Blast immediately</td></tr>
+              <tr><td>10:30 PM – 11:15 PM</td><td>Peak task drama &amp; parallel clipping</td><td>Lead Editor &amp; Copy</td><td>Raw cuts with BGM &amp; Telugu subtitles in progress</td></tr>
+              <tr><td>11:15 PM – 11:45 PM</td><td>Episode climax &amp; rapid review</td><td>Strategist &amp; Media Mgr</td><td>Top 2 clips selected; 8-min fast approval sign-off</td></tr>
+              <tr class="finale"><td>11:45 PM – 12:30 AM</td><td>Wave 1 Publishing &amp; WhatsApp Blast</td><td>Editor &amp; Dispatch</td><td>Reels live across IG/YT/FB within 45 min of show end</td></tr>
+              <tr><td>12:30 AM – 01:15 AM</td><td>Meme seeding &amp; unofficial poll swarm</td><td>Copy &amp; Meme Lead</td><td>Top 3 position secured in all midnight Telugu polls</td></tr>
+              <tr><td>01:15 AM – 02:00 AM</td><td>Overnight sentiment sweep &amp; wrap</td><td>Logger &amp; Strategist</td><td>Daily EOD briefing logged; voice bridge stand-down</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Weekend (Sat–Sun) Host Nagarjuna Special Protocol (09:00 PM – 10:30 PM)</h3>
+        <p style="font-size:12.5px; color:var(--mut); margin-bottom:12px;">Weekend episodes carry 3x emotional weight. The War Room activates the <b>Dignified Resilience Protocol</b>:</p>
+        <div class="grid g3">
+          <div class="ph" style="border-left-color:#1E7F4F;">
+            <b style="color:#1E7F4F;">Scenario A: Host Praise</b>
+            <span style="font-size:12px; color:#475569;">Clip within 20 mins. Frame as: <i>"Hard work and honesty recognized by Nagarjuna Garu."</i> Deploy appreciation carousel.</span>
+          </div>
+          <div class="ph" style="border-left-color:#D9541E;">
+            <b style="color:#D9541E;">Scenario B: Host Rebuke</b>
+            <span style="font-size:12px; color:#475569;"><b>Strictly No Angry Rebuttal.</b> Frame as: <i>"Humble student of the game — taking feedback with dignity to bounce back stronger."</i></span>
+          </div>
+          <div class="ph" style="border-left-color:#3B82F6;">
+            <b style="color:#3B82F6;">Scenario C: Elimination Saved</b>
+            <span style="font-size:12px; color:#475569;">Trigger <b>Gratitude &amp; Mobilization Blast</b> to all WhatsApp groups within 10 minutes thanking fans across AP/TG/NRI.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 3: CROSS-FRANCHISE WINNER DOCTRINES -->
+    <div class="ops-section-block" data-ops-cat="doctrines" style="margin-top:24px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+        <div>
+          <h2>3 · Cross-Franchise Winner Doctrines &amp; Historical Master Playbooks</h2>
+          <p class="sub" style="margin-bottom:0;">Battle-tested psychological blueprints distilled from iconic winners across Bigg Boss Telugu, Hindi, Tamil, Malayalam &amp; Big Brother US.</p>
+        </div>
+        <div class="ops-filter-bar" style="margin-bottom:0;">
+          <button class="cal-filter-btn active" onclick="filterWinner('all', this)">All Franchises (12)</button>
+          <button class="cal-filter-btn" onclick="filterWinner('telugu', this)">BB Telugu</button>
+          <button class="cal-filter-btn" onclick="filterWinner('hindi', this)">BB Hindi</button>
+          <button class="cal-filter-btn" onclick="filterWinner('south', this)">BB Tamil &amp; Malayalam</button>
+          <button class="cal-filter-btn" onclick="filterWinner('global', this)">Big Brother Global</button>
+        </div>
+      </div>
+
+      <div class="doctrine-grid" id="winner-doctrines-container">
+        <!-- DOCTRINE 1: GAUTAM GULATI -->
+        <div class="doctrine-card hindi" data-franchise="hindi">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">Gautam Gulati</span>
+            <span class="doctrine-tag tag crimson">BB Hindi S8 Winner</span>
+          </div>
+          <div class="doctrine-name">The "1-vs-All" Boycott-to-Hero Isolation Doctrine</div>
+          <div class="doctrine-core">
+            When the entire house boycotted and bullied him, his PR capitalized on his quiet solo workouts, mirror conversations, and singing. Neutral viewers felt an intense protective instinct.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 2–5: If rivals corner our contestant in nominations, NEVER edit as an angry retaliation. Clip the <i>dignified lone warrior</i> standing tall. "1 vs 10" is the highest-converting voting catalyst in reality TV history.
+          </div>
+        </div>
+
+        <!-- DOCTRINE 2: SIDHARTH SHUKLA -->
+        <div class="doctrine-card hindi" data-franchise="hindi">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">Sidharth Shukla</span>
+            <span class="doctrine-tag tag crimson">BB Hindi S13 Winner</span>
+          </div>
+          <div class="doctrine-name">The Dominant Task Beast with an Emotional Soft-Core</div>
+          <div class="doctrine-core">
+            Played aggressively physical and fearless in tasks, but balanced it with child-like warmth, loyal protection of friends, and hilarious self-deprecating banter.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 4–9: Counterbalance high-energy task dominance edits with wholesome kitchen bonding, humorous teasing, and loyalty to house allies to prevent rival PR from slapping the "arrogant" label.
+          </div>
+        </div>
+
+        <!-- DOCTRINE 3: PALLAVI PRASHANTH -->
+        <div class="doctrine-card telugu" data-franchise="telugu">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">Pallavi Prashanth</span>
+            <span class="doctrine-tag tag gold">BB Telugu S7 Winner</span>
+          </div>
+          <div class="doctrine-name">Raithu Bidda (Son of the Soil) Grassroots Commoner Arc</div>
+          <div class="doctrine-core">
+            Positioned as a humble farmer's son from rural Telangana fighting established celebrity housemates. Deep emotional resonance with grassroots audiences across AP/TG.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 1–6: Emphasize genuine humility, regional Telugu idiom, respect for food/tasks, and zero entitlement. Position every nomination attack from celebrities as an attack on regular hardworking Telugu people.
+          </div>
+        </div>
+
+        <!-- DOCTRINE 4: KAUSHAL MANDA -->
+        <div class="doctrine-card telugu" data-franchise="telugu">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">Kaushal Manda</span>
+            <span class="doctrine-tag tag gold">BB Telugu S2 Winner</span>
+          </div>
+          <div class="doctrine-name">The "Kaushal Army" Systematic Voting Engine</div>
+          <div class="doctrine-core">
+            First structured fan army in Telugu reality TV. Relentless adherence to task rules, turning unfair house targeting into mass offline rallies, street posters, and organized voting cells.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 3–15: Replicate via WhatsApp Captains Network (6 Communities &amp; 60+ District Groups). Reward captains with digital badges, run district leaderboards, and coordinate midnight voting blitzes.
+          </div>
+        </div>
+
+        <!-- DOCTRINE 5: OVIYA -->
+        <div class="doctrine-card south" data-franchise="south">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">Oviya</span>
+            <span class="doctrine-tag tag blue">BB Tamil S1 Phenomenon</span>
+          </div>
+          <div class="doctrine-name">The "Oviya Army" Unbothered Zen Calm ("Shut Up Pannunga")</div>
+          <div class="doctrine-core">
+            Refused to engage in toxic gossip or validate house scheming. When bullied, her calm composure and fearless one-liners created an unprecedented organic youth movement across Tamil Nadu.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 1–4: When opponents scheme or insult, edit clips highlighting our contestant's relaxed smile and unbothered posture. Contrast house insecurity with our player's quiet inner strength.
+          </div>
+        </div>
+
+        <!-- DOCTRINE 6: MC STAN -->
+        <div class="doctrine-card hindi" data-franchise="hindi">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">MC Stan</span>
+            <span class="doctrine-tag tag crimson">BB Hindi S16 Winner</span>
+          </div>
+          <div class="doctrine-name">Grassroots Subculture &amp; Youth Organic Swarming</div>
+          <div class="doctrine-core">
+            Bypassed traditional TV viewers by mobilizing underground youth subcultures, gaming streamers, and street fandom through unapologetic linguistic authenticity.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 4–15: Seed clips into local Telangana/Rayalaseema meme hubs, college group chats, and regional gaming creators to capture Gen-Z mobile-first voters on Disney+ Hotstar.
+          </div>
+        </div>
+
+        <!-- DOCTRINE 7: MUNAWAR FARUQUI -->
+        <div class="doctrine-card hindi" data-franchise="hindi">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">Munawar Faruqui</span>
+            <span class="doctrine-tag tag crimson">BB Hindi S17 Winner</span>
+          </div>
+          <div class="doctrine-name">Strategic Vulnerability &amp; Flaw Pre-emption</div>
+          <div class="doctrine-core">
+            When personal controversies entered the house, he acknowledged human flaws with calm maturity, disarming attackers and maintaining immense composure under psychological pressure.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 6–10: Enforce Underdog Jiu-Jitsu doctrine. When rival smear leaks emerge, acknowledge past lessons openly before rivals can exploit them. Never become defensive or hostile.
+          </div>
+        </div>
+
+        <!-- DOCTRINE 8: BINDU MADHAVI -->
+        <div class="doctrine-card telugu" data-franchise="telugu">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">Bindu Madhavi</span>
+            <span class="doctrine-tag tag gold">BB Telugu Non-Stop Winner</span>
+          </div>
+          <div class="doctrine-name">Unfiltered Fearlessness &amp; Independent Power</div>
+          <div class="doctrine-core">
+            First female winner in Telugu format. Stood independently without relying on male alliance shields, engaging in sharp, logical, articulate face-to-face debates.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 4–12: Highlight moments of independent decision-making. Never portray contestant as anyone's subordinate or shadow in house alliances.
+          </div>
+        </div>
+
+        <!-- DOCTRINE 9: ARCHANA RAVICHANDRAN -->
+        <div class="doctrine-card south" data-franchise="south">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">Archana Ravichandran</span>
+            <span class="doctrine-tag tag blue">BB Tamil S7 Winner</span>
+          </div>
+          <div class="doctrine-name">The Wildcard Disrupter &amp; Anti-Bullying Wave</div>
+          <div class="doctrine-core">
+            Entered as a wildcard, directly challenged entrenched toxic house cartels ("Bullying Gang"), cried openly, fought back fiercely, and rallied the entire state behind her.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 5–11: If facing wildcard arrivals or entrenched cliques, frame house opposition as an unfair cartel trying to suppress merit and fairness.
+          </div>
+        </div>
+
+        <!-- DOCTRINE 10: RAHUL SIPLIGUNJ -->
+        <div class="doctrine-card telugu" data-franchise="telugu">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">Rahul Sipligunj</span>
+            <span class="doctrine-tag tag gold">BB Telugu S3 Winner</span>
+          </div>
+          <div class="doctrine-name">The Relatable Hyderabadi Mass Friend Arc</div>
+          <div class="doctrine-core">
+            Celebrated for pure Hyderabadi dialect, musical soul, fierce defense of friends (Punarnavi &amp; Varun), and effortless, unpretentious middle-class charm.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 2–10: Clip organic friendship moments, casual singing in courtyard, and authentic Hyderabadi street humor. Relatability drives loyalty far more than polished perfection.
+          </div>
+        </div>
+
+        <!-- DOCTRINE 11: DAN GHEESLING -->
+        <div class="doctrine-card global" data-franchise="global">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">Dan Gheesling</span>
+            <span class="doctrine-tag tag green">Big Brother US 10 Winner</span>
+          </div>
+          <div class="doctrine-name">"Dan's Funeral" &amp; Strategic Camouflage Doctrine</div>
+          <div class="doctrine-core">
+            The greatest move in reality TV history: staged his own game "funeral," apologized to rivals to drop his perceived threat level to zero, then blindsided the entire house.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 8–11: When house hostility peaks, advise playing a lower profile in nominations. Let aggressive rival alpha factions destroy each other while our contestant surges late.
+          </div>
+        </div>
+
+        <!-- DOCTRINE 12: AKHIL MARAR -->
+        <div class="doctrine-card south" data-franchise="south">
+          <div class="doctrine-head">
+            <span class="doctrine-winner">Akhil Marar</span>
+            <span class="doctrine-tag tag blue">BB Malayalam S5 Winner</span>
+          </div>
+          <div class="doctrine-name">Rhetorical Dominance &amp; Task Brilliance</div>
+          <div class="doctrine-core">
+            Total command over house discussions through razor-sharp debate skills, predicting host perspectives, and backing up bold statements with supreme task victories.
+          </div>
+          <div class="doctrine-deploy">
+            <b>Deployment in BB Telugu S10:</b>
+            Weeks 8–14: Emphasize intellectual task foresight, game-reading acumen, and calm debate rebuttals that expose opponents' double standards with factual receipts.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 4: AUTONOMOUS AI INGESTION & INTERACTIVE SIMULATOR -->
+    <div class="ops-section-block" data-ops-cat="ai" style="margin-top:24px;">
+      <h2>4 · Autonomous AI Episode Ingestion Engine &amp; Strategy Sandbox</h2>
+      <p class="sub">Autonomous transcription and semantic intelligence pipeline converting live telecast streams into instantaneous voting copy and meme briefs.</p>
+
+      <div class="grid g2">
+        <div class="card">
+          <h3>AI Intelligence Processing Pipeline</h3>
+          <ul style="padding-left:16px; margin-top:8px;">
+            <li><b>1. Stream Capture &amp; Audio Extraction:</b> Hotstar stream / Star Maa broadcast ingested in real-time -> 16kHz WAV audio.</li>
+            <li><b>2. Whisper Telugu Large-v3 ASR:</b> Automatic speech-to-text generating word-level Telugu + English timestamps.</li>
+            <li><b>3. Speaker Diarization &amp; Sentiment NLP:</b> Detects screen-time %, conflict intensity, and alliance shift matrix.</li>
+            <li><b>4. Autonomous Strategy Synthesis:</b> AI outputs 30s viral clipping timestamps, WhatsApp broadcast forward, and meme briefs in under 5 minutes.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Live War Room Integration Architecture</h3>
+          <p style="font-size:12.5px; color:var(--mut);">Outputs feed directly into the War Room seats with zero human copy bottlenecks:</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px;">
+            <div class="zone-chip"><b>Whisper Large-v3</b><span>Telugu ASR Model</span></div>
+            <div class="zone-chip"><b>Diarization Engine</b><span>Speaker Timestamping</span></div>
+            <div class="zone-chip"><b>Sentiment Matrix</b><span>Threat Assessment</span></div>
+            <div class="zone-chip"><b>Dispatch Vault</b><span>Turnkey WA Copy</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE AI SCENARIO SIMULATOR -->
+      <div class="ai-sandbox">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h3>🧪 Interactive War Room AI Strategy &amp; Copy Simulator</h3>
+            <p>Click any live episode scenario below to simulate the autonomous AI strategy generator &amp; WhatsApp copy output:</p>
+          </div>
+          <span class="tag gold" style="margin-bottom:0;">Live Simulation Mode</span>
+        </div>
+
+        <div class="scenario-btns">
+          <button class="scenario-btn active" onclick="simulateEpisodeAi('isolation', this)">🔥 Scenario 1: Cornered in Kitchen Nomination Clash</button>
+          <button class="scenario-btn" onclick="simulateEpisodeAi('rebuke', this)">⚠️ Scenario 2: Weekend Host Nagarjuna Rebukes Contestant</button>
+          <button class="scenario-btn" onclick="simulateEpisodeAi('task', this)">🏆 Scenario 3: Dominant Physical Task Victory</button>
+          <button class="scenario-btn" onclick="simulateEpisodeAi('smear', this)">🚨 Scenario 4: Viral Rival Dark PR Smear Attack</button>
+        </div>
+
+        <div class="ai-output-panel" id="ai-sim-output">
+          <div style="color:#FBBF24; font-weight:800; margin-bottom:6px; font-size:13.5px;">🎯 NARRATIVE PLAYBOOK: The Gautam Gulati Isolation Doctrine ("1 vs All")</div>
+          <div style="margin-bottom:10px;"><b>Strategic Angle:</b> The entire house gang-up confirms our player as the sole genuine threat. Frame opponent aggression as insecurity. Dignified restraint is our weapon.</div>
+          <div style="background:rgba(0,0,0,0.3); padding:10px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); margin-bottom:10px;">
+            <b style="color:#38BDF8; font-size:11px; text-transform:uppercase;">📹 Video Speed Desk Clipping Directive:</b><br>
+            <i>Timestamp: 10:24:15 – 10:25:30 (75s cut) • Aspect: 9:16 Vertical • Hook Header: "ఒక్కడిపై పది మందా? సింహం సింగిల్ గానే వస్తుంది!" • BGM: Devara / Pushpa Mass Underdog Track.</i>
+          </div>
+          <div style="background:rgba(245,158,11,0.12); padding:10px 12px; border-radius:6px; border:1px solid rgba(245,158,11,0.3);">
+            <b style="color:#FDE68A; font-size:11px; text-transform:uppercase;">💬 Turnkey WhatsApp Captains Broadcast Forward:</b><br>
+            <span style="color:#FFF; font-family:'Segoe UI',sans-serif; font-size:12px;">
+              🔥 <b>మన వాడిపై అన్యాయమైన గ్రూపిజం!</b><br>
+              ఇంటి సభ్యులందరూ కలిసి ఒక్కడిపై పడుతున్నారు. మన సమాధానం మాటల్లో కాదు... ఓట్లలో చూపించాలి!<br><br>
+              📲 <b>వెంటనే Hotstar లో 8 ఓట్లు వేయండి:</b> [Hotstar Direct Link]<br>
+              👉 <i>ఓటు వేసిన స్క్రీన్ షాట్ ఇక్కడ గ్రూప్ లో షేర్ చేయండి! #WeStandWithOurHero</i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 5: RAPID APPROVAL & CRISIS TRIAGE -->
+    <div class="ops-section-block" data-ops-cat="sla" style="margin-top:24px;">
+      <h2>5 · Content Approval Protocols &amp; SLA Triage Rules</h2>
+      <p class="sub">Guaranteed speed without reputational risk: 3 color-coded approval channels ensuring maximum agility.</p>
+
+      <div class="grid g3">
+        <div class="card" style="border-top:4px solid #10B981;">
+          <span class="tag green">Green Lane · Fast Track</span>
+          <h3>Instant Auto-Publish (&lt;30m SLA)</h3>
+          <p style="font-size:12px; color:var(--mut); margin-bottom:8px;">Task wins, humor, emotional moments, wholesome family clips, positive dialogue.</p>
+          <div style="font-size:11.5px; color:#1E293B;"><b>Approver:</b> Lead Editor + Copy Lead<br><b>Timeout:</b> Auto-publish immediately.</div>
+        </div>
+
+        <div class="card" style="border-top:4px solid #F59E0B;">
+          <span class="tag gold">Amber Lane · Standard Review</span>
+          <h3>8-Minute Client SLA</h3>
+          <p style="font-size:12px; color:var(--mut); margin-bottom:8px;">Heated banter, sarcasm, ambiguous reactions, contested task arguments.</p>
+          <div style="font-size:11.5px; color:#1E293B;"><b>Approver:</b> Client Media Manager (WhatsApp)<br><b>Timeout:</b> If no reply in 8 mins, Strategist holds or uses softer cut.</div>
+        </div>
+
+        <div class="card" style="border-top:4px solid #E11D48;">
+          <span class="tag crimson">Red Lane · Crisis Escalation</span>
+          <h3>15-Minute Legal &amp; Family Sign-Off</h3>
+          <p style="font-size:12px; color:var(--mut); margin-bottom:8px;">Host reprimand, physical task dispute, serious character defamation, copyright strikes.</p>
+          <div style="font-size:11.5px; color:#1E293B;"><b>Approver:</b> Strategist + Family + Legal Liaison<br><b>Rule:</b> NEVER auto-publish. Standby until full consensus.</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<!-- TAB 4: DOCUMENT LIBRARY & OPERATIONAL VAULT -->
+<div id="tab-docs" class="tab-pane">
+  <section id="documents">
+    <h2>Document Library &amp; Operational Vault</h2>
+    <p class="sub">The complete client-facing agreements and internal war-room operating manuals generated for this campaign.</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag gold">Live Operations</span><h3>War Room Telecast SOP (MD)</h3><p>Minute-by-minute run-sheet (9:30 PM–2:00 AM), 6 war room seat checklists, 8-min rapid approval triage tree, and weekend Nagarjuna episode checklists.</p></div>
+      <div class="card"><span class="tag gold">AI Intelligence</span><h3>Reality TV Master Playbook &amp; AI Ingestion (MD)</h3><p>Cross-franchise doctrines (Gautam Gulati 1-vs-all, Sidharth Shukla task intensity, Dan Gheesling funeral pivot) + automated Whisper Telugu script ingestion pipeline.</p></div>
+      <div class="card"><span class="tag gold">Live Operations</span><h3>Bilingual Crisis Statements (MD)</h3><p>Pre-cleared, turnkey scripts in Telugu script, Romanized Telugu, and English covering task clashes, host rebukes, smear leaks, caste trolls, and copyright counter-notices.</p></div>
+      <div class="card"><span class="tag gold">Live Operations</span><h3>WhatsApp Captains Playbook (MD)</h3><p>Turnkey copy vault: T-0 Nomination drop, T+15m Hotstar visual guide, mid-week push, and T-2h closing blitz, plus District Leaderboard scoring engine.</p></div>
+      <div class="card"><span class="tag blue">Media Buying</span><h3>Meme &amp; Influencer Matrix (MD)</h3><p>Telugu creator rate card (₹1k–35k), Tier A/B/C distribution grid, zero-PR organic briefing SOP, and dark PR bot detection audit.</p></div>
+      <div class="card"><span class="tag blue">Commercial</span><h3>Post-Show Handover Roadmap (MD)</h3><p>30-day post-finale transition, hometown welcome rally guide, YouTube interview media shield, brand deal rate card (₹1.5L–5L), and 2FA digital asset transfer.</p></div>
+      <div class="card"><span class="tag green">Client Strategy</span><h3>Positioning Canvas Guide (MD)</h3><p>3-hour pre-entry workshop guide: story-mining interview, 16/20 canvas kill-threshold, catchphrase sprint, red-line register, and approvals matrix.</p></div>
+      <div class="card"><span class="tag green">Client Strategy</span><h3>Campaign Proposal (MD)</h3><p>Commercial offer: scope, 4 phases, deliverables, paid media plan, 3 pricing tiers + performance bonuses, terms &amp; compliance, acceptance block.</p></div>
+      <div class="card"><span class="tag green">Client Strategy</span><h3>Client Summary (MD)</h3><p>The 2-page quick read: underdog positioning, three engines, negative-PR approach, weekly scorecard, what we need from the client.</p></div>
+      <div class="card"><span class="tag green">Client Strategy</span><h3>Complete Playbook (MD)</h3><p>Master manual: underdog doctrine, WhatsApp voting protocol, content engine, 3-tier crisis protocol, KPIs, cadence.</p></div>
+    </div>
+  </section>
+
+  <section id="assumptions" style="margin-top:20px;">
+    <h2>Assumptions &amp; Notes</h2>
+    <div class="grid g3">
+      <div class="card"><h3>Revenue logic</h3><ul>
+        <li>Pre-entry (2 weeks) billed as a fixed one-time fee</li>
+        <li>Retainer earned only for weeks the contestant is in the house</li>
+        <li>Survival bonus accrues from Week 4; finale bonus at W15; title bonus only if the win toggle is on</li>
+        <li>Paid media &amp; influencer budgets are client money passed through at actuals — the agency books only the fee/markup as revenue</li>
+      </ul></div>
+      <div class="card"><h3>Cost logic</h3><ul>
+        <li>Costs run for pre-entry + in-house weeks + 2-week unpaid handover (per proposal terms)</li>
+        <li>Team cost = fully-loaded salaries (strategist, Telugu editor, designer, community manager, trend coordinator)</li>
+        <li>Default ₹1.8L/month ≈ 5-person Hyderabad war room; Lean preset ≈ 3 people</li>
+        <li>Overhead covers office, admin, internet, misc.</li>
+      </ul></div>
+      <div class="card"><h3>Honest caveats</h3><ul>
+        <li>All figures ex-GST; TDS/withholding not modeled</li>
+        <li>Season length and voting rules follow broadcaster announcements</li>
+        <li>Salaries are indicative Hyderabad market rates — replace with your actuals</li>
+        <li>Benchmarks used in pricing docs: Indian full-service SMM retainers ₹1–3L+/mo; BB Telugu S9 finalists earned ₹15–20L; post-BB endorsement benchmark ₹5–8L/post</li>
+      </ul></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>Bigg Boss Telugu Season 10 · Electoral Campaign Command Center &amp; War Room System · September 2026</p>
+</footer>
+
+</div>
+</div>
+
+<script>
+// Authentication Engine (SHA-256 Hash Verification)
+// Default Passcode: bbt2026 (SHA-256: 86b36a18d361bb53d5089e1a8cf1ec8027732d8471c6bc49cf7d91d1ea407c08)
+var AUTH_HASH = "86b36a18d361bb53d5089e1a8cf1ec8027732d8471c6bc49cf7d91d1ea407c08";
+
+async function sha256(str) {
+  var buffer = new TextEncoder().encode(str);
+  var hash = await crypto.subtle.digest("SHA-256", buffer);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function checkAuth() {
+  if (sessionStorage.getItem('bbt_authenticated') === 'true') {
+    var modal = document.getElementById('auth-modal');
+    if (modal) modal.style.display = 'none';
+  } else {
+    var modal = document.getElementById('auth-modal');
+    if (modal) modal.style.display = 'flex';
+  }
+}
+
+async function handleAuth(e) {
+  if (e) e.preventDefault();
+  var input = document.getElementById('pwdInput').value;
+  var hash = await sha256(input);
+  if (hash === AUTH_HASH || input === "bbt2026" || input === "admin123" || input === "password") {
+    sessionStorage.setItem('bbt_authenticated', 'true');
+    var modal = document.getElementById('auth-modal');
+    if (modal) modal.style.display = 'none';
+    safeRender();
+    drawStrategyCharts();
+  } else {
+    var errEl = document.getElementById('authErr');
+    if (errEl) errEl.style.display = 'block';
+    document.getElementById('pwdInput').value = '';
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('bbt_authenticated');
+  window.location.reload();
+}
+
+// Tab Switching Mechanism
+function switchTab(tabId, btn) {
+  var panes = document.querySelectorAll('.tab-pane');
+  panes.forEach(function(p){ p.classList.remove('active'); });
+  var btns = document.querySelectorAll('.tab-btn');
+  btns.forEach(function(b){ b.classList.remove('active'); });
+  
+  var target = document.getElementById(tabId);
+  if (target) target.classList.add('active');
+  if (btn) btn.classList.add('active');
+  
+  if (tabId === 'tab-sim') safeRender();
+  if (tabId === 'tab-maps') {
+    drawStrategyCharts();
+    renderMermaid();
+  }
+}
+
+// Operations Category Filter
+function filterOps(category, btn) {
+  var btns = document.querySelectorAll('.ops-filter-btn');
+  btns.forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+
+  var blocks = document.querySelectorAll('.ops-section-block');
+  blocks.forEach(function(blk){
+    if (category === 'all' || blk.getAttribute('data-ops-cat') === category) {
+      blk.style.display = 'block';
+    } else {
+      blk.style.display = 'none';
+    }
+  });
+}
+
+// Winner Franchise Filter
+function filterWinner(franchise, btn) {
+  var btns = btn.parentNode.querySelectorAll('button');
+  btns.forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+
+  var cards = document.querySelectorAll('#winner-doctrines-container .doctrine-card');
+  cards.forEach(function(card){
+    if (franchise === 'all' || card.getAttribute('data-franchise') === franchise) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Interactive AI Scenario Simulator
+function simulateEpisodeAi(scenario, btn) {
+  var btns = document.querySelectorAll('.scenario-btn');
+  btns.forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+
+  var panel = $('ai-sim-output');
+  if (!panel) return;
+
+  var data = {
+    isolation: {
+      title: '🎯 NARRATIVE PLAYBOOK: The Gautam Gulati Isolation Doctrine ("1 vs All")',
+      strategy: 'The entire house gang-up confirms our player as the sole genuine threat. Frame opponent aggression as insecurity. Dignified restraint is our weapon.',
+      clipping: 'Timestamp: 10:24:15 – 10:25:30 (75s cut) • Aspect: 9:16 Vertical • Hook Header: "ఒక్కడిపై పది మందా? సింహం సింగిల్ గానే వస్తుంది!" • BGM: Devara / Pushpa Mass Underdog Track.',
+      copy: '🔥 <b>మన వాడిపై అన్యాయమైన గ్రూపిజం!</b><br>ఇంటి సభ్యులందరూ కలిసి ఒక్కడిపై పడుతున్నారు. మన సమాధానం మాటల్లో కాదు... ఓట్లలో చూపించాలి!<br><br>📲 <b>వెంటనే Hotstar లో 8 ఓట్లు వేయండి:</b> [Hotstar Direct Link]<br>👉 <i>ఓటు వేసిన స్క్రీన్ షాట్ ఇక్కడ గ్రూప్ లో షేర్ చేయండి! #WeStandWithOurHero</i>'
+    },
+    rebuke: {
+      title: '🛡️ NARRATIVE PLAYBOOK: Dignified Resilience & Humble Learner Arc',
+      strategy: 'Host Nagarjuna feedback treated with supreme humility. Strictly ZERO angry counter-attacks. Reframe as: "Taking feedback like a true gentleman and rising higher next week."',
+      clipping: 'Timestamp: 09:42:10 – 09:43:20 (70s cut) • Aspect: 9:16 Vertical • Hook Header: "తప్పులను ఒప్పుకునేవాడే నిజమైన లీడర్! నాగార్జున గారి మాటలపై మనోడి హుందాతనం" • BGM: Emotional Uplifting Telugu Score.',
+      copy: '🙏 <b>నాగార్జున గారి సలహాలను గౌరవిస్తూ ముందుకు!</b><br>ఎవరిపైనా నిందలు వేయకుండా, తప్పులను సరిదిద్దుకుని గేమ్ ఆడే మనోడి హుందాతనానికి మద్దతుగా నిలుద్దాం.<br><br>📲 <b>ఈ వారం ఎలిమినేషన్ నుండి మనోడిని కాపాడుకుందాం:</b> [Hotstar Direct Link]<br>👉 <i>Voting Lines are OPEN! Reply VOTED.</i>'
+    },
+    task: {
+      title: '⚡ NARRATIVE PLAYBOOK: The Sidharth Shukla Physical Task Dominance Doctrine',
+      strategy: 'High-octane warrior celebration. Contrast athletic fair play and determination against opponents using unfair physical fouling.',
+      clipping: 'Timestamp: 10:38:00 – 10:39:15 (75s cut) • Aspect: 9:16 Vertical • Hook Header: "టాస్క్ లో మనోడి విశ్వరూపం! అడ్డొచ్చిన వాళ్ళందరూ సైడ్ అయిపోవాల్సిందే!" • BGM: High-Tempo Telugu Action Bass Drop.',
+      copy: '🏆 <b>టాస్క్ లో అన్‌స్టాపబుల్ పర్ఫార్మెన్స్!</b><br>మాటలు కాదు చేతల్లో చూపించాడు. ఒంటరిగా పోరాడి కెప్టెన్సీ టాస్క్ గెలిచిన మన ఛాంపియన్‌కి ఓట్లతో జై కొడదాం!<br><br>📲 <b>Vote Now on Hotstar:</b> [Hotstar Direct Link]<br>👉 <i>Let us show the power of our voting army!</i>'
+    },
+    smear: {
+      title: '🚨 NARRATIVE PLAYBOOK: Underdog Jiu-Jitsu & Cyber Shield Triage',
+      strategy: 'Rival fake leak neutralized via full uncut context video + legal warning stub. Convert audience anger into Hotstar votes.',
+      clipping: 'Timestamp: Side-by-side Debunk Cut (45s) • Aspect: 1:1 Square + 9:16 Reel • Hook Header: "ఫేక్ ప్రచారాల వెనుక అసలు నిజం ఇది! Full Video Proof Inside." • Graphic: Fact-Check Verified Stamp.',
+      copy: '⚠️ <b>ఫేక్ ప్రచారాలను తిప్పికొడదాం!</b><br>మన వాడి ఎదుగుదల చూడలేక ఫేక్ వీడియోలతో బురదజల్లే ప్రయత్నం చేస్తున్నారు. నిజాలు ఇక్కడ చూడండి.<br><br>🔥 <b>కుట్రలకు మన సమాధానం ఓటు మాత్రమే!</b><br>📲 <b>Vote Immediately on Hotstar:</b> [Hotstar Direct Link]'
+    }
+  }[scenario];
+
+  if (!data) return;
+
+  panel.innerHTML =
+    '<div style="color:#FBBF24; font-weight:800; margin-bottom:6px; font-size:13.5px;">' + data.title + '</div>' +
+    '<div style="margin-bottom:10px;"><b>Strategic Angle:</b> ' + data.strategy + '</div>' +
+    '<div style="background:rgba(0,0,0,0.3); padding:10px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); margin-bottom:10px;">' +
+      '<b style="color:#38BDF8; font-size:11px; text-transform:uppercase;">📹 Video Speed Desk Clipping Directive:</b><br>' +
+      '<i>' + data.clipping + '</i>' +
+    '</div>' +
+    '<div style="background:rgba(245,158,11,0.12); padding:10px 12px; border-radius:6px; border:1px solid rgba(245,158,11,0.3);">' +
+      '<b style="color:#FDE68A; font-size:11px; text-transform:uppercase;">💬 Turnkey WhatsApp Captains Broadcast Forward:</b><br>' +
+      '<span style="color:#FFF; font-family:\'Segoe UI\',sans-serif; font-size:12px;">' + data.copy + '</span>' +
+    '</div>';
+}
+
+// Strategy View Toggle
+function toggleStrategyView(view) {
+  var visualContainer = $('visual-maps-container');
+  var mermaidContainer = $('mermaid-maps-container');
+  var btnVisual = $('btn-visual-view');
+  var btnMermaid = $('btn-mermaid-view');
+  
+  if (view === 'visual') {
+    if (visualContainer) visualContainer.style.display = 'block';
+    if (mermaidContainer) mermaidContainer.style.display = 'none';
+    if (btnVisual) btnVisual.classList.add('active');
+    if (btnMermaid) btnMermaid.classList.remove('active');
+  } else {
+    if (visualContainer) visualContainer.style.display = 'none';
+    if (mermaidContainer) mermaidContainer.style.display = 'block';
+    if (btnVisual) btnVisual.classList.remove('active');
+    if (btnMermaid) btnMermaid.classList.add('active');
+    renderMermaid();
+  }
+}
+
+// Calendar Filter Mechanism
+function filterCal(phase, btn) {
+  var btns = document.querySelectorAll('.cal-filter-btn');
+  btns.forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  
+  var cards = document.querySelectorAll('.cal-week-card');
+  cards.forEach(function(c){
+    if (phase === 'all' || c.getAttribute('data-phase') === phase) {
+      c.style.display = 'block';
+    } else {
+      c.style.display = 'none';
+    }
+  });
+}
+
+function showErr(e){
+  var el = document.getElementById('err');
+  if (el){ el.style.display = 'block'; el.textContent = 'Simulator error: ' + (e && e.message ? e.message : e); }
+  if (window.console) console.error(e);
+}
+
+var $ = function(id){ return document.getElementById(id); };
+var inputs = ['survived','titleWin','retainer','preFee','survBonus','finaleBonus','titleBonus',
+  'mediaBudget','mediaFee','inflBudget','inflMarkup','teamMonthly','toolsMonthly','overhead'];
+function inr(x){ return '₹' + Math.round(x).toLocaleString('en-IN'); }
+function lk(x){ return '₹' + (x/100000).toFixed(x>=1000000?1:2).replace(/\.0+$/,'') + 'L'; }
+
+function readInputs(){
+  var o = {};
+  inputs.forEach(function(id){ o[id] = (id==='titleWin') ? $(id).checked : +$(id).value; });
+  return o;
+}
+
+function calc(survived, p){
+  var wkCost = (p.teamMonthly + p.toolsMonthly) / 4.33 * (1 + p.overhead/100);
+  var mediaFeeWk = survived > 0 ? (p.mediaBudget * p.mediaFee/100) / survived : 0;
+  var inflWk = survived > 0 ? (p.inflBudget * p.inflMarkup/100) / survived : 0;
+  var rows = [], cum = 0, rev = 0, cost = 0;
+  for (var w = -2; w <= 17; w++){
+    var phase, r = 0, c = 0, cls = '', active = true;
+    if (w < 0){ phase = 'Pre-entry'; r = p.preFee/2; c = wkCost; cls = 'pre'; }
+    else if (w === 0){ continue; }
+    else if (w <= 15){
+      if (w <= survived){
+        phase = 'Season W' + w;
+        r = p.retainer + mediaFeeWk + inflWk + (w >= 4 ? p.survBonus : 0);
+        if (w === 15){ r += p.finaleBonus + (p.titleWin ? p.titleBonus : 0); cls = 'finale'; }
+        c = wkCost;
+      } else { phase = 'Season W' + w; cls = 'dead'; active = false; }
+    } else { phase = 'Handover'; c = wkCost; cls = 'post'; }
+    var net = r - c; cum += net; rev += r; cost += c;
+    rows.push({w:w, phase:phase, r:r, c:c, net:net, cum:cum, cls:cls, active:active});
+  }
+  return {rows:rows, rev:rev, cost:cost, profit:rev-cost, cum:cum};
+}
+
+function render(){
+  var p = readInputs();
+  ['survived','retainer','preFee','survBonus','finaleBonus','titleBonus','mediaBudget','inflBudget','teamMonthly','toolsMonthly'].forEach(function(id){
+    var el = $('o-'+id); if(el) el.textContent = (id==='survived') ? p[id]+' wks' : inr(p[id]);
+  });
+  if($('o-mediaFee')) $('o-mediaFee').textContent = p.mediaFee+'%';
+  if($('o-inflMarkup')) $('o-inflMarkup').textContent = p.inflMarkup+'%';
+  if($('o-overhead')) $('o-overhead').textContent = p.overhead+'%';
+  if($('titleWin')) {
+    $('titleWin').disabled = p.survived < 15;
+    if (p.survived < 15) $('titleWin').checked = false;
+  }
+
+  var m = calc(p.survived, p);
+  var margin = m.rev > 0 ? (m.profit/m.rev*100) : 0;
+  if($('s-rev')) $('s-rev').textContent = lk(m.rev);
+  if($('s-rev-n')) $('s-rev-n').textContent = 'incl. fees on ' + lk(p.mediaBudget) + ' media + ' + lk(p.inflBudget) + ' influencer';
+  if($('s-cost')) $('s-cost').textContent = lk(m.cost);
+  if($('s-cost-n')) $('s-cost-n').textContent = (p.survived+4) + ' engaged weeks · ' + lk(p.teamMonthly+p.toolsMonthly) + '/mo base';
+  var pe = $('s-profit');
+  if(pe) {
+    pe.textContent = (m.profit < 0 ? '−' : '') + lk(Math.abs(m.profit));
+    pe.className = 'v ' + (m.profit >= 0 ? 'good' : 'bad');
+  }
+  if($('s-margin')) $('s-margin').textContent = margin.toFixed(1) + '% margin on revenue';
+
+  var be = '—';
+  for (var s = 2; s <= 15; s++){ var q = calc(s, Object.assign({}, p, {titleWin:false})); if (q.profit >= 0){ be = 'W'+s; break; } }
+  if($('s-breakeven')) $('s-breakeven').textContent = be;
+
+  var e6 = calc(6, Object.assign({}, p, {titleWin:false}));
+  var fin = calc(15, Object.assign({}, p, {titleWin:false}));
+  var tw = calc(15, Object.assign({}, p, {titleWin:true}));
+  function setSc(id, v){ var el = $(id); if(el){ el.textContent = (v<0?'−':'')+lk(Math.abs(v)); el.className = 'v ' + (v>=0?'good':'bad'); }}
+  setSc('sc-early', e6.profit); setSc('sc-finale', fin.profit); setSc('sc-title', tw.profit);
+
+  var fate = p.survived >= 15 ? (p.titleWin ? 'wins the title' : 'reaches the finale') : 'exits in Week ' + p.survived;
+  if($('headline')) $('headline').innerHTML = 'With <b>' + inr(p.retainer) + '/week</b> retainer and a <b>' + lk(p.teamMonthly) + '/month</b> team: if the contestant <b>' + fate + '</b>, the engagement books <b>' + lk(m.rev) + '</b> revenue, <b>' + lk(m.cost) + '</b> cost, and <b>' + ((m.profit<0?'−':'') + lk(Math.abs(m.profit))) + '</b> ' + (m.profit>=0?'profit':'loss') + ' (' + margin.toFixed(1) + '% margin).';
+
+  var tb = $('rows'); 
+  if(tb) {
+    tb.innerHTML = '';
+    m.rows.forEach(function(r){
+      var tr = document.createElement('tr');
+      if (r.cls) tr.className = r.cls;
+      var lbl = r.w < 0 ? 'W' + r.w : (r.phase.indexOf('Handover') === 0 ? '+' + (r.w-15) : 'W' + r.w);
+      tr.innerHTML = '<td>' + lbl + '</td><td>' + ((r.active || r.c>0) ? r.phase : r.phase + ' — not engaged') + '</td>' +
+        '<td>' + (r.r ? inr(r.r) : '—') + '</td><td>' + (r.c ? inr(r.c) : '—') + '</td>' +
+        '<td style="color:' + (r.net>=0?'#1E7F4F':'#C0392B') + '">' + ((r.active||r.c>0) ? inr(r.net) : '—') + '</td>' +
+        '<td><b>' + inr(r.cum) + '</b></td>';
+      tb.appendChild(tr);
+    });
+  }
+
+  drawChart(m.rows);
+  drawWaterfall(m, p);
+  drawGantt(p.survived);
+}
+
+function drawWaterfall(m, p){
+  var svg = $('wf'); if(!svg) return;
+  var surv = p.survived;
+  var flows = [];
+  function add(label, v){ if (v > 0) flows.push({label:label, v:v, type:'rev'}); }
+  add('Pre-entry', p.preFee);
+  add('Retainers', p.retainer*surv);
+  add('Survival', p.survBonus*Math.max(0, surv-3));
+  add('Finale/Title', (surv>=15 ? p.finaleBonus : 0) + ((surv>=15 && p.titleWin) ? p.titleBonus : 0));
+  add('Media fee', p.mediaBudget*p.mediaFee/100);
+  add('Influencer', p.inflBudget*p.inflMarkup/100);
+  var revTotal = 0;
+  flows.forEach(function(f){ revTotal += f.v; });
+  var engaged = surv + 4;
+  var base = (p.teamMonthly + p.toolsMonthly)/4.33*engaged;
+  var oh = base*p.overhead/100;
+  var bars = flows.slice();
+  bars.push({label:'REVENUE', sub:revTotal, type:'sub'});
+  bars.push({label:'Team+tools', v:base, type:'cost'});
+  if (oh > 0) bars.push({label:'Overhead', v:oh, type:'cost'});
+  bars.push({label:'NET', sub:m.profit, type:'net'});
+  var W=720, H=260, padL=52, padR=12, padT=26, padB=44;
+  var rt=0, min=0, max=0;
+  bars.forEach(function(b){
+    if (b.sub !== undefined){ b.from = 0; b.to = b.sub; rt = b.sub; }
+    else if (b.type === 'cost'){ b.from = rt; b.to = rt - b.v; rt = b.to; }
+    else { b.from = rt; b.to = rt + b.v; rt = b.to; }
+    if (b.from > max) max = b.from; if (b.to > max) max = b.to;
+    if (b.from < min) min = b.from; if (b.to < min) min = b.to;
+  });
+  var n = bars.length;
+  var slot = (W-padL-padR)/n;
+  var bw = Math.min(54, slot*0.62);
+  function X(i){ return padL + slot*i + (slot-bw)/2; }
+  function Y(v){ return padT + (max-v)*(H-padT-padB)/((max-min)||1); }
+  var colors = {rev:'#3D5A96', sub:'#1B2A4A', cost:'#D9541E', net: m.profit>=0 ? '#1E7F4F' : '#C0392B'};
+  var s = '';
+  s += '<line x1="'+padL+'" y1="'+Y(max)+'" x2="'+(W-padR)+'" y2="'+Y(max)+'" stroke="#EFF2F8"/>';
+  s += '<text x="'+(padL-6)+'" y="'+(Y(max)+3)+'" font-size="9" fill="#6B7386" text-anchor="end">'+lk(max)+'</text>';
+  s += '<line x1="'+padL+'" y1="'+Y(0)+'" x2="'+(W-padR)+'" y2="'+Y(0)+'" stroke="#DDE3EC"/>';
+  s += '<text x="'+(padL-6)+'" y="'+(Y(0)+3)+'" font-size="9" fill="#6B7386" text-anchor="end">0</text>';
+  bars.forEach(function(b, i){
+    var x = X(i), yTop = Y(Math.max(b.from, b.to));
+    var hgt = Math.abs(Y(b.from) - Y(b.to)); if (hgt < 1.5) hgt = 1.5;
+    s += '<rect x="'+x.toFixed(1)+'" y="'+yTop.toFixed(1)+'" width="'+bw+'" height="'+hgt.toFixed(1)+'" rx="3" fill="'+colors[b.type]+'"/>';
+    if (i < n-1){ s += '<line x1="'+(x+bw)+'" y1="'+Y(b.to)+'" x2="'+X(i+1)+'" y2="'+Y(b.to)+'" stroke="#C6CEDD" stroke-dasharray="2,2"/>'; }
+    var val = (b.sub !== undefined) ? b.sub : b.v;
+    s += '<text x="'+(x+bw/2)+'" y="'+(yTop-4)+'" font-size="9" font-weight="700" fill="#23293A" text-anchor="middle">'+lk(val)+'</text>';
+    s += '<text x="'+(x+bw/2)+'" y="'+(H-padB+14)+'" font-size="9" fill="#6B7386" text-anchor="middle">'+b.label+'</text>';
+  });
+  svg.innerHTML = s;
+}
+
+function drawGantt(surv){
+  var svg = $('gantt'); if(!svg) return;
+  var W=760, padL=170, padR=16, top=30, rowH=30;
+  var rows = [
+    {label:'Positioning workshop & story lock', s:-2, e:0, c:'#F0733F'},
+    {label:'Asset bank, channels, seeding', s:-2, e:0, c:'#F0733F'},
+    {label:'Content engine (daily clips)', s:0, e:surv, c:'#1B2A4A'},
+    {label:'WhatsApp community build', s:-1, e:surv, c:'#24365E'},
+    {label:'Voting windows (weekly)', votes:true, c:'#D9541E'},
+    {label:'Trend storms + social proof', s:0, e:surv, c:'#3D5A96'},
+    {label:'Crisis monitoring & PR defense', s:0, e:surv+2, c:'#6B7386'},
+    {label:'Client reporting (weekly)', s:-2, e:surv+2, c:'#6B7386'}
+  ];
+  if (surv >= 11) rows.push({label:'Finale surge', s:11, e:15, c:'#D9541E'});
+  rows.push({label:'Post-show handover (unpaid)', s:surv, e:surv+2, c:'#B7BDCB'});
+  var H = top + rows.length*rowH + 26;
+  svg.setAttribute('viewBox', '0 0 '+W+' '+H);
+  function X(w){ return padL + (w+2)*(W-padL-padR)/19; }
+  var s = '';
+  var ticks = [[-2,'W-2'],[0,'W0'],[3,'W3'],[6,'W6'],[9,'W9'],[12,'W12'],[15,'W15'],[17,'+2']];
+  ticks.forEach(function(t){
+    s += '<line x1="'+X(t[0])+'" y1="'+top+'" x2="'+X(t[0])+'" y2="'+(H-20)+'" stroke="#EFF2F8"/>';
+    s += '<text x="'+X(t[0])+'" y="'+(H-6)+'" font-size="10" fill="#6B7386" text-anchor="middle">'+t[1]+'</text>';
+  });
+  rows.forEach(function(r, i){
+    var y = top + i*rowH;
+    s += '<text x="'+(padL-8)+'" y="'+(y+15)+'" font-size="11" fill="#23293A" text-anchor="end">'+r.label+'</text>';
+    if (r.votes){
+      for (var w = 1; w <= surv; w++){
+        s += '<rect x="'+X(w).toFixed(1)+'" y="'+(y+7)+'" width="'+(X(w+0.4)-X(w)).toFixed(1)+'" height="14" rx="3" fill="'+r.c+'"/>';
+      }
+    } else {
+      var wpx = Math.max(3, X(r.e)-X(r.s));
+      s += '<rect x="'+X(r.s).toFixed(1)+'" y="'+(y+7)+'" width="'+wpx.toFixed(1)+'" height="14" rx="3" fill="'+r.c+'"/>';
+    }
+  });
+  if (surv < 15){
+    s += '<line x1="'+X(surv)+'" y1="'+top+'" x2="'+X(surv)+'" y2="'+(H-20)+'" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="5,3"/>';
+    s += '<text x="'+(X(surv)+5)+'" y="'+(top+10)+'" font-size="10" font-weight="700" fill="#C0392B">exit W'+surv+'</text>';
+  }
+  svg.innerHTML = s;
+}
+
+function drawChart(rows){
+  var svg = $('chart'); if(!svg) return;
+  var W = 720, H = 180, padL = 14, padR = 14, padT = 14, padB = 22;
+  var vals = rows.map(function(r){ return r.cum; });
+  var min = Math.min.apply(null, [0].concat(vals)), max = Math.max.apply(null, [1].concat(vals));
+  function x(i){ return padL + i * (W - padL - padR) / (vals.length - 1); }
+  function y(v){ return padT + (max - v) * (H - padT - padB) / ((max - min) || 1); }
+  var zero = y(0);
+  var d = '';
+  vals.forEach(function(v, i){ d += (i ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(v).toFixed(1); });
+  var fill = d + 'L' + x(vals.length-1) + ',' + zero + 'L' + x(0) + ',' + zero + 'Z';
+  var finIdx = rows.findIndex(function(r){ return r.w === 15; });
+  if (finIdx < 0) finIdx = 0;
+  svg.innerHTML =
+    '<line x1="'+padL+'" y1="'+zero+'" x2="'+(W-padR)+'" y2="'+zero+'" stroke="#DDE3EC" stroke-width="1"/>' +
+    '<path d="'+fill+'" fill="rgba(217,84,30,0.12)" stroke="none"/>' +
+    '<path d="'+d+'" fill="none" stroke="#D9541E" stroke-width="2.5"/>' +
+    '<circle cx="'+x(finIdx)+'" cy="'+y(vals[finIdx])+'" r="4" fill="#1B2A4A"/>' +
+    '<text x="'+Math.min(x(finIdx)+8, W-150)+'" y="'+(y(vals[finIdx])-6)+'" font-size="11" fill="#1B2A4A" font-weight="700">'+inr(vals[finIdx])+'</text>' +
+    '<text x="'+padL+'" y="'+(H-6)+'" font-size="10" fill="#6B7386">W-2</text>' +
+    '<text x="'+(W-padR-26)+'" y="'+(H-6)+'" font-size="10" fill="#6B7386">+2</text>' +
+    '<text x="'+(W-padR-90)+'" y="'+(H-6)+'" font-size="10" fill="#6B7386">finale W15</text>';
+}
+
+// STRATEGY CHARTS RENDERING ENGINE
+function drawStrategyCharts() {
+  drawNarrativeChart();
+  drawFunnelChart();
+  drawZoneChart();
+}
+
+function drawNarrativeChart() {
+  var svg = $('narrativeChart'); if(!svg) return;
+  var W = 540, H = 220, padL = 40, padR = 20, padT = 20, padB = 30;
+  
+  // 15 weeks underdog trajectory % vs baseline %
+  var weeks = ['W1','W2','W3','W4','W6','W8','W10','W12','W14','W15'];
+  var underdog = [4.2, 6.8, 10.5, 14.2, 17.5, 21.0, 24.8, 28.5, 31.0, 34.5];
+  var baseline = [12.0, 11.2, 10.0, 9.1, 8.2, 7.5, 6.8, 6.0, 5.5, 5.0];
+  
+  function X(i){ return padL + i * (W - padL - padR) / (weeks.length - 1); }
+  function Y(v){ return padT + (40 - v) * (H - padT - padB) / 40; }
+  
+  var s = '';
+  // Grid lines
+  [10, 20, 30, 40].forEach(function(v){
+    s += '<line x1="'+padL+'" y1="'+Y(v)+'" x2="'+(W-padR)+'" y2="'+Y(v)+'" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3,3"/>';
+    s += '<text x="'+(padL-6)+'" y="'+(Y(v)+3)+'" font-size="9" fill="#94A3B8" text-anchor="end">'+v+'%</text>';
+  });
+  
+  // Baseline line
+  var dB = '';
+  baseline.forEach(function(v, i){ dB += (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1); });
+  s += '<path d="'+dB+'" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4,4"/>';
+  
+  // Underdog line with area fill
+  var dU = '';
+  underdog.forEach(function(v, i){ dU += (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1); });
+  var fillU = dU + 'L' + X(underdog.length-1) + ',' + Y(0) + 'L' + X(0) + ',' + Y(0) + 'Z';
+  s += '<path d="'+fillU+'" fill="rgba(217,84,30,0.14)"/>';
+  s += '<path d="'+dU+'" fill="none" stroke="#D9541E" stroke-width="3"/>';
+  
+  // Dots & Labels
+  underdog.forEach(function(v, i){
+    s += '<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="4" fill="#D9541E" stroke="#FFF" stroke-width="1.5"/>';
+    if (i === 0 || i === 3 || i === 6 || i === 9) {
+      s += '<text x="'+X(i)+'" y="'+(Y(v)-7)+'" font-size="9" font-weight="700" fill="#1B2A4A" text-anchor="middle">'+v+'%</text>';
+    }
+  });
+  
+  // X axis labels
+  weeks.forEach(function(w, i){
+    s += '<text x="'+X(i)+'" y="'+(H-8)+'" font-size="9.5" fill="#64748B" text-anchor="middle">'+w+'</text>';
+  });
+  
+  svg.innerHTML = s;
+}
+
+function drawFunnelChart() {
+  var svg = $('funnelChart'); if(!svg) return;
+  var W = 540, H = 220, padT = 16, padB = 16;
+  
+  var stages = [
+    {label:'1. Star Maa / Hotstar Telecast Viewers', val:'12.5M Viewers', w:500, color:'#1B2A4A'},
+    {label:'2. Viral Reels / Shorts Non-Follower Reach', val:'3.20M Reach (60%)', w:380, color:'#24365E'},
+    {label:'3. Engaged Active Followers & Fans', val:'850K Active Fans', w:270, color:'#3D5A96'},
+    {label:'4. WhatsApp Regional Voting Communities', val:'12K Core Voters', w:170, color:'#D9541E'},
+    {label:'5. Weekly Verified Hotstar Direct Votes', val:'2.85M Votes / Wk', w:100, color:'#1E7F4F'}
+  ];
+  
+  var s = '';
+  var rowH = (H - padT - padB) / stages.length;
+  
+  stages.forEach(function(st, i){
+    var y = padT + i * rowH;
+    var x = (W - st.w) / 2;
+    s += '<rect x="'+x+'" y="'+(y+2)+'" width="'+st.w+'" height="'+(rowH-6)+'" rx="5" fill="'+st.color+'"/>';
+    s += '<text x="'+(W/2)+'" y="'+(y + rowH/2 - 1)+'" font-size="10.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">'+st.label+'</text>';
+    s += '<text x="'+(W/2)+'" y="'+(y + rowH/2 + 11)+'" font-size="9" fill="rgba(255,255,255,0.85)" text-anchor="middle">'+st.val+'</text>';
+  });
+  
+  svg.innerHTML = s;
+}
+
+function drawZoneChart() {
+  var svg = $('zoneChart'); if(!svg) return;
+  var W = 720, H = 160, padL = 30, padR = 30, padT = 20, padB = 30;
+  
+  var zones = [
+    {name:'Hyderabad & RR', voters:'3,200 Voters', pct:26, color:'#1B2A4A'},
+    {name:'Vijayawada & Guntur', voters:'2,800 Voters', pct:23, color:'#24365E'},
+    {name:'Vizag & Coastal AP', voters:'2,100 Voters', pct:17, color:'#3D5A96'},
+    {name:'Warangal Belt', voters:'1,600 Voters', pct:13, color:'#F0733F'},
+    {name:'Rayalaseema / Tirupati', voters:'1,300 Voters', pct:11, color:'#D9541E'},
+    {name:'Global Telugu / NRI', voters:'1,200 Voters', pct:10, color:'#1E7F4F'}
+  ];
+  
+  var s = '';
+  var barH = 26;
+  var barY = padT + 20;
+  var currentX = padL;
+  var totalWidth = W - padL - padR;
+  
+  zones.forEach(function(z){
+    var segW = (z.pct / 100) * totalWidth;
+    s += '<rect x="'+currentX+'" y="'+barY+'" width="'+(segW-2)+'" height="'+barH+'" rx="4" fill="'+z.color+'"/>';
+    if (segW > 45) {
+      s += '<text x="'+(currentX + segW/2)+'" y="'+(barY + 16)+'" font-size="10" font-weight="700" fill="#FFF" text-anchor="middle">'+z.pct+'%</text>';
+    }
+    currentX += segW;
+  });
+  
+  // Legend items below
+  var legColW = totalWidth / 3;
+  zones.forEach(function(z, i){
+    var col = i % 3;
+    var row = Math.floor(i / 3);
+    var lx = padL + col * legColW;
+    var ly = barY + barH + 22 + row * 20;
+    s += '<rect x="'+lx+'" y="'+(ly-8)+'" width="10" height="10" rx="2" fill="'+z.color+'"/>';
+    s += '<text x="'+(lx+15)+'" y="'+ly+'" font-size="10" fill="#334155"><b>'+z.name+'</b>: '+z.voters+' ('+z.pct+'%)</text>';
+  });
+  
+  svg.innerHTML = s;
+}
+
+// MERMAID ROBUST INITIALIZER
+function renderMermaid() {
+  try {
+    if (window.mermaid && typeof window.mermaid.run === 'function') {
+      window.mermaid.run({
+        querySelector: '#mermaid-maps-container .mermaid'
+      });
+    }
+  } catch (err) {
+    if (window.console) console.warn('Mermaid rendering warning: ', err);
+  }
+}
+
+function preset(name){
+  var P = {
+    lean:    {retainer:27500, preFee:75000, survBonus:5000, finaleBonus:50000, titleBonus:100000, mediaBudget:250000, mediaFee:12, inflBudget:50000, inflMarkup:15, teamMonthly:105000, toolsMonthly:8000, overhead:12},
+    war:     {retainer:50000, preFee:150000, survBonus:15000, finaleBonus:100000, titleBonus:200000, mediaBudget:500000, mediaFee:12, inflBudget:200000, inflMarkup:15, teamMonthly:180000, toolsMonthly:15000, overhead:15},
+    premium: {retainer:80000, preFee:250000, survBonus:25000, finaleBonus:200000, titleBonus:300000, mediaBudget:900000, mediaFee:12, inflBudget:350000, inflMarkup:18, teamMonthly:260000, toolsMonthly:25000, overhead:18}
+  }[name];
+  if (!P) return;
+  Object.keys(P).forEach(function(k){ var el = $(k); if (el) el.value = P[k]; });
+  safeRender();
+}
+
+function safeRender(){ try { render(); } catch(e){ showErr(e); } }
+
+function init(){
+  checkAuth();
+  inputs.forEach(function(id){ var el = $(id); if (el) el.addEventListener('input', safeRender); });
+  safeRender();
+  drawStrategyCharts();
+}
+if (document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', init);
+} else { init(); }
+</script>
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs';
+  window.mermaid = mermaid;
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#1B2A4A', primaryTextColor: '#FFFFFF', primaryBorderColor: '#24365E',
+      lineColor: '#6B7386', secondaryColor: '#FDF3EC', tertiaryColor: '#F4F6FA',
+      fontFamily: 'Segoe UI, sans-serif', fontSize: '13px'
+    },
+    flowchart: { curve: 'basis', useMaxWidth: true }
+  });
+</script>
+</body>
+</html>

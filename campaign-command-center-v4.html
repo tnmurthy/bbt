@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bigg Boss Telugu S10 — Campaign Command Center & War Room</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23F59E0B'/%3E%3Cstop offset='50%25' stop-color='%23D9541E'/%3E%3Cstop offset='100%25' stop-color='%231B2A4A'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='46' fill='%23111827' stroke='url(%23g)' stroke-width='4'/%3E%3Cpath d='M20,50 Q50,20 80,50 Q50,80 20,50 Z' fill='none' stroke='%23F59E0B' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%23D9541E' stroke='%23FFF' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23FFF'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --navy:#1B2A4A; --navy2:#24365E; --accent:#D9541E; --accent2:#F0733F;
+    --bg:#F4F6FA; --card:#FFFFFF; --line:#DDE3EC; --ink:#23293A; --mut:#6B7386;
+    --good:#1E7F4F; --bad:#C0392B; --gold:#D97706; --gold-bg:#FEF3C7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--ink); line-height:1.5;}
+  header{background:linear-gradient(135deg,#0B1329 0%,#1B2A4A 60%,#24365E 100%); color:#fff; padding:26px 24px 22px; border-bottom:2px solid rgba(245,158,11,0.25);}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 20px;}
+  .header-flex{display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;}
+  .header-brand{display:flex; align-items:center; gap:16px;}
+  .brand-logo-svg{width:70px; height:70px; flex-shrink:0;}
+  header .kick{color:#FBBF24; font-weight:800; letter-spacing:1.5px; font-size:11.5px; text-transform:uppercase;}
+  header h1{font-size:26px; margin:3px 0 3px; font-weight:800; color:#FFFFFF;}
+  header p{color:#CBD5E1; font-size:13.5px; max-width:760px;}
+  nav{position:sticky; top:0; background:#0F1A30; z-index:10; border-top:1px solid rgba(255,255,255,.12);}
+  nav .wrap{display:flex; gap:4px; flex-wrap:wrap;}
+  nav a{color:#C7D0E4; text-decoration:none; padding:12px 16px; font-size:13.5px; font-weight:600;}
+  nav a:hover{color:#fff; background:rgba(255,255,255,.08);}
+  section{padding:34px 0 10px;}
+  h2{font-size:21px; color:var(--navy); margin-bottom:4px;}
+  .sub{color:var(--mut); font-size:13.5px; margin-bottom:18px;}
+  .grid{display:grid; gap:14px;}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(420px,1fr));}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px;}
+  .card h3{font-size:14.5px; color:var(--navy); margin-bottom:6px;}
+  .card p, .card li{font-size:13px; color:var(--mut);}
+  .card ul{padding-left:16px;}
+  .tag{display:inline-block; font-size:11px; font-weight:700; padding:2px 9px; border-radius:20px; background:#FDEBE2; color:var(--accent); margin-bottom:8px; text-transform:uppercase; letter-spacing:.5px;}
+  .tag.blue{background:#E4EAF6; color:var(--navy);}
+  .timeline{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-top:6px;}
+  .ph{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:8px; padding:12px;}
+  .ph b{display:block; font-size:12.5px; color:var(--navy);}
+  .ph span{font-size:11.5px; color:var(--mut);}
+  .sim{display:grid; grid-template-columns:340px 1fr; gap:18px; align-items:start;}
+  @media(max-width:900px){.sim{grid-template-columns:1fr;}}
+  .controls{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px;}
+  .controls h3{font-size:13px; color:var(--navy); text-transform:uppercase; letter-spacing:1px; margin:18px 0 8px; border-bottom:1px solid var(--line); padding-bottom:5px;}
+  .controls h3:first-child{margin-top:0;}
+  .ctl{margin-bottom:11px;}
+  .ctl label{display:flex; justify-content:space-between; font-size:12.5px; color:var(--ink); font-weight:600; margin-bottom:3px;}
+  .ctl label output{color:var(--accent); font-weight:700;}
+  .ctl input[type=range]{width:100%; accent-color:var(--accent); height:22px;}
+  .presets{display:flex; gap:6px; margin-bottom:6px;}
+  .presets button{flex:1; padding:8px 4px; font-size:12px; font-weight:700; border:1.5px solid var(--navy); background:#fff; color:var(--navy); border-radius:8px; cursor:pointer;}
+  .presets button:hover{background:var(--navy); color:#fff;}
+  .chk{display:flex; gap:8px; align-items:center; font-size:12.5px; font-weight:600; margin:6px 0;}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px;}
+  .stat .k{font-size:11.5px; color:var(--mut); text-transform:uppercase; letter-spacing:.6px; font-weight:700;}
+  .stat .v{font-size:22px; font-weight:800; color:var(--navy); margin-top:2px;}
+  .stat .v.good{color:var(--good);} .stat .v.bad{color:var(--bad);}
+  .stat .n{font-size:11.5px; color:var(--mut); margin-top:2px;}
+  .headline{background:var(--navy); color:#fff; border-radius:12px; padding:16px 18px; font-size:14px; margin-bottom:14px;}
+  .headline b{color:var(--accent2);}
+  table{width:100%; border-collapse:collapse; font-size:12.3px; background:#fff;}
+  th{background:var(--navy); color:#fff; text-align:right; padding:8px 9px; font-size:11.5px;}
+  th:first-child, td:first-child{text-align:left;}
+  td{padding:6px 9px; text-align:right; border-bottom:1px solid var(--line);}
+  tr.pre td{background:#FDF3EC;}
+  tr.post td{background:#F0F2F7; color:var(--mut);}
+  tr.dead td{color:#B7BDCB; background:#FAFBFD;}
+  tr.finale td{font-weight:700; background:#EAF6EF;}
+  .tscroll{max-height:460px; overflow:auto; border:1px solid var(--line); border-radius:12px;}
+  .legend{font-size:11.5px; color:var(--mut); margin-top:8px;}
+  .chip{display:inline-block; width:11px; height:11px; border-radius:3px; margin:0 4px 0 12px; vertical-align:-1px;}
+  footer{padding:26px 0 46px; color:var(--mut); font-size:12px;}
+  svg text{font-family:'Segoe UI',sans-serif;}
+  .mermaid{overflow-x:auto; padding:6px 0; font-size:13px; color:var(--mut);}
+  .mermaid svg{max-width:100%; height:auto;}
+  #err{display:none; background:#FDECEA; border:1px solid #F5C6C0; color:#8C2F22; border-radius:10px; padding:12px 14px; font-size:12.5px; margin-bottom:14px; white-space:pre-wrap;}
+  noscript div, .jsnote{background:#FFF7E6; border:1px solid #F0D9A8; color:#7A5B12; border-radius:10px; padding:12px 14px; font-size:12.5px; margin-bottom:14px;}
+  @media print{ nav,.controls,.presets{display:none;} .sim{grid-template-columns:1fr;} body{background:#fff;} section{padding:14px 0;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-flex">
+      <div class="header-brand">
+        <svg class="brand-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bbGoldGradV4" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FEF08A"/>
+              <stop offset="35%" stop-color="#F59E0B"/>
+              <stop offset="75%" stop-color="#EA580C"/>
+              <stop offset="100%" stop-color="#991B1B"/>
+            </linearGradient>
+            <radialGradient id="bbIrisGlowV4" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FDE047"/>
+              <stop offset="60%" stop-color="#F97316"/>
+              <stop offset="100%" stop-color="#0B1329"/>
+            </radialGradient>
+          </defs>
+          <path d="M6,50 Q50,10 94,50 Q50,90 6,50 Z" fill="#0B1329" stroke="url(#bbGoldGradV4)" stroke-width="4.5"/>
+          <circle cx="50" cy="50" r="26" fill="url(#bbIrisGlowV4)"/>
+          <circle cx="50" cy="50" r="18" fill="#0B1329" stroke="#FDE047" stroke-width="2"/>
+          <circle cx="50" cy="50" r="9" fill="#EA580C"/>
+          <circle cx="50" cy="50" r="4.5" fill="#FFFFFF"/>
+        </svg>
+        <div>
+          <div class="kick">బిగ్ బాస్ తెలుగు · Season 10 · [Contestant Name]</div>
+          <h1>బిగ్ బాస్ Telugu Campaign Command Center &amp; P&amp;L Simulator</h1>
+          <p>Full engagement portal: campaign plan, generated documents, and interactive 15-week profit &amp; loss model.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav><div class="wrap">
+  <a href="#overview">Overview</a>
+  <a href="#maps">Strategy Maps</a>
+  <a href="#simulator">P&amp;L Simulator</a>
+  <a href="#documents">Document Library</a>
+  <a href="#assumptions">Assumptions</a>
+</div></nav>
+
+<div class="wrap">
+
+<section id="overview">
+  <h2>Campaign at a Glance</h2>
+  <p class="sub">The engagement this P&amp;L models — underdog positioning, five channels, war-room cadence, WhatsApp voting machine.</p>
+  <div class="grid g4">
+    <div class="card"><span class="tag">Strategy</span><h3>People's Underdog</h3><p>Sympathy drives votes, pride drives recruitment. 7-beat season story arc from "Who is this?" to "One of us."</p></div>
+    <div class="card"><span class="tag">Core weapon</span><h3>WhatsApp Engine</h3><p>Channel &rarr; 6 regional Communities &rarr; district groups. Target: ~10,000 organized voters, 60+ captains by finale.</p></div>
+    <div class="card"><span class="tag">Channels</span><h3>IG · FB · YT · X · WA</h3><p>Reels within 60 min of telecast; FB mass reach; YT analysis ecosystem; X trend storms 2–3&times;/week.</p></div>
+    <div class="card"><span class="tag">Defense</span><h3>Crisis Protocol</h3><p>3-tier severity matrix, 2-hour T2 response, pre-approved holding statements, fan conduct code.</p></div>
+  </div>
+  <div class="timeline">
+    <div class="ph"><b>Pre-entry · W-2 to W0</b><span>Asset bank, channels, positioning workshop, community seeding</span></div>
+    <div class="ph"><b>Establish · W1–3</b><span>Story lock-in, follower base, first voting cycles</span></div>
+    <div class="ph"><b>Machine · W4–10</b><span>Scale communities, win polls, manage rival PR</span></div>
+    <div class="ph"><b>Surge · W11–15</b><span>Max vote volume, finale narrative, paid surge</span></div>
+    <div class="ph"><b>Handover · +2 wks</b><span>Gratitude arc, asset handover, brand roadmap (unpaid)</span></div>
+  </div>
+  <div class="card" style="margin-top:14px;">
+    <h3>Execution Gantt — 19-week engagement (responds to the survival slider)</h3>
+    <svg id="gantt" width="100%" height="340" viewBox="0 0 760 340" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+</section>
+
+<section id="maps">
+  <h2>Strategy Maps</h2>
+  <p class="sub">The operating model as diagrams. These render via the Mermaid CDN and need internet; the simulator and Gantt charts work fully offline.</p>
+  <div class="grid" style="grid-template-columns:1fr;">
+    <div class="card">
+      <h3>1 · The campaign flywheel — how an episode moment becomes votes</h3>
+      <pre class="mermaid">
+flowchart LR
+  EP["Episode moment airs"] --> CL["Clip live in 30-60 min"]
+  CL --> RE["Reach: Reels / Shorts / FB"]
+  RE --> FO["New follower"]
+  FO --> WA["Joins WhatsApp community"]
+  WA --> VO["Votes every window - replies VOTED"]
+  VO --> AD["Advocate: recruits 3 more"]
+  AD --> RE
+      </pre>
+    </div>
+    <div class="card">
+      <h3>2 · Underdog story arc — the seven beats of the season</h3>
+      <pre class="mermaid">
+flowchart LR
+  B1["W1 · Who is this?"] --> B2["W1-2 · Overlooked"]
+  B2 --> B3["W2-4 · First stand"]
+  B3 --> B4["W4-8 · Tested, never breaks"]
+  B4 --> B5["W6-10 · Respect earned"]
+  B5 --> B6["W9-13 · People's pick"]
+  B6 --> B7["W14-15 · One of us"]
+      </pre>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:14px;">
+    <div class="card">
+      <h3>3 · Campaign groups — WhatsApp voter architecture</h3>
+      <pre class="mermaid">
+flowchart TD
+  CH["WhatsApp Channel - public, unlimited"] --> C1["Hyderabad"]
+  CH --> C2["Vijayawada - Guntur"]
+  CH --> C3["Vizag - Uttarandhra"]
+  CH --> C4["Warangal belt"]
+  CH --> C5["Rayalaseema - Tirupati"]
+  CH --> C6["NRI / Global Telugu"]
+  C1 --> DG["District groups - 1,024 cap each"]
+  C2 --> DG
+  C3 --> DG
+  DG --> CAP["Captains Circle - broadcast lists of 256"]
+  CAP --> OPS["Agency war room"]
+      </pre>
+      <p>Each Community holds 2,000 members across up to 100 groups; six Communities ≈ 12,000 organized voters at full build.</p>
+    </div>
+    <div class="card">
+      <h3>4 · KPI tree — everything ladders to survival</h3>
+      <pre class="mermaid">
+flowchart TD
+  NS["NORTH STAR: survive every weekly elimination"]
+  NS --> R["Reach: over 60% non-follower reel reach"]
+  NS --> A["Audience: 10-20% weekly growth, weeks 1-3"]
+  NS --> E["Engagement: 4-8% nano tier, over 2.5% micro"]
+  NS --> C["Community: 50+ groups, VOTED replies per window"]
+  NS --> P["Proof: top-3 fan polls by W4, 2+ X trends per week"]
+  NS --> N["Narrative: over 70% positive, T2 reply under 2h"]
+      </pre>
+    </div>
+  </div>
+  <div class="grid" style="grid-template-columns:1fr; margin-top:14px;">
+    <div class="card">
+      <h3>5 · Crisis decision flow — negative PR triage</h3>
+      <pre class="mermaid">
+flowchart TD
+  SP["Negative spike detected - 2x the 7-day average"] --> Q{"Coordinated or mainstream?"}
+  Q -->|"No - troll noise"| T1["T1: starve it - block, report, document only"]
+  Q -->|"Yes - trending hashtag or viral clip"| T2["T2: full-context clip within 2h + positive trend flood + voting CTA intact"]
+  Q -->|"News coverage or serious allegation"| T3["T3: one official statement, legal review, all handles go quiet"]
+  T2 --> UJ["Underdog jiu-jitsu: reframe the attack as proof of the story"]
+  T3 --> UJ
+  UJ --> MO["Mobilize: channel fan anger into votes, not abuse"]
+      </pre>
+    </div>
+  </div>
+</section>
+
+<section id="simulator">
+  <h2>P&amp;L Simulator — Agency View, Full Engagement (up to 19 weeks)</h2>
+  <p class="sub">Revenue = retainers + fees + bonuses. Costs = team + tools + overhead. Paid media &amp; influencer spends are pass-through; the agency earns only the management fee / markup on them.</p>
+  <noscript><div><b>JavaScript is blocked in this viewer.</b> Download this file and open it directly in Chrome, Edge, or Firefox to use the simulator.</div></noscript>
+  <div class="jsnote"><b>Tip:</b> if the numbers below stay blank, your file preview is blocking scripts — download the file and open it directly in a browser.</div>
+  <div id="err"></div>
+
+  <div class="sim">
+    <div class="controls">
+      <h3>Presets</h3>
+      <div class="presets">
+        <button type="button" onclick="preset('lean')">Lean Ops</button>
+        <button type="button" onclick="preset('war')">Full War Room</button>
+        <button type="button" onclick="preset('premium')">Premium</button>
+      </div>
+
+      <h3>Engagement</h3>
+      <div class="ctl"><label>Weeks contestant survives <output id="o-survived"></output></label>
+        <input type="range" id="survived" min="2" max="15" step="1" value="15"></div>
+      <div class="chk"><input type="checkbox" id="titleWin"> <span>Title win (adds title bonus)</span></div>
+
+      <h3>Revenue</h3>
+      <div class="ctl"><label>Weekly retainer <output id="o-retainer"></output></label>
+        <input type="range" id="retainer" min="20000" max="120000" step="2500" value="50000"></div>
+      <div class="ctl"><label>Pre-entry fixed fee <output id="o-preFee"></output></label>
+        <input type="range" id="preFee" min="50000" max="400000" step="10000" value="150000"></div>
+      <div class="ctl"><label>Survival bonus / week (from W4) <output id="o-survBonus"></output></label>
+        <input type="range" id="survBonus" min="0" max="50000" step="2500" value="15000"></div>
+      <div class="ctl"><label>Finale bonus <output id="o-finaleBonus"></output></label>
+        <input type="range" id="finaleBonus" min="0" max="500000" step="25000" value="100000"></div>
+      <div class="ctl"><label>Title bonus <output id="o-titleBonus"></output></label>
+        <input type="range" id="titleBonus" min="0" max="500000" step="25000" value="200000"></div>
+
+      <h3>Managed budgets (pass-through)</h3>
+      <div class="ctl"><label>Paid media budget <output id="o-mediaBudget"></output></label>
+        <input type="range" id="mediaBudget" min="100000" max="1500000" step="50000" value="500000"></div>
+      <div class="ctl"><label>Media management fee % <output id="o-mediaFee"></output></label>
+        <input type="range" id="mediaFee" min="0" max="20" step="1" value="12"></div>
+      <div class="ctl"><label>Influencer budget <output id="o-inflBudget"></output></label>
+        <input type="range" id="inflBudget" min="0" max="600000" step="25000" value="200000"></div>
+      <div class="ctl"><label>Influencer markup % <output id="o-inflMarkup"></output></label>
+        <input type="range" id="inflMarkup" min="0" max="25" step="1" value="15"></div>
+
+      <h3>Costs</h3>
+      <div class="ctl"><label>Team cost / month <output id="o-teamMonthly"></output></label>
+        <input type="range" id="teamMonthly" min="60000" max="400000" step="5000" value="180000"></div>
+      <div class="ctl"><label>Tools &amp; software / month <output id="o-toolsMonthly"></output></label>
+        <input type="range" id="toolsMonthly" min="0" max="60000" step="2500" value="15000"></div>
+      <div class="ctl"><label>Overhead % on direct cost <output id="o-overhead"></output></label>
+        <input type="range" id="overhead" min="0" max="30" step="1" value="15"></div>
+    </div>
+
+    <div>
+      <div class="headline" id="headline">Loading simulator… if this text stays, your viewer blocked JavaScript — download and open in a browser.</div>
+      <div class="grid g4" style="margin-bottom:14px;">
+        <div class="stat"><div class="k">Total revenue</div><div class="v" id="s-rev">—</div><div class="n" id="s-rev-n"></div></div>
+        <div class="stat"><div class="k">Total cost</div><div class="v" id="s-cost">—</div><div class="n" id="s-cost-n"></div></div>
+        <div class="stat"><div class="k">Net profit</div><div class="v" id="s-profit">—</div><div class="n" id="s-margin"></div></div>
+        <div class="stat"><div class="k">Break-even</div><div class="v" id="s-breakeven">—</div><div class="n">earliest profitable week</div></div>
+      </div>
+      <div class="grid g3" style="margin-bottom:14px;">
+        <div class="stat"><div class="k">Scenario: out in W6</div><div class="v" id="sc-early">—</div><div class="n">retainer stops; 2-wk unpaid handover</div></div>
+        <div class="stat"><div class="k">Scenario: finale (W15)</div><div class="v" id="sc-finale">—</div><div class="n">all survival + finale bonuses</div></div>
+        <div class="stat"><div class="k">Scenario: title win</div><div class="v" id="sc-title">—</div><div class="n">finale + title bonus</div></div>
+      </div>
+      <div class="card" style="margin-bottom:14px;">
+        <h3>Financial waterfall — where the money comes from and goes</h3>
+        <svg id="wf" width="100%" height="260" viewBox="0 0 720 260" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+      <div class="card" style="margin-bottom:14px;">
+        <h3>Cumulative cash position by week</h3>
+        <svg id="chart" width="100%" height="180" viewBox="0 0 720 180" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="tscroll"><table>
+        <thead><tr><th>Week</th><th>Phase</th><th>Revenue</th><th>Cost</th><th>Net</th><th>Cumulative</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table></div>
+      <p class="legend">
+        <span class="chip" style="background:#FDF3EC;"></span>Pre-entry (fixed fee)
+        <span class="chip" style="background:#fff; border:1px solid #DDE3EC;"></span>Season (retainer + bonuses)
+        <span class="chip" style="background:#EAF6EF;"></span>Finale week
+        <span class="chip" style="background:#F0F2F7;"></span>Unpaid handover
+        <span class="chip" style="background:#FAFBFD; border:1px solid #E5E9F1;"></span>Not engaged (post-elimination)
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="documents">
+  <h2>Document Library — Everything Generated So Far</h2>
+  <p class="sub">The complete client-facing and internal artifact set for this engagement.</p>
+  <div class="grid g3">
+    <div class="card"><span class="tag blue">Client meeting</span><h3>Campaign Package (PDF, 24 pages)</h3><p>Branded compilation: proposal + client summary + complete playbook, with cover, contents, and part dividers. The leave-behind.</p></div>
+    <div class="card"><span class="tag blue">Client</span><h3>Campaign Proposal (MD)</h3><p>Commercial offer: scope, 4 phases, deliverables, paid media plan, 3 pricing tiers + performance bonuses, terms &amp; compliance, acceptance block.</p></div>
+    <div class="card"><span class="tag blue">Client</span><h3>Campaign Summary (MD)</h3><p>The 2-page quick read: underdog positioning, three engines, negative-PR approach, weekly scorecard, what we need from the client.</p></div>
+    <div class="card"><span class="tag blue">Client + team</span><h3>Complete Playbook (MD)</h3><p>Operating manual: underdog doctrine &amp; story arc, WhatsApp community engine (architecture, voting protocol, conduct code), content engine, 3-tier crisis protocol with holding statements, KPIs, cadence.</p></div>
+    <div class="card"><span class="tag">Media manager</span><h3>One-Pager (MD)</h3><p>Channel mix (IG/FB/YT/X/WA), investment tiers ₹60K–3L+/mo, and the return math: ₹15–20L in-show earnings protected + post-show brand economy. Positions us as growing the manager's book, not competing.</p></div>
+    <div class="card"><span class="tag">Week zero</span><h3>Positioning Workshop Guide (MD)</h3><p>3-hour session: story-mining interview, canvas drafting with 16/20 kill-threshold, catchphrase sprint, red-line register, skeleton audit, approvals matrix.</p></div>
+  </div>
+</section>
+
+<section id="assumptions">
+  <h2>Assumptions &amp; Notes</h2>
+  <div class="grid g3">
+    <div class="card"><h3>Revenue logic</h3><ul>
+      <li>Pre-entry (2 weeks) billed as a fixed one-time fee</li>
+      <li>Retainer earned only for weeks the contestant is in the house</li>
+      <li>Survival bonus accrues from Week 4; finale bonus at W15; title bonus only if the win toggle is on</li>
+      <li>Paid media &amp; influencer budgets are client money passed through at actuals — the agency books only the fee/markup as revenue</li>
+    </ul></div>
+    <div class="card"><h3>Cost logic</h3><ul>
+      <li>Costs run for pre-entry + in-house weeks + 2-week unpaid handover (per proposal terms)</li>
+      <li>Team cost = fully-loaded salaries (strategist, Telugu editor, designer, community manager, trend coordinator)</li>
+      <li>Default ₹1.8L/month ≈ 5-person Hyderabad war room; Lean preset ≈ 3 people</li>
+      <li>Overhead covers office, admin, internet, misc.</li>
+    </ul></div>
+    <div class="card"><h3>Honest caveats</h3><ul>
+      <li>All figures ex-GST; TDS/withholding not modeled</li>
+      <li>Season length and voting rules follow broadcaster announcements</li>
+      <li>Salaries are indicative Hyderabad market rates — replace with your actuals</li>
+      <li>Benchmarks used in pricing docs: Indian full-service SMM retainers ₹1–3L+/mo; BB Telugu S9 finalists (commoners) earned ₹15–20L; national post-BB endorsement benchmark ₹5–8L/post</li>
+    </ul></div>
+  </div>
+</section>
+
+<footer>
+  <p>[AGENCY NAME] · Internal planning tool + client-conversation aid · Placeholders in brackets pending final inputs · September 2026 · v4</p>
+</footer>
+
+</div>
+
+<script>
+function showErr(e){
+  var el = document.getElementById('err');
+  if (el){ el.style.display = 'block'; el.textContent = 'Simulator error: ' + (e && e.message ? e.message : e); }
+  if (window.console) console.error(e);
+}
+var $ = function(id){ return document.getElementById(id); };
+var inputs = ['survived','titleWin','retainer','preFee','survBonus','finaleBonus','titleBonus',
+  'mediaBudget','mediaFee','inflBudget','inflMarkup','teamMonthly','toolsMonthly','overhead'];
+function inr(x){ return '₹' + Math.round(x).toLocaleString('en-IN'); }
+function lk(x){ return '₹' + (x/100000).toFixed(x>=1000000?1:2).replace(/\.0+$/,'') + 'L'; }
+
+function readInputs(){
+  var o = {};
+  inputs.forEach(function(id){ o[id] = (id==='titleWin') ? $(id).checked : +$(id).value; });
+  return o;
+}
+
+function calc(survived, p){
+  var wkCost = (p.teamMonthly + p.toolsMonthly) / 4.33 * (1 + p.overhead/100);
+  var mediaFeeWk = survived > 0 ? (p.mediaBudget * p.mediaFee/100) / survived : 0;
+  var inflWk = survived > 0 ? (p.inflBudget * p.inflMarkup/100) / survived : 0;
+  var rows = [], cum = 0, rev = 0, cost = 0;
+  for (var w = -2; w <= 17; w++){
+    var phase, r = 0, c = 0, cls = '', active = true;
+    if (w < 0){ phase = 'Pre-entry'; r = p.preFee/2; c = wkCost; cls = 'pre'; }
+    else if (w === 0){ continue; }
+    else if (w <= 15){
+      if (w <= survived){
+        phase = 'Season W' + w;
+        r = p.retainer + mediaFeeWk + inflWk + (w >= 4 ? p.survBonus : 0);
+        if (w === 15){ r += p.finaleBonus + (p.titleWin ? p.titleBonus : 0); cls = 'finale'; }
+        c = wkCost;
+      } else { phase = 'Season W' + w; cls = 'dead'; active = false; }
+    } else { phase = 'Handover'; c = wkCost; cls = 'post'; }
+    var net = r - c; cum += net; rev += r; cost += c;
+    rows.push({w:w, phase:phase, r:r, c:c, net:net, cum:cum, cls:cls, active:active});
+  }
+  return {rows:rows, rev:rev, cost:cost, profit:rev-cost, cum:cum};
+}
+
+function render(){
+  var p = readInputs();
+  ['survived','retainer','preFee','survBonus','finaleBonus','titleBonus','mediaBudget','inflBudget','teamMonthly','toolsMonthly'].forEach(function(id){
+    $('o-'+id).textContent = (id==='survived') ? p[id]+' wks' : inr(p[id]);
+  });
+  $('o-mediaFee').textContent = p.mediaFee+'%';
+  $('o-inflMarkup').textContent = p.inflMarkup+'%';
+  $('o-overhead').textContent = p.overhead+'%';
+  $('titleWin').disabled = p.survived < 15;
+  if (p.survived < 15) $('titleWin').checked = false;
+
+  var m = calc(p.survived, p);
+  var margin = m.rev > 0 ? (m.profit/m.rev*100) : 0;
+  $('s-rev').textContent = lk(m.rev);
+  $('s-rev-n').textContent = 'incl. fees on ' + lk(p.mediaBudget) + ' media + ' + lk(p.inflBudget) + ' influencer';
+  $('s-cost').textContent = lk(m.cost);
+  $('s-cost-n').textContent = (p.survived+4) + ' engaged weeks · ' + lk(p.teamMonthly+p.toolsMonthly) + '/mo base';
+  var pe = $('s-profit');
+  pe.textContent = (m.profit < 0 ? '−' : '') + lk(Math.abs(m.profit));
+  pe.className = 'v ' + (m.profit >= 0 ? 'good' : 'bad');
+  $('s-margin').textContent = margin.toFixed(1) + '% margin on revenue';
+
+  var be = '—';
+  for (var s = 2; s <= 15; s++){ var q = calc(s, Object.assign({}, p, {titleWin:false})); if (q.profit >= 0){ be = 'W'+s; break; } }
+  $('s-breakeven').textContent = be;
+
+  var e6 = calc(6, Object.assign({}, p, {titleWin:false}));
+  var fin = calc(15, Object.assign({}, p, {titleWin:false}));
+  var tw = calc(15, Object.assign({}, p, {titleWin:true}));
+  function setSc(id, v){ var el = $(id); el.textContent = (v<0?'−':'')+lk(Math.abs(v)); el.className = 'v ' + (v>=0?'good':'bad'); }
+  setSc('sc-early', e6.profit); setSc('sc-finale', fin.profit); setSc('sc-title', tw.profit);
+
+  var fate = p.survived >= 15 ? (p.titleWin ? 'wins the title' : 'reaches the finale') : 'exits in Week ' + p.survived;
+  $('headline').innerHTML = 'With <b>' + inr(p.retainer) + '/week</b> retainer and a <b>' + lk(p.teamMonthly) + '/month</b> team: if the contestant <b>' + fate + '</b>, the engagement books <b>' + lk(m.rev) + '</b> revenue, <b>' + lk(m.cost) + '</b> cost, and <b>' + ((m.profit<0?'−':'') + lk(Math.abs(m.profit))) + '</b> ' + (m.profit>=0?'profit':'loss') + ' (' + margin.toFixed(1) + '% margin).';
+
+  var tb = $('rows'); tb.innerHTML = '';
+  m.rows.forEach(function(r){
+    var tr = document.createElement('tr');
+    if (r.cls) tr.className = r.cls;
+    var lbl = r.w < 0 ? 'W' + r.w : (r.phase.indexOf('Handover') === 0 ? '+' + (r.w-15) : 'W' + r.w);
+    tr.innerHTML = '<td>' + lbl + '</td><td>' + ((r.active || r.c>0) ? r.phase : r.phase + ' — not engaged') + '</td>' +
+      '<td>' + (r.r ? inr(r.r) : '—') + '</td><td>' + (r.c ? inr(r.c) : '—') + '</td>' +
+      '<td style="color:' + (r.net>=0?'#1E7F4F':'#C0392B') + '">' + ((r.active||r.c>0) ? inr(r.net) : '—') + '</td>' +
+      '<td><b>' + inr(r.cum) + '</b></td>';
+    tb.appendChild(tr);
+  });
+
+  drawChart(m.rows);
+  drawWaterfall(m, p);
+  drawGantt(p.survived);
+}
+
+function drawWaterfall(m, p){
+  var svg = $('wf'); if(!svg) return;
+  var surv = p.survived;
+  var flows = [];
+  function add(label, v){ if (v > 0) flows.push({label:label, v:v, type:'rev'}); }
+  add('Pre-entry', p.preFee);
+  add('Retainers', p.retainer*surv);
+  add('Survival', p.survBonus*Math.max(0, surv-3));
+  add('Finale/Title', (surv>=15 ? p.finaleBonus : 0) + ((surv>=15 && p.titleWin) ? p.titleBonus : 0));
+  add('Media fee', p.mediaBudget*p.mediaFee/100);
+  add('Influencer', p.inflBudget*p.inflMarkup/100);
+  var revTotal = 0;
+  flows.forEach(function(f){ revTotal += f.v; });
+  var engaged = surv + 4;
+  var base = (p.teamMonthly + p.toolsMonthly)/4.33*engaged;
+  var oh = base*p.overhead/100;
+  var bars = flows.slice();
+  bars.push({label:'REVENUE', sub:revTotal, type:'sub'});
+  bars.push({label:'Team+tools', v:base, type:'cost'});
+  if (oh > 0) bars.push({label:'Overhead', v:oh, type:'cost'});
+  bars.push({label:'NET', sub:m.profit, type:'net'});
+  var W=720, H=260, padL=52, padR=12, padT=26, padB=44;
+  var rt=0, min=0, max=0;
+  bars.forEach(function(b){
+    if (b.sub !== undefined){ b.from = 0; b.to = b.sub; rt = b.sub; }
+    else if (b.type === 'cost'){ b.from = rt; b.to = rt - b.v; rt = b.to; }
+    else { b.from = rt; b.to = rt + b.v; rt = b.to; }
+    if (b.from > max) max = b.from; if (b.to > max) max = b.to;
+    if (b.from < min) min = b.from; if (b.to < min) min = b.to;
+  });
+  var n = bars.length;
+  var slot = (W-padL-padR)/n;
+  var bw = Math.min(54, slot*0.62);
+  function X(i){ return padL + slot*i + (slot-bw)/2; }
+  function Y(v){ return padT + (max-v)*(H-padT-padB)/((max-min)||1); }
+  var colors = {rev:'#3D5A96', sub:'#1B2A4A', cost:'#D9541E', net: m.profit>=0 ? '#1E7F4F' : '#C0392B'};
+  var s = '';
+  s += '<line x1="'+padL+'" y1="'+Y(max)+'" x2="'+(W-padR)+'" y2="'+Y(max)+'" stroke="#EFF2F8"/>';
+  s += '<text x="'+(padL-6)+'" y="'+(Y(max)+3)+'" font-size="9" fill="#6B7386" text-anchor="end">'+lk(max)+'</text>';
+  s += '<line x1="'+padL+'" y1="'+Y(0)+'" x2="'+(W-padR)+'" y2="'+Y(0)+'" stroke="#DDE3EC"/>';
+  s += '<text x="'+(padL-6)+'" y="'+(Y(0)+3)+'" font-size="9" fill="#6B7386" text-anchor="end">0</text>';
+  bars.forEach(function(b, i){
+    var x = X(i), yTop = Y(Math.max(b.from, b.to));
+    var hgt = Math.abs(Y(b.from) - Y(b.to)); if (hgt < 1.5) hgt = 1.5;
+    s += '<rect x="'+x.toFixed(1)+'" y="'+yTop.toFixed(1)+'" width="'+bw+'" height="'+hgt.toFixed(1)+'" rx="3" fill="'+colors[b.type]+'"/>';
+    if (i < n-1){ s += '<line x1="'+(x+bw)+'" y1="'+Y(b.to)+'" x2="'+X(i+1)+'" y2="'+Y(b.to)+'" stroke="#C6CEDD" stroke-dasharray="2,2"/>'; }
+    var val = (b.sub !== undefined) ? b.sub : b.v;
+    s += '<text x="'+(x+bw/2)+'" y="'+(yTop-4)+'" font-size="9" font-weight="700" fill="#23293A" text-anchor="middle">'+lk(val)+'</text>';
+    s += '<text x="'+(x+bw/2)+'" y="'+(H-padB+14)+'" font-size="9" fill="#6B7386" text-anchor="middle">'+b.label+'</text>';
+  });
+  svg.innerHTML = s;
+}
+
+function drawGantt(surv){
+  var svg = $('gantt'); if(!svg) return;
+  var W=760, padL=170, padR=16, top=30, rowH=30;
+  var rows = [
+    {label:'Positioning workshop & story lock', s:-2, e:0, c:'#F0733F'},
+    {label:'Asset bank, channels, seeding', s:-2, e:0, c:'#F0733F'},
+    {label:'Content engine (daily clips)', s:0, e:surv, c:'#1B2A4A'},
+    {label:'WhatsApp community build', s:-1, e:surv, c:'#24365E'},
+    {label:'Voting windows (weekly)', votes:true, c:'#D9541E'},
+    {label:'Trend storms + social proof', s:0, e:surv, c:'#3D5A96'},
+    {label:'Crisis monitoring & PR defense', s:0, e:surv+2, c:'#6B7386'},
+    {label:'Client reporting (weekly)', s:-2, e:surv+2, c:'#6B7386'}
+  ];
+  if (surv >= 11) rows.push({label:'Finale surge', s:11, e:15, c:'#D9541E'});
+  rows.push({label:'Post-show handover (unpaid)', s:surv, e:surv+2, c:'#B7BDCB'});
+  var H = top + rows.length*rowH + 26;
+  svg.setAttribute('viewBox', '0 0 '+W+' '+H);
+  function X(w){ return padL + (w+2)*(W-padL-padR)/19; }
+  var s = '';
+  var ticks = [[-2,'W-2'],[0,'W0'],[3,'W3'],[6,'W6'],[9,'W9'],[12,'W12'],[15,'W15'],[17,'+2']];
+  ticks.forEach(function(t){
+    s += '<line x1="'+X(t[0])+'" y1="'+top+'" x2="'+X(t[0])+'" y2="'+(H-20)+'" stroke="#EFF2F8"/>';
+    s += '<text x="'+X(t[0])+'" y="'+(H-6)+'" font-size="10" fill="#6B7386" text-anchor="middle">'+t[1]+'</text>';
+  });
+  rows.forEach(function(r, i){
+    var y = top + i*rowH;
+    s += '<text x="'+(padL-8)+'" y="'+(y+15)+'" font-size="11" fill="#23293A" text-anchor="end">'+r.label+'</text>';
+    if (r.votes){
+      for (var w = 1; w <= surv; w++){
+        s += '<rect x="'+X(w).toFixed(1)+'" y="'+(y+7)+'" width="'+(X(w+0.4)-X(w)).toFixed(1)+'" height="14" rx="3" fill="'+r.c+'"/>';
+      }
+    } else {
+      var wpx = Math.max(3, X(r.e)-X(r.s));
+      s += '<rect x="'+X(r.s).toFixed(1)+'" y="'+(y+7)+'" width="'+wpx.toFixed(1)+'" height="14" rx="3" fill="'+r.c+'"/>';
+    }
+  });
+  if (surv < 15){
+    s += '<line x1="'+X(surv)+'" y1="'+top+'" x2="'+X(surv)+'" y2="'+(H-20)+'" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="5,3"/>';
+    s += '<text x="'+(X(surv)+5)+'" y="'+(top+10)+'" font-size="10" font-weight="700" fill="#C0392B">exit W'+surv+'</text>';
+  }
+  svg.innerHTML = s;
+}
+
+function drawChart(rows){
+  var svg = $('chart');
+  var W = 720, H = 180, padL = 14, padR = 14, padT = 14, padB = 22;
+  var vals = rows.map(function(r){ return r.cum; });
+  var min = Math.min.apply(null, [0].concat(vals)), max = Math.max.apply(null, [1].concat(vals));
+  function x(i){ return padL + i * (W - padL - padR) / (vals.length - 1); }
+  function y(v){ return padT + (max - v) * (H - padT - padB) / ((max - min) || 1); }
+  var zero = y(0);
+  var d = '';
+  vals.forEach(function(v, i){ d += (i ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(v).toFixed(1); });
+  var fill = d + 'L' + x(vals.length-1) + ',' + zero + 'L' + x(0) + ',' + zero + 'Z';
+  var finIdx = rows.findIndex(function(r){ return r.w === 15; });
+  if (finIdx < 0) finIdx = 0;
+  svg.innerHTML =
+    '<line x1="'+padL+'" y1="'+zero+'" x2="'+(W-padR)+'" y2="'+zero+'" stroke="#DDE3EC" stroke-width="1"/>' +
+    '<path d="'+fill+'" fill="rgba(217,84,30,0.12)" stroke="none"/>' +
+    '<path d="'+d+'" fill="none" stroke="#D9541E" stroke-width="2.5"/>' +
+    '<circle cx="'+x(finIdx)+'" cy="'+y(vals[finIdx])+'" r="4" fill="#1B2A4A"/>' +
+    '<text x="'+Math.min(x(finIdx)+8, W-150)+'" y="'+(y(vals[finIdx])-6)+'" font-size="11" fill="#1B2A4A" font-weight="700">'+inr(vals[finIdx])+'</text>' +
+    '<text x="'+padL+'" y="'+(H-6)+'" font-size="10" fill="#6B7386">W-2</text>' +
+    '<text x="'+(W-padR-26)+'" y="'+(H-6)+'" font-size="10" fill="#6B7386">+2</text>' +
+    '<text x="'+(W-padR-90)+'" y="'+(H-6)+'" font-size="10" fill="#6B7386">finale W15</text>';
+}
+
+function preset(name){
+  var P = {
+    lean:    {retainer:27500, preFee:75000, survBonus:5000, finaleBonus:50000, titleBonus:100000, mediaBudget:250000, mediaFee:12, inflBudget:50000, inflMarkup:15, teamMonthly:105000, toolsMonthly:8000, overhead:12},
+    war:     {retainer:50000, preFee:150000, survBonus:15000, finaleBonus:100000, titleBonus:200000, mediaBudget:500000, mediaFee:12, inflBudget:200000, inflMarkup:15, teamMonthly:180000, toolsMonthly:15000, overhead:15},
+    premium: {retainer:80000, preFee:250000, survBonus:25000, finaleBonus:200000, titleBonus:300000, mediaBudget:900000, mediaFee:12, inflBudget:350000, inflMarkup:18, teamMonthly:260000, toolsMonthly:25000, overhead:18}
+  }[name];
+  if (!P) return;
+  Object.keys(P).forEach(function(k){ var el = $(k); if (el) el.value = P[k]; });
+  safeRender();
+}
+
+function safeRender(){ try { render(); } catch(e){ showErr(e); } }
+
+function init(){
+  inputs.forEach(function(id){ var el = $(id); if (el) el.addEventListener('input', safeRender); });
+  safeRender();
+}
+if (document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', init);
+} else { init(); }
+</script>
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#1B2A4A', primaryTextColor: '#FFFFFF', primaryBorderColor: '#24365E',
+      lineColor: '#6B7386', secondaryColor: '#FDF3EC', tertiaryColor: '#F4F6FA',
+      fontFamily: 'Segoe UI, sans-serif', fontSize: '13px'
+    },
+    flowchart: { curve: 'basis', useMaxWidth: true }
+  });
+</script>
+</body>
+</html>
