@@ -151,8 +151,8 @@
 </section>
 
 <section id="maps">
-  <h2>Strategy Maps</h2>
-  <p class="sub">The operating model as diagrams. These render via the Mermaid CDN and need internet; the simulator and Gantt charts work fully offline.</p>
+  <h2>Strategy Maps &amp; Operating Flywheels</h2>
+  <p class="sub">Visual execution models: narrative flywheels, crisis decision trees, and voter architectures.</p>
   <div class="grid" style="grid-template-columns:1fr;">
     <div class="card">
       <h3>1 · The campaign flywheel — how an episode moment becomes votes</h3>
@@ -171,12 +171,12 @@ flowchart LR
       <h3>2 · Underdog story arc — the seven beats of the season</h3>
       <pre class="mermaid">
 flowchart LR
-  B1["W1 · Who is this?"] --> B2["W1-2 · Overlooked"]
-  B2 --> B3["W2-4 · First stand"]
-  B3 --> B4["W4-8 · Tested, never breaks"]
-  B4 --> B5["W6-10 · Respect earned"]
-  B5 --> B6["W9-13 · People's pick"]
-  B6 --> B7["W14-15 · One of us"]
+  B1["W1: Who is this?"] --> B2["W1-2: Overlooked"]
+  B2 --> B3["W2-4: First stand"]
+  B3 --> B4["W4-8: Tested, never breaks"]
+  B4 --> B5["W6-10: Respect earned"]
+  B5 --> B6["W9-13: People's pick"]
+  B6 --> B7["W14-15: One of us"]
       </pre>
     </div>
   </div>
@@ -185,31 +185,34 @@ flowchart LR
       <h3>3 · Campaign groups — WhatsApp voter architecture</h3>
       <pre class="mermaid">
 flowchart TD
-  CH["WhatsApp Channel - public, unlimited"] --> C1["Hyderabad"]
+  CH["WhatsApp Channel (Public, Unlimited)"] --> C1["Hyderabad and Ranga Reddy"]
   CH --> C2["Vijayawada - Guntur"]
   CH --> C3["Vizag - Uttarandhra"]
-  CH --> C4["Warangal belt"]
+  CH --> C4["Warangal Belt"]
   CH --> C5["Rayalaseema - Tirupati"]
   CH --> C6["NRI / Global Telugu"]
-  C1 --> DG["District groups - 1,024 cap each"]
+  C1 --> DG["District groups (1,024 cap each)"]
   C2 --> DG
   C3 --> DG
-  DG --> CAP["Captains Circle - broadcast lists of 256"]
-  CAP --> OPS["Agency war room"]
+  C4 --> DG
+  C5 --> DG
+  C6 --> DG
+  DG --> CAP["Captains Circle (Broadcast lists of 256)"]
+  CAP --> OPS["Agency War Room"]
       </pre>
-      <p>Each Community holds 2,000 members across up to 100 groups; six Communities ≈ 12,000 organized voters at full build.</p>
+      <p style="font-size:12px; color:var(--mut); margin-top:8px;">Each Community holds 2,000 members across up to 100 groups; six Communities ≈ 12,000 organized voters at full build.</p>
     </div>
     <div class="card">
       <h3>4 · KPI tree — everything ladders to survival</h3>
       <pre class="mermaid">
 flowchart TD
-  NS["NORTH STAR: survive every weekly elimination"]
-  NS --> R["Reach: over 60% non-follower reel reach"]
-  NS --> A["Audience: 10-20% weekly growth, weeks 1-3"]
+  NS["NORTH STAR: Survive every weekly elimination"]
+  NS --> R["Reach: Over 60% non-follower reel reach"]
+  NS --> A["Audience: 10-20% weekly growth (W1-3)"]
   NS --> E["Engagement: 4-8% nano tier, over 2.5% micro"]
   NS --> C["Community: 50+ groups, VOTED replies per window"]
-  NS --> P["Proof: top-3 fan polls by W4, 2+ X trends per week"]
-  NS --> N["Narrative: over 70% positive, T2 reply under 2h"]
+  NS --> P["Proof: Top-3 fan polls by W4, 2+ X trends per week"]
+  NS --> N["Narrative: Over 70% positive, T2 reply under 2h"]
       </pre>
     </div>
   </div>
@@ -218,13 +221,13 @@ flowchart TD
       <h3>5 · Crisis decision flow — negative PR triage</h3>
       <pre class="mermaid">
 flowchart TD
-  SP["Negative spike detected - 2x the 7-day average"] --> Q{"Coordinated or mainstream?"}
-  Q -->|"No - troll noise"| T1["T1: starve it - block, report, document only"]
-  Q -->|"Yes - trending hashtag or viral clip"| T2["T2: full-context clip within 2h + positive trend flood + voting CTA intact"]
-  Q -->|"News coverage or serious allegation"| T3["T3: one official statement, legal review, all handles go quiet"]
-  T2 --> UJ["Underdog jiu-jitsu: reframe the attack as proof of the story"]
+  SP["Negative spike detected: 2x 7-day average"] --> Q{"Coordinated or Mainstream?"}
+  Q -->|No: Troll Noise| T1["T1: Starve it - Block, report, document only"]
+  Q -->|Yes: Trending Misinformation| T2["T2: Full-context clip within 2h and positive trend flood"]
+  Q -->|Yes: News or Serious Allegation| T3["T3: One official statement, legal review, hold fire"]
+  T2 --> UJ["Underdog Jiu-Jitsu: Reframe attack as proof of threat"]
   T3 --> UJ
-  UJ --> MO["Mobilize: channel fan anger into votes, not abuse"]
+  UJ --> MO["Mobilize: Channel fan anger into votes, not abuse"]
       </pre>
     </div>
   </div>
