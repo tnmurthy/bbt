@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BB Telugu 10 Threat Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+Telugu:wght@400;600&display=swap">
+<style>
+:root{
+  --paper:#faf8f4; --surface:#ffffff; --surface-2:#f2efe8; --surface-3:#eae5db;
+  --line:#e2ddd2; --line-strong:#cfc8ba;
+  --text:#16151a; --text-2:#5d574c; --text-3:#8b8377;
+  --accent:#c8781a; --accent-soft:#f6e6ce;
+  --t1:#b8402c; --t1-soft:#f7e2dd;
+  --t2:#a8761a; --t2-soft:#f8ecd4;
+  --t3:#3f7186; --t3-soft:#dfeaef;
+  --ours:#2b7a5e; --ours-soft:#dcefe6;
+  --shadow:0 1px 2px rgba(22,21,26,.05), 0 8px 24px -16px rgba(22,21,26,.25);
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+  --telugu:"Noto Sans Telugu","Nirmala UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131319; --surface:#1b1b23; --surface-2:#22222c; --surface-3:#2a2a35;
+    --line:#33333f; --line-strong:#454553;
+    --text:#f1eee7; --text-2:#a9a496; --text-3:#7a7568;
+    --accent:#e8a83c; --accent-soft:#3a2e17;
+    --t1:#e2705a; --t1-soft:#3b201a;
+    --t2:#dbab45; --t2-soft:#3a2f13;
+    --t3:#74a8bd; --t3-soft:#1c2c33;
+    --ours:#4fb894; --ours-soft:#16302a;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131319; --surface:#1b1b23; --surface-2:#22222c; --surface-3:#2a2a35;
+  --line:#33333f; --line-strong:#454553;
+  --text:#f1eee7; --text-2:#a9a496; --text-3:#7a7568;
+  --accent:#e8a83c; --accent-soft:#3a2e17;
+  --t1:#e2705a; --t1-soft:#3b201a;
+  --t2:#dbab45; --t2-soft:#3a2f13;
+  --t3:#74a8bd; --t3-soft:#1c2c33;
+  --ours:#4fb894; --ours-soft:#16302a;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--text);
+  font-family:var(--body); font-size:15px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding:0 22px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:3px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important; animation:none!important}}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--line); background:var(--surface)}
+.mast-in{display:flex; flex-wrap:wrap; gap:20px; align-items:flex-end; justify-content:space-between; padding:26px 0 20px}
+.eyebrow{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent); margin:0 0 8px;
+}
+h1{
+  font-family:var(--display); font-weight:800; font-size:clamp(30px,5.2vw,46px);
+  line-height:1.02; letter-spacing:-.022em; margin:0; text-wrap:balance;
+}
+h1 .sub{display:block; font-weight:500; font-size:.44em; letter-spacing:-.005em; color:var(--text-2); margin-top:10px}
+.countdown{
+  flex:0 0 auto; text-align:right; border-left:2px solid var(--accent); padding-left:16px;
+}
+.countdown .n{font-family:var(--display); font-weight:800; font-size:40px; line-height:1; letter-spacing:-.03em; font-variant-numeric:tabular-nums}
+.countdown .l{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-2); display:block; margin-top:6px}
+
+/* ---------- fact bar ---------- */
+.facts{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr));
+  border-top:1px solid var(--line); background:var(--surface-2);
+}
+.fact{padding:12px 22px; border-right:1px solid var(--line)}
+.fact:last-child{border-right:0}
+.fact dt{font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3); margin:0 0 3px}
+.fact dd{margin:0; font-weight:600; font-size:14px}
+.facts-outer{border-bottom:1px solid var(--line); background:var(--surface-2)}
+.facts-outer .wrap{padding:0}
+
+/* ---------- tabs ---------- */
+.tabrail{position:sticky; top:0; z-index:20; background:var(--paper); border-bottom:1px solid var(--line)}
+.tabs{display:flex; gap:2px; overflow-x:auto; scrollbar-width:thin; padding:0}
+.tab{
+  appearance:none; background:none; border:0; border-bottom:2px solid transparent;
+  font-family:var(--body); font-weight:600; font-size:13.5px; color:var(--text-3);
+  padding:14px 15px; cursor:pointer; white-space:nowrap; transition:color .15s, border-color .15s;
+}
+.tab:hover{color:var(--text)}
+.tab[aria-selected="true"]{color:var(--text); border-bottom-color:var(--accent)}
+.tab .cnt{font-family:var(--mono); font-size:10.5px; color:var(--text-3); margin-left:6px}
+
+/* ---------- panels ---------- */
+.panel{padding:34px 0 72px}
+.panel[hidden]{display:none!important}
+h2{
+  font-family:var(--display); font-weight:700; font-size:23px; letter-spacing:-.018em;
+  margin:0 0 6px; text-wrap:balance;
+}
+h3{font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:-.012em; margin:0 0 6px}
+.lede{color:var(--text-2); max-width:64ch; margin:0 0 26px}
+.sec{margin-top:40px}
+.sec:first-child{margin-top:0}
+.kicker{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 10px;
+}
+
+/* thesis */
+.thesis{
+  border-left:3px solid var(--accent); background:var(--accent-soft);
+  padding:20px 22px; border-radius:0 6px 6px 0; margin-bottom:30px;
+}
+.thesis p{margin:0; font-family:var(--display); font-weight:500; font-size:19px; line-height:1.4; letter-spacing:-.012em; text-wrap:balance}
+.thesis p + p{margin-top:12px; font-family:var(--body); font-size:14.5px; font-weight:400; color:var(--text-2); letter-spacing:0}
+
+/* tables */
+.tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:640px}
+thead th{
+  font-family:var(--mono); font-size:10px; letter-spacing:.11em; text-transform:uppercase;
+  color:var(--text-3); text-align:left; font-weight:500;
+  padding:11px 14px; border-bottom:1px solid var(--line-strong); background:var(--surface-2);
+  position:sticky; top:0;
+}
+tbody td{padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.num,th.num{font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--text-3); width:1%; white-space:nowrap}
+td strong{font-weight:600}
+.won{color:var(--ours); font-weight:600}
+
+/* chips */
+.chip{
+  display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:.07em;
+  text-transform:uppercase; padding:2.5px 7px; border-radius:3px; font-weight:500; white-space:nowrap;
+}
+.chip.t1{background:var(--t1-soft); color:var(--t1)}
+.chip.t2{background:var(--t2-soft); color:var(--t2)}
+.chip.t3{background:var(--t3-soft); color:var(--t3)}
+.chip.open{background:var(--ours-soft); color:var(--ours)}
+.chip.rumour{background:var(--surface-3); color:var(--text-3)}
+
+/* laws */
+.laws{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.law{background:var(--surface); padding:18px 20px; display:grid; grid-template-columns:auto 1fr; gap:18px; align-items:start}
+.law .idx{font-family:var(--mono); font-size:11px; color:var(--accent); font-weight:600; padding-top:3px}
+.law h3{margin-bottom:4px}
+.law p{margin:0; color:var(--text-2); font-size:14px}
+.law .ev{display:block; margin-top:7px; font-family:var(--mono); font-size:11.5px; color:var(--text-3)}
+
+/* lanes */
+.lanes{display:grid; gap:10px}
+.lane{
+  display:grid; grid-template-columns:210px 1fr auto; gap:16px; align-items:center;
+  background:var(--surface); border:1px solid var(--line); border-radius:7px; padding:13px 16px;
+}
+.lane.pick{border-color:var(--ours); background:var(--ours-soft)}
+.lane .nm{font-weight:600}
+.lane .oc{color:var(--text-2); font-size:13.5px}
+@media (max-width:720px){.lane{grid-template-columns:1fr; gap:6px}}
+
+/* blocs */
+.bloc{
+  border:1px solid var(--line); border-left:4px solid var(--line-strong);
+  border-radius:0 8px 8px 0; background:var(--surface); margin-bottom:14px; overflow:hidden;
+}
+.bloc.t1{border-left-color:var(--t1)}
+.bloc.t2{border-left-color:var(--t2)}
+.bloc.t3{border-left-color:var(--t3)}
+.bloc > summary{
+  list-style:none; cursor:pointer; padding:16px 20px;
+  display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+}
+.bloc > summary::-webkit-details-marker{display:none}
+.bloc > summary:hover{background:var(--surface-2)}
+.bloc summary .name{font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:-.012em; flex:1 1 220px}
+.bloc summary .who{font-size:12.5px; color:var(--text-3); flex:2 1 300px}
+.bloc summary .mk{font-family:var(--mono); font-size:11px; color:var(--text-3)}
+.bloc[open] summary .mk::after{content:"  ▲"}
+.bloc:not([open]) summary .mk::after{content:"  ▼"}
+.bloc-body{padding:4px 20px 22px; border-top:1px solid var(--line)}
+.roster{
+  font-family:var(--mono); font-size:11.5px; color:var(--text-2);
+  background:var(--surface-2); border-radius:5px; padding:9px 12px; margin:16px 0 20px; line-height:1.7;
+}
+.split{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--line); border-radius:7px; overflow:hidden}
+.split > div{padding:15px 17px}
+.split > div:first-child{border-right:1px solid var(--line); background:var(--t1-soft)}
+.split > div:last-child{background:var(--ours-soft)}
+.split h4{margin:0 0 9px; font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; font-weight:500}
+.split > div:first-child h4{color:var(--t1)}
+.split > div:last-child h4{color:var(--ours)}
+.split ul{margin:0; padding-left:17px; font-size:13.5px; color:var(--text-2)}
+.split li + li{margin-top:6px}
+@media (max-width:720px){.split{grid-template-columns:1fr} .split > div:first-child{border-right:0; border-bottom:1px solid var(--line)}}
+.play{margin-top:18px; display:grid; gap:12px}
+.playrow{display:grid; grid-template-columns:132px 1fr; gap:16px; font-size:13.5px}
+.playrow dt{font-family:var(--mono); font-size:10px; letter-spacing:.11em; text-transform:uppercase; color:var(--text-3); padding-top:3px}
+.playrow dd{margin:0; color:var(--text-2)}
+.playrow dd em{font-style:normal; color:var(--text); font-weight:500}
+@media (max-width:600px){.playrow{grid-template-columns:1fr; gap:3px}}
+.dont{
+  margin-top:16px; border:1px dashed var(--t1); border-radius:6px; padding:11px 14px;
+  font-size:13.5px; color:var(--text-2); background:transparent;
+}
+.dont b{color:var(--t1); font-family:var(--mono); font-size:10px; letter-spacing:.11em; text-transform:uppercase; display:block; margin-bottom:4px}
+
+/* timeline */
+.tl{display:grid; gap:0; border-left:2px solid var(--line); margin-left:8px}
+.tl-item{position:relative; padding:0 0 30px 26px}
+.tl-item:last-child{padding-bottom:4px}
+.tl-item::before{
+  content:""; position:absolute; left:-7px; top:5px; width:12px; height:12px;
+  border-radius:50%; background:var(--paper); border:2px solid var(--accent);
+}
+.tl-item.now::before{background:var(--accent)}
+.tl-when{font-family:var(--mono); font-size:10.5px; letter-spacing:.11em; text-transform:uppercase; color:var(--accent); margin-bottom:3px}
+.tl-item h3{margin-bottom:5px}
+.tl-item ul{margin:8px 0 0; padding-left:18px; color:var(--text-2); font-size:13.5px}
+.tl-item li + li{margin-top:5px}
+
+/* ops */
+.cols2{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+@media (max-width:760px){.cols2{grid-template-columns:1fr}}
+.note{
+  background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:18px 20px;
+}
+.note h3{margin-bottom:8px}
+.note ul{margin:0; padding-left:18px; color:var(--text-2); font-size:13.5px}
+.note li + li{margin-top:6px}
+.te{font-family:var(--telugu); font-size:15px}
+.rule{
+  display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:baseline;
+  padding:11px 0; border-bottom:1px solid var(--line); font-size:13.5px;
+}
+.rule:last-child{border-bottom:0}
+.rule .mark{font-family:var(--mono); font-weight:600; font-size:11px}
+.rule.no .mark{color:var(--t1)}
+.rule.yes .mark{color:var(--ours)}
+
+footer{border-top:1px solid var(--line); background:var(--surface-2); padding:26px 0 40px; color:var(--text-3); font-size:12.5px}
+footer a{color:var(--text-2)}
+footer .srcs{display:grid; gap:4px; margin-top:10px; font-family:var(--mono); font-size:11.5px}
+.caveat{
+  font-family:var(--mono); font-size:11.5px; color:var(--text-2); background:var(--t2-soft);
+  border-radius:5px; padding:9px 13px; margin:0 0 24px; line-height:1.6;
+}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-in">
+      <div>
+        <p class="eyebrow">War room intelligence · Dasavatharam season</p>
+        <h1>House Threat Map
+          <span class="sub">Who blocks our contestant's path to the top 3 — and how we get past each one.</span>
+        </h1>
+      </div>
+      <div class="countdown">
+        <span class="n" id="cd">4</span>
+        <span class="l" id="cdl">days to premiere</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="facts-outer">
+  <div class="wrap">
+    <dl class="facts">
+      <div class="fact"><dt>Premiere</dt><dd>Sat 6 Sep, 7:00 PM</dd></div>
+      <div class="fact"><dt>Where</dt><dd>Star Maa · JioHotstar</dd></div>
+      <div class="fact"><dt>Host</dt><dd>Nagarjuna (S3–S10)</dd></div>
+      <div class="fact"><dt>Theme</dt><dd>Dasavatharam · 10 yrs</dd></div>
+      <div class="fact"><dt>Feeder show</dt><dd>Agnipariksha 2, 10 PM</dd></div>
+      <div class="fact"><dt>Roster</dt><dd>Unconfirmed</dd></div>
+    </dl>
+  </div>
+</div>
+
+<div class="tabrail">
+  <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Battlecard sections">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="p-verdict" id="t-verdict">The top-3 formula</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-lanes" id="t-lanes">Lane map</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-ledger" id="t-ledger">Threat ledger<span class="cnt">27</span></button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-blocs" id="t-blocs">Bloc battlecards<span class="cnt">7</span></button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-plan" id="t-plan">Next 21 days</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-ops" id="t-ops">Voting &amp; rules</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ============ VERDICT ============ -->
+<section class="panel" id="p-verdict" role="tabpanel" aria-labelledby="t-verdict">
+  <div class="thesis">
+    <p>Bigg Boss Telugu does not crown the best player. It crowns the housemate the audience feels personally responsible for protecting.</p>
+    <p>Nine seasons of results say the same thing: emotional ownership converts into missed calls, and follower counts do not. Our contestant's top-3 slot will be won in the districts, not on the timeline — and the rivals who threaten it are the ones standing in the same emotional lane, not the ones making the most noise on screen.</p>
+  </div>
+
+  <div class="sec">
+    <p class="kicker">Evidence · nine finales</p>
+    <h2>The winner ledger</h2>
+    <p class="lede">Every Bigg Boss Telugu title, with the archetype that actually won it. Read the archetype column, not the profession column — that is where the pattern lives.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th class="num">S</th><th class="num">Year</th><th>Winner</th><th>By trade</th><th>Winning archetype</th><th>Runner-up</th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td class="num">2017</td><td><strong>Siva Balaji</strong></td><td>Actor</td><td>Grounded family man</td><td>Aadarsh Balakrishna</td></tr>
+          <tr><td class="num">2</td><td class="num">2018</td><td><strong>Kaushal Manda</strong></td><td>Actor</td><td>Polarising warrior with an organised army</td><td>Geetha Madhuri · singer</td></tr>
+          <tr><td class="num">3</td><td class="num">2019</td><td><strong>Rahul Sipligunj</strong></td><td>Singer</td><td>Street-mass Hyderabadi</td><td>Sreemukhi · anchor</td></tr>
+          <tr><td class="num">4</td><td class="num">2020</td><td><strong>Abijeet</strong></td><td>Actor</td><td>Calm protector</td><td>Akhil Sarthak</td></tr>
+          <tr><td class="num">5</td><td class="num">2021</td><td><strong>VJ Sunny</strong></td><td>VJ / dancer</td><td>Working-class grinder</td><td>Shanmukh Jaswanth · YouTuber</td></tr>
+          <tr><td class="num">6</td><td class="num">2022</td><td><strong>L.V. Revanth</strong></td><td>Singer</td><td>Humble underdog</td><td>Shrihan · YouTuber</td></tr>
+          <tr><td class="num">7</td><td class="num">2023</td><td><strong>Pallavi Prashanth</strong></td><td>Farmer · commoner</td><td>Rural mass underdog</td><td>Amardeep Chowdary</td></tr>
+          <tr><td class="num">8</td><td class="num">2024</td><td><strong>Nikhil Maliyakkal</strong></td><td>Actor</td><td>Dominant house chief</td><td>Gautham Krishna · doctor-actor</td></tr>
+          <tr><td class="num">9</td><td class="num">2025</td><td><strong>Kalyan Padala</strong></td><td>Army officer · commoner</td><td>Dignity underdog</td><td>Thanuja Puttaswamy · actress</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sec">
+    <p class="kicker">What the ledger forces us to accept</p>
+    <h2>Five laws of this house</h2>
+    <div class="laws">
+      <div class="law"><div class="idx">01</div><div>
+        <h3>Emotion beats performance</h3>
+        <p>Six of nine titles went to a relatable origin story rather than superior gameplay. Only Nikhil (S8) won purely on dominance, and he needed flawless conflict handling across 105 days to do it.</p>
+        <span class="ev">Implication → our weekly content brief is an emotional arc, not a highlight reel.</span>
+      </div></div>
+      <div class="law"><div class="idx">02</div><div>
+        <h3>Commoners now win, not just survive</h3>
+        <p>Two of the last three titles went to non-celebrities — a farmer (S7) and an Army officer (S9). Agnipariksha has institutionalised the pipeline, and this season it runs nightly at 10 PM, building six commoners' backstories before Day 1.</p>
+        <span class="ev">Implication → the underdog lane is already occupied by the time our contestant walks in.</span>
+      </div></div>
+      <div class="law"><div class="idx">03</div><div>
+        <h3>Digital reach reaches the finale, never the title</h3>
+        <p>Shanmukh (S5), Shrihan (S6) and Nabeel (S8) all converted large online audiences into runner-up finishes and nothing more. Likes are urban and passive; missed calls are district-level and organised.</p>
+        <span class="ev">Implication → do not enter a follower war we gain nothing by winning.</span>
+      </div></div>
+      <div class="law"><div class="idx">04</div><div>
+        <h3>Comedians cap out around third</h3>
+        <p>Jabardasth and Patas names arrive with enormous recall and reliably reach the last four — Emmanuel finished third in S9 — but audiences enjoy them rather than feel responsible for them. Affection is not the same emotion as protection.</p>
+        <span class="ev">Implication → they are volume rivals in the finale, not lane rivals in the middle weeks.</span>
+      </div></div>
+      <div class="law"><div class="idx">05</div><div>
+        <h3>Women reach runner-up, rarely first</h3>
+        <p>Geetha Madhuri, Sreemukhi and Thanuja each finished second. No woman has taken the Telugu title in nine seasons. Breaking it has always needed a visible conflict-survival arc, not a likeability arc.</p>
+        <span class="ev">Implication → if our contestant is a woman, we plan the confrontation she survives, we do not avoid confrontation.</span>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LANES ============ -->
+<section class="panel" id="p-lanes" role="tabpanel" aria-labelledby="t-lanes" hidden>
+  <h2>Which emotional lane is still open</h2>
+  <p class="lede">A house holds roughly sixteen people and about eight viable emotional positions. Two contestants in the same lane split one vote base and both lose it. This is the single highest-leverage decision we make before 6 September, and it is reversible for about seventy-two hours after premiere — not longer.</p>
+
+  <div class="lanes">
+    <div class="lane"><span class="nm">Underdog / commoner</span><span class="oc">Six Agnipariksha entrants arrive pre-loaded with a televised backstory</span><span class="chip t1">Closed</span></div>
+    <div class="lane"><span class="nm">Telangana regional pride</span><span class="oc">Claimed the moment a mass folk name enters; historically the deepest single vote driver</span><span class="chip t1">Closed on entry</span></div>
+    <div class="lane"><span class="nm">Comic relief</span><span class="oc">Four to six comedy-circuit names competing for the same laughs</span><span class="chip t1">Closed &amp; undesirable</span></div>
+    <div class="lane"><span class="nm">Glamour</span><span class="oc">Contested every season; lowest top-3 conversion rate of any lane</span><span class="chip t2">Avoid</span></div>
+    <div class="lane"><span class="nm">House strategist / chief</span><span class="oc">Won S8, but demands perfect conflict handling for 15 weeks — no margin</span><span class="chip t2">High risk</span></div>
+    <div class="lane"><span class="nm">Coastal AP · Rayalaseema · Uttarandhra pride</span><span class="oc">Rarely claimed while everyone crowds Telangana identity</span><span class="chip open">Open</span></div>
+    <div class="lane"><span class="nm">Family / parent emotional anchor</span><span class="oc">Speaks directly to women 25–55, the largest missed-call demographic</span><span class="chip open">Open</span></div>
+    <div class="lane pick"><span class="nm">The worker who protects</span><span class="oc">Grinder plus house conscience — the composite that produced Siva Balaji, Abijeet, VJ Sunny and Kalyan Padala</span><span class="chip open">Recommended</span></div>
+  </div>
+
+  <div class="sec">
+    <h2>Why "the worker who protects"</h2>
+    <div class="cols2">
+      <div class="note">
+        <h3>It is the only background-agnostic lane</h3>
+        <ul>
+          <li>It works whether our contestant is an actor, a comedian, a creator or a commoner — it is built from behaviour on screen, not from biography.</li>
+          <li>It converts in every one of the nine seasons on record, across four different professions of winner.</li>
+          <li>It sits directly on top of the underdog campaign already built in the playbook — protection is what the audience does for an underdog, and being seen protecting someone else is how a contestant earns it without claiming it.</li>
+          <li>No rumoured name in the current pool is positioned there.</li>
+        </ul>
+      </div>
+      <div class="note">
+        <h3>What it looks like on screen, weekly</h3>
+        <ul>
+          <li>Takes the unglamorous task nobody wants — kitchen, washing, garden — without narrating it.</li>
+          <li>Stands between an aggressor and whoever is being cornered, once per week, on camera.</li>
+          <li>Loses an argument gracefully at least once in the first fortnight; audiences distrust the undefeated.</li>
+          <li>Never claims the position out loud. The moment a contestant says "I am the only one working here", the lane collapses into self-pity.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEDGER ============ -->
+<section class="panel" id="p-ledger" role="tabpanel" aria-labelledby="t-ledger" hidden>
+  <h2>Threat ledger</h2>
+  <p class="lede">Every name currently circulating for Season 10, scored on the only question that matters — does this person cost us a top-3 slot? Weekly-survival danger is a separate and lesser problem.</p>
+
+  <p class="caveat">STATUS 02 SEP · Star Maa has confirmed no contestant. Every name below is press speculation from two overlapping rumour pools and several will not enter. Tier assignments hold regardless: they are assigned to the <em>bloc</em>, and the blocs are structural to the format. Re-score names within 48 hours of the premiere.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr>
+        <th>Name</th><th>Bloc</th><th>Vote base</th><th>Tier</th><th>Why</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><strong>Jhansi</strong> <span class="chip rumour">Agni 2</span></td><td>Commoner</td><td>Built live on the pre-show</td><td><span class="chip t1">T1</span></td><td>Singer with a televised backstory before Day 1 — direct lane rival</td></tr>
+        <tr><td><strong>Apoorva</strong> <span class="chip rumour">Agni 2</span></td><td>Commoner</td><td>Pre-show + anchor recall</td><td><span class="chip t1">T1</span></td><td>Commoner sympathy plus camera fluency is the strongest combination in the pool</td></tr>
+        <tr><td><strong>Rajakumari Dayana</strong> <span class="chip rumour">Agni 2</span></td><td>Commoner</td><td>Pre-show</td><td><span class="chip t1">T1</span></td><td>Distinctive persona; high early recall</td></tr>
+        <tr><td><strong>Rohit</strong> <span class="chip rumour">Agni 2</span></td><td>Commoner</td><td>Pre-show</td><td><span class="chip t2">T2</span></td><td>Volume threat if he lands a Week 1–2 hero moment</td></tr>
+        <tr><td><strong>Charan</strong> <span class="chip rumour">Agni 2</span></td><td>Commoner</td><td>Pre-show</td><td><span class="chip t2">T2</span></td><td>As above; unproven under house pressure</td></tr>
+        <tr><td><strong>Bhaagi</strong> <span class="chip rumour">Agni 2</span></td><td>Commoner</td><td>Pre-show</td><td><span class="chip t2">T2</span></td><td>As above</td></tr>
+        <tr><td><strong>Mangli</strong></td><td>Mass music</td><td>Telangana folk, statewide</td><td><span class="chip t1">T1</span></td><td>Closest thing to a pre-loaded finalist in the pool — regional pride is the deepest driver in this market</td></tr>
+        <tr><td><strong>Rocking Rakesh</strong></td><td>Comedy</td><td>Jabardasth, rural TS/AP</td><td><span class="chip t2">T2</span></td><td>Huge recall, weekend screen time; historically caps around third</td></tr>
+        <tr><td><strong>Express Hari</strong></td><td>Comedy</td><td>Patas, districts</td><td><span class="chip t2">T2</span></td><td>Writer-comedian; strong family viewing pull</td></tr>
+        <tr><td><strong>Naresh</strong></td><td>Comedy</td><td>Jabardasth</td><td><span class="chip t2">T2</span></td><td>Same pattern; splits the comedy vote with Rakesh and Hari</td></tr>
+        <tr><td><strong>Ramprasad</strong></td><td>Comedy</td><td>Jabardasth</td><td><span class="chip t3">T3</span></td><td>Fourth comedy name in a saturated bloc</td></tr>
+        <tr><td><strong>Varsha</strong></td><td>Comedy</td><td>Jabardasth</td><td><span class="chip t3">T3</span></td><td>Comedy plus glamour — two low-conversion lanes stacked</td></tr>
+        <tr><td><strong>Temper Vamsi</strong></td><td>Comedy / film</td><td>Mass film recall</td><td><span class="chip t3">T3</span></td><td>Face recognition without a personal fan base</td></tr>
+        <tr><td><strong>Varshini Sounderajan</strong></td><td>Anchor</td><td>~2M IG, urban</td><td><span class="chip t2">T2</span></td><td>Reportedly among the highest-paid this season — expect heavy narrative real estate</td></tr>
+        <tr><td><strong>Pallavi Gowda</strong></td><td>Serial actress</td><td>Multi-language serial households</td><td><span class="chip t2">T2</span></td><td>Reaches women 25–55 across four industries — the core missed-call demographic</td></tr>
+        <tr><td><strong>Deepika Rangaraju</strong></td><td>Serial actress</td><td>TN + TS serial audience</td><td><span class="chip t2">T2</span></td><td>Former news presenter; articulate under pressure</td></tr>
+        <tr><td><strong>Tejaswini</strong></td><td>Serial actress</td><td>Serial households</td><td><span class="chip t3">T3</span></td><td>Splits with the other serial names</td></tr>
+        <tr><td><strong>Sonia Singh</strong></td><td>Serial actress</td><td>Serial households</td><td><span class="chip t3">T3</span></td><td>As above</td></tr>
+        <tr><td><strong>Haritha</strong></td><td>Serial actress</td><td>Senior serial audience</td><td><span class="chip t3">T3</span></td><td>Potential mother-figure lane — watch if she claims it</td></tr>
+        <tr><td><strong>Chaitra Rai</strong></td><td>Serial actress</td><td>TV audience</td><td><span class="chip t3">T3</span></td><td>Low differentiation in a crowded bloc</td></tr>
+        <tr><td><strong>Debjani Modak</strong></td><td>Serial actress</td><td>TV audience</td><td><span class="chip t3">T3</span></td><td>As above</td></tr>
+        <tr><td><strong>Uppal Balu</strong></td><td>Creator</td><td>Urban short-form</td><td><span class="chip t3">T3</span></td><td>Trend threat in Weeks 1–4, vote threat only in finale week</td></tr>
+        <tr><td><strong>Sudheer Reddy</strong></td><td>Creator</td><td>YouTube</td><td><span class="chip t3">T3</span></td><td>As above — see Law 03</td></tr>
+        <tr><td><strong>Adith Arun</strong></td><td>Film actor</td><td>Film audience, urban</td><td><span class="chip t3">T3</span></td><td>Most recognisable male actor rumoured; privilege framing is his ceiling</td></tr>
+        <tr><td><strong>Krishnudu</strong></td><td>Film actor</td><td>Legacy film recall</td><td><span class="chip t3">T3</span></td><td>Recall without an active fan base</td></tr>
+        <tr><td><strong>Mukesh Gowda</strong></td><td>Film / TV actor</td><td>TV audience</td><td><span class="chip t3">T3</span></td><td>Unproven draw</td></tr>
+        <tr><td><strong>Chandrahas</strong></td><td>Film actor</td><td>Film-family recall</td><td><span class="chip t3">T3</span></td><td>Star-kid framing is a liability in this house, not an asset</td></tr>
+        <tr><td><strong>Pandu Master</strong></td><td>Dance</td><td>Dhee audience, mass</td><td><span class="chip t2">T2</span></td><td>Dance formats give recurring screen time and a genuine mass following</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="cols2">
+      <div class="note"><h3>Tier definitions</h3>
+        <ul>
+          <li><span class="chip t1">T1</span> <strong>Lane rival.</strong> Competes for our exact emotional position. Every vote they earn is a vote we do not get. Three to four of these decide our season.</li>
+          <li><span class="chip t2">T2</span> <strong>Volume rival.</strong> Different lane, bigger raw numbers. Harmless in the middle weeks, decisive in the finale.</li>
+          <li><span class="chip t3">T3</span> <strong>Noise rival.</strong> High screen time, weak vote conversion. Dangerous only as a nomination-week aggressor.</li>
+        </ul>
+      </div>
+      <div class="note"><h3>How we spend attention</h3>
+        <ul>
+          <li>T1 gets a named owner in the war room and a running file from Day 1.</li>
+          <li>T2 is monitored weekly and countered only from Week 10 onward, when finale-volume maths starts to matter.</li>
+          <li>T3 gets no counter-content at all unless they attack our contestant directly on screen. Responding elevates them.</li>
+          <li>Reallocate after the premiere: the blocs are stable, the names are not.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLOCS ============ -->
+<section class="panel" id="p-blocs" role="tabpanel" aria-labelledby="t-blocs" hidden>
+  <h2>Bloc battlecards</h2>
+  <p class="lede">Seven blocs, ordered by the danger they pose to a top-3 finish. Open the one you are briefing against. Every counter-play below is fought through our own content and our own communities — never by attacking a rival on an official channel.</p>
+
+  <details class="bloc t1" open>
+    <summary>
+      <span class="name">The Commoner Bloc</span>
+      <span class="who">Jhansi · Apoorva · Rohit · Rajakumari Dayana · Charan · Bhaagi</span>
+      <span class="chip t1">T1 lane rival</span><span class="mk"></span>
+    </summary>
+    <div class="bloc-body">
+      <div class="roster">ROUTE Agnipariksha Season 2, 10 PM daily · VOTE BASE built on live television before Day 1 · PRECEDENT two of the last three titles</div>
+      <div class="split">
+        <div><h4>Where they beat us</h4><ul>
+          <li>They own the underdog position by format. The pre-show spends three weeks building each backstory while our contestant has not appeared yet.</li>
+          <li>Zero baggage — no old interviews, no rivalries, nothing for a hostile page to dig up.</li>
+          <li>Nagarjuna consistently protects commoners on the weekend episodes; that is a weekly endorsement we cannot buy.</li>
+          <li>Their entry was itself voted for, so a fan base already exists on Day 1.</li>
+        </ul></div>
+        <div><h4>Where we beat them</h4><ul>
+          <li>No campaign team, no budget, no district structure. Their vote base is real but unorganised — ours is drilled.</li>
+          <li>Goodwill without machinery decays. The historical failure point is Weeks 5–8, when the celebrity bloc isolates them and nobody outside is converting sympathy into missed calls.</li>
+          <li>No crisis handling. One badly-edited moment and there is no one outside to reframe it.</li>
+          <li>We can reach their audience; they cannot reach ours.</li>
+        </ul></div>
+      </div>
+      <dl class="play">
+        <div class="playrow"><dt>Counter-play</dt><dd>Do not contest the underdog lane. Take the <em>protector</em> position: be the housemate who stands up for a commoner when the celebrity bloc closes ranks. Their audience is watching for exactly this, and a share of it transfers to us on their eviction.</dd></div>
+        <div class="playrow"><dt>Content angle</dt><dd>Clip every moment our contestant defends or includes a commoner. Caption in the second person — <span class="te">మనవాడు వాళ్ళ పక్కన నిలబడ్డాడు</span> — never in the third.</dd></div>
+        <div class="playrow"><dt>Landmine question</dt><dd>Asked of the audience, never of the contestant: "Who has actually stood next to them when it counted?" It reframes the season around behaviour rather than backstory.</dd></div>
+        <div class="playrow"><dt>Timing</dt><dd>Weeks 1–4 they are untouchable. Our transfer window is Weeks 5–9, as the bloc thins.</dd></div>
+      </dl>
+      <div class="dont"><b>Never</b>Never let our contestant be seen dismissing a commoner's background, occupation or language on screen, and never let a fan page do it either. In this market that is not a bad week — it is the end of the campaign.</div>
+    </div>
+  </details>
+
+  <details class="bloc t1">
+    <summary>
+      <span class="name">Mass Music &amp; Dance</span>
+      <span class="who">Mangli · Pandu Master</span>
+      <span class="chip t1">T1 lane rival</span><span class="mk"></span>
+    </summary>
+    <div class="bloc-body">
+      <div class="roster">VOTE BASE Telangana folk and dance-format audiences, statewide and cross-class · SCREEN TIME guaranteed weekly by performance segments</div>
+      <div class="split">
+        <div><h4>Where they beat us</h4><ul>
+          <li>Regional pride is the deepest vote driver in this market, and a folk name activates it without saying a word.</li>
+          <li>Performance segments hand them recurring, positively-framed screen time that costs them nothing in conflict.</li>
+          <li>Their fan base predates the show and survives a bad week.</li>
+        </ul></div>
+        <div><h4>Where we beat them</h4><ul>
+          <li>Performers can look like they are performing. Fifteen weeks of cameras expose whether there is a person behind the persona.</li>
+          <li>They are rarely task-strong; the house punishes that visibly by Weeks 6–9.</li>
+          <li>They carry a public reputation to protect, which makes them conflict-averse — and conflict avoidance reads as calculation.</li>
+        </ul></div>
+      </div>
+      <dl class="play">
+        <div class="playrow"><dt>Counter-play</dt><dd>If a Telangana mass-music name enters, <em>vacate Telangana pride entirely</em> the same night. Move to Coastal AP, Rayalaseema or Uttarandhra identity, or drop regional framing and run the worker lane. Two contestants splitting one regional bloc is the fastest way to lose both halves.</dd></div>
+        <div class="playrow"><dt>Content angle</dt><dd>Contrast, not comparison. Where they perform, we work. Never post a side-by-side.</dd></div>
+        <div class="playrow"><dt>Landmine question</dt><dd>"Which of them do you know outside the stage?" — asked as a fan poll, not as an accusation.</dd></div>
+        <div class="playrow"><dt>Timing</dt><dd>Assess within 24 hours of the premiere. Lane reassignment gets harder every day after that.</dd></div>
+      </dl>
+      <div class="dont"><b>Never</b>Never let our fan communities disparage a folk artist or their community. It reads as caste or class contempt regardless of intent, and it will be screenshotted.</div>
+    </div>
+  </details>
+
+  <details class="bloc t2">
+    <summary>
+      <span class="name">The Jabardasth Comedy Bloc</span>
+      <span class="who">Rocking Rakesh · Express Hari · Naresh · Ramprasad · Varsha · Temper Vamsi</span>
+      <span class="chip t2">T2 volume rival</span><span class="mk"></span>
+    </summary>
+    <div class="bloc-body">
+      <div class="roster">VOTE BASE rural and semi-urban family viewing across AP and TS · CEILING third place (Emmanuel, S9) · INTERNAL four to six names splitting one comedy vote</div>
+      <div class="split">
+        <div><h4>Where they beat us</h4><ul>
+          <li>Instant likeability from Day 1 — no story-building required.</li>
+          <li>They win the weekend episodes, where Nagarjuna's banter gives them the most valuable minutes of the week.</li>
+          <li>Families vote together for comedians, which multiplies a single household into several missed calls.</li>
+        </ul></div>
+        <div><h4>Where we beat them</h4><ul>
+          <li>They plateau. Audiences enjoy them; they do not feel responsible for them, and that is the emotion that fills the finale.</li>
+          <li>With four to six of them inside, they cannibalise the same vote base every week.</li>
+          <li>Sustained task pressure turns their humour aggressive around Weeks 6–8 — the point at which the "nice guy" vote leaves.</li>
+        </ul></div>
+      </div>
+      <dl class="play">
+        <div class="playrow"><dt>Counter-play</dt><dd>Ally, do not attack. A comedian needs a foil, and being their foil buys our contestant free screen time in the most-watched segments of the week — <em>as the straight man, never as the punchline</em>.</dd></div>
+        <div class="playrow"><dt>Content angle</dt><dd>Post the warmth: the moments our contestant and a comedian make each other laugh. It borrows their likeability at zero cost.</dd></div>
+        <div class="playrow"><dt>Landmine question</dt><dd>None needed before Week 6. From Week 6, the footage does it for us — clip the moment the joke turns into an edge.</dd></div>
+        <div class="playrow"><dt>Timing</dt><dd>Harmless to us until roughly Week 11. From then it is a pure volume contest and our district organisation is the answer.</dd></div>
+      </dl>
+      <div class="dont"><b>Never</b>Never let our contestant become a running gag. Comic-relief framing is the single most reliable way to be liked into fourth place.</div>
+    </div>
+  </details>
+
+  <details class="bloc t2">
+    <summary>
+      <span class="name">The Serial Actress Bloc</span>
+      <span class="who">Pallavi Gowda · Deepika Rangaraju · Tejaswini · Sonia Singh · Haritha · Chaitra Rai · Debjani Modak</span>
+      <span class="chip t2">T2 volume rival</span><span class="mk"></span>
+    </summary>
+    <div class="bloc-body">
+      <div class="roster">VOTE BASE women 25–55 — the largest and most reliable missed-call demographic in this market · INTERNAL up to seven names in one bloc</div>
+      <div class="split">
+        <div><h4>Where they beat us</h4><ul>
+          <li>Daily-serial fame reaches exactly the households that vote by missed call, every evening, for years.</li>
+          <li>Familiarity needs no introduction episode — the audience already has a relationship.</li>
+          <li>A senior actress who claims the mother-figure position is very hard to evict.</li>
+        </ul></div>
+        <div><h4>Where we beat them</h4><ul>
+          <li>Serial fame is passive. It rarely comes with district-level organisation or a captain structure.</li>
+          <li>Seven names in one bloc is self-defeating; they consolidate against each other long before they consolidate against us.</li>
+          <li>Editors reliably position at least one of them as manipulative around Weeks 4–6, and that framing sticks.</li>
+        </ul></div>
+      </div>
+      <dl class="play">
+        <div class="playrow"><dt>Counter-play</dt><dd>Let the bloc split itself. Our only job is to ensure our contestant is never the outsider the bloc consolidates <em>against</em> — one genuine friendship inside it is worth more than any counter-content.</dd></div>
+        <div class="playrow"><dt>Content angle</dt><dd>If our contestant is a woman, we must break out of this bloc's framing in Week 1 by taking a visible task or protection role, not a relationship role.</dd></div>
+        <div class="playrow"><dt>Landmine question</dt><dd>"Who is playing the game and who is being themselves?" — a fan poll that this bloc historically loses.</dd></div>
+        <div class="playrow"><dt>Timing</dt><dd>Bloc politics peak Weeks 4–8. Watch nomination patterns for evidence of a coordinated group vote.</dd></div>
+      </dl>
+      <div class="dont"><b>Never</b>Never let our communities run gendered abuse at any woman in the house. It is the fastest route to a mainstream negative story about our contestant, and none of it is deniable.</div>
+    </div>
+  </details>
+
+  <details class="bloc t2">
+    <summary>
+      <span class="name">The Anchor Bloc</span>
+      <span class="who">Varshini Sounderajan · Apoorva</span>
+      <span class="chip t2">T2 volume rival</span><span class="mk"></span>
+    </summary>
+    <div class="bloc-body">
+      <div class="roster">VOTE BASE urban, digitally-engaged, roughly 2M IG on the lead name · LEVERAGE reportedly among the highest-paid signings this season</div>
+      <div class="split">
+        <div><h4>Where they beat us</h4><ul>
+          <li>Total camera fluency. They give producers clean, quotable confessionals, so they get cut into every episode.</li>
+          <li>A high fee usually buys narrative real estate — expect them to be centred in promos.</li>
+          <li>Existing urban following that mobilises fast on app voting.</li>
+        </ul></div>
+        <div><h4>Where we beat them</h4><ul>
+          <li>Polish reads as media training. Audiences discount rehearsed emotion, and this house runs long enough to expose it.</li>
+          <li>Urban app voting is a fraction of the total; missed calls decide close weeks.</li>
+          <li>Anchors are used to controlling the room and struggle visibly when they cannot.</li>
+        </ul></div>
+      </div>
+      <dl class="play">
+        <div class="playrow"><dt>Counter-play</dt><dd>Contrast. Where they are fluent, we are plain. An unpolished sentence that is obviously true beats a well-delivered one — <em>we win on credibility, not articulacy</em>.</dd></div>
+        <div class="playrow"><dt>Content angle</dt><dd>Unedited, unglamorous footage of our contestant. No filters, no background score, no captions on the emotional clips.</dd></div>
+        <div class="playrow"><dt>Landmine question</dt><dd>"Was that felt or performed?" Ask it about the season generally; the audience will apply it themselves.</dd></div>
+        <div class="playrow"><dt>Timing</dt><dd>Strongest Weeks 1–3 while promos favour them. Their conversion problem appears from Week 6.</dd></div>
+      </dl>
+      <div class="dont"><b>Never</b>Never mock anyone's fee or their looks. Both attacks convert neutral viewers into their supporters within a day.</div>
+    </div>
+  </details>
+
+  <details class="bloc t3">
+    <summary>
+      <span class="name">The Digital Creator Bloc</span>
+      <span class="who">Uppal Balu · Sudheer Reddy · and any wildcard creator</span>
+      <span class="chip t3">T3 noise rival</span><span class="mk"></span>
+    </summary>
+    <div class="bloc-body">
+      <div class="roster">RECORD three consecutive creator runners-up — Shanmukh S5, Shrihan S6, Nabeel S8 · TITLES zero</div>
+      <div class="split">
+        <div><h4>Where they beat us</h4><ul>
+          <li>Weeks 1–3 trend volume and meme velocity. They will look like they are winning the season on the timeline.</li>
+          <li>Their audience produces content for them free, which multiplies their apparent momentum.</li>
+          <li>They convert well on in-app voting, which is the visible metric.</li>
+        </ul></div>
+        <div><h4>Where we beat them</h4><ul>
+          <li>Nine seasons, three finalists, no titles. The pattern is not ambiguous.</li>
+          <li>Their reach is urban, young and passive — high engagement, low repeat-vote discipline.</li>
+          <li>They have no district structure and no captain network, so they cannot mobilise on a two-hour window.</li>
+        </ul></div>
+      </div>
+      <dl class="play">
+        <div class="playrow"><dt>Counter-play</dt><dd>Concede trending, win missed calls. Do not enter a follower-count war in Weeks 1–4 — <em>it is a contest we gain nothing by winning and lose narrative ground by joining</em>.</dd></div>
+        <div class="playrow"><dt>Content angle</dt><dd>Inside our own communities only, run the honest check-in: "Have you voted, or only liked?" It hardens our own base and never mentions a rival.</dd></div>
+        <div class="playrow"><dt>Landmine question</dt><dd>The gap between their engagement and their poll numbers is the whole argument. Let the poll screenshots speak.</dd></div>
+        <div class="playrow"><dt>Timing</dt><dd>Ignore until Week 10. From Week 12 they become a genuine volume threat in a short finale window.</dd></div>
+      </dl>
+      <div class="dont"><b>Never</b>Never brief the client that creator follower counts predict eliminations. They do not, and setting that expectation makes a good week look like a bad one.</div>
+    </div>
+  </details>
+
+  <details class="bloc t3">
+    <summary>
+      <span class="name">The Film Actor Bloc</span>
+      <span class="who">Adith Arun · Krishnudu · Mukesh Gowda · Chandrahas</span>
+      <span class="chip t3">T3 noise rival</span><span class="mk"></span>
+    </summary>
+    <div class="bloc-body">
+      <div class="roster">VOTE BASE film recall, largely urban and passive · STRUCTURAL WEAKNESS "he doesn't need it" is the most fatal audience frame in this house</div>
+      <div class="split">
+        <div><h4>Where they beat us</h4><ul>
+          <li>Perceived class and screen presence; they photograph well in promos.</li>
+          <li>Nagarjuna's natural warmth toward film people reads as endorsement.</li>
+          <li>Industry contacts amplify them in trade media.</li>
+        </ul></div>
+        <div><h4>Where we beat them</h4><ul>
+          <li>Telugu audiences punish visible privilege in this format. Recall is not the same as a fan base that dials a number.</li>
+          <li>They tend to withdraw under stress, which edits as arrogance.</li>
+          <li>They have the most to lose reputationally, so they play safe — and safe does not reach the top three.</li>
+        </ul></div>
+      </div>
+      <dl class="play">
+        <div class="playrow"><dt>Counter-play</dt><dd>Never attack them for being privileged; it looks like envy and it makes them sympathetic. <em>Simply out-work them where the camera can see it</em> and let the contrast do the argument.</dd></div>
+        <div class="playrow"><dt>Content angle</dt><dd>Effort footage. Our contestant doing the difficult, boring, physical thing — with no caption claiming credit.</dd></div>
+        <div class="playrow"><dt>Landmine question</dt><dd>"Who has actually needed this?" Asked once, as a community poll, and never repeated.</dd></div>
+        <div class="playrow"><dt>Timing</dt><dd>Rarely a threat past Week 8 unless one of them takes an unexpected emotional lane.</dd></div>
+      </dl>
+      <div class="dont"><b>Never</b>Never let our pages run family or star-kid attacks. It invites an industry-wide pile-on that our client cannot absorb.</div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ PLAN ============ -->
+<section class="panel" id="p-plan" role="tabpanel" aria-labelledby="t-plan" hidden>
+  <h2>The next 21 days</h2>
+  <p class="lede">A sequence, because the order genuinely matters — the lane must be locked before Day 1, the field can only be read after it, and the district machine has to be tested on a real voting window before the stakes get high.</p>
+
+  <div class="tl">
+    <div class="tl-item now">
+      <div class="tl-when">Now → 5 Sep · four days</div>
+      <h3>Lock the lane and build the machine blind</h3>
+      <ul>
+        <li>Choose the lane from the Lane Map and write it into one sentence every team member can recite. Everything else follows from it.</li>
+        <li>Watch Agnipariksha 2 nightly at 10 PM and log every commoner's backstory, hometown and sympathy hook. This is free intelligence on our most dangerous bloc, and it stops the day they enter the house.</li>
+        <li>Recruit and brief district captains across Hyderabad, Vijayawada–Guntur, Vizag, Warangal, Tirupati and the NRI group. Captains take days to train and hours to lose.</li>
+        <li>Build the voting explainer creative with the missed-call number left blank — the number is only announced on air.</li>
+        <li>Bank thirty pre-entry assets. From Day 1 the only new raw material is episode footage.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-when">Sat 6 Sep, 7 PM · premiere night</div>
+      <h3>Read the real field</h3>
+      <ul>
+        <li>Log every actual entrant against a bloc within two hours of the entry sequence. Rumour lists end tonight.</li>
+        <li>Flag immediately if a mass folk or regional-pride name enters — that triggers same-night lane reassignment.</li>
+        <li>Publish the first clip within 30–60 minutes of our contestant's entry. The first page to clip a moment owns the shares.</li>
+        <li>Do not attack anyone. Week 1 negativity attaches to the attacker, not the target.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-when">Week 1 · 7–13 Sep</div>
+      <h3>Establish the face, confirm the mechanics</h3>
+      <ul>
+        <li>Reissue this threat map with real names and revised tiers within 48 hours. Assign a war-room owner to each T1.</li>
+        <li>Confirm the Season 10 voting rules on air — daily vote limits per method and the window close time — then reprint every creative to match. Last season allowed roughly 50 votes per method per day; do not assume it carries over.</li>
+        <li>Capture and publish the first protector moment. If it has not happened by Day 5, the lane is not landing and we reassess.</li>
+        <li>Grow communities hard while there is no voting pressure yet.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-when">Week 2 · 14–20 Sep</div>
+      <h3>First live fire</h3>
+      <ul>
+        <li>Full district activation on the first real nomination window: alert within minutes of the episode ending, timed reminders through the window, "Reply VOTED" check-ins.</li>
+        <li>Measure the check-in ratio per district. That number, not follower growth, is our campaign's true health metric and our baseline for the season.</li>
+        <li>Identify our contestant's natural on-screen ally and their natural aggressor. Both matter more than any strategy we write from outside.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-when">Week 3 · 21–27 Sep</div>
+      <h3>Consolidate and prepare the counter-file</h3>
+      <ul>
+        <li>Fix the weakest district from the Week 2 check-in data — usually a captain problem, not an audience problem.</li>
+        <li>Open a running file on the identified aggressor: their pattern, their pressure points, the footage that will matter in Weeks 6–8.</li>
+        <li>Lock the weekly reporting rhythm with the client, including what we will not promise — official vote counts are never published, and every number we report is directional.</li>
+        <li>Brief every captain on the conduct code before the season gets heated, not after.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPS ============ -->
+<section class="panel" id="p-ops" role="tabpanel" aria-labelledby="t-ops" hidden>
+  <h2>Voting mechanics &amp; rules of engagement</h2>
+  <p class="lede">The operational floor under everything above. Get the mechanics wrong in Week 1 and the best narrative in the house will not save a nomination night.</p>
+
+  <div class="cols2">
+    <div class="note">
+      <h3>How the vote actually works</h3>
+      <ul>
+        <li><strong>Two channels.</strong> In-app voting on JioHotstar, plus a unique missed-call number per contestant announced on air.</li>
+        <li><strong>Daily caps, per method.</strong> Season 9 allowed roughly 50 votes per day per method, resetting at midnight IST. Treat this as unconfirmed for Season 10 until it is announced on air.</li>
+        <li><strong>The window.</strong> Opens after the nomination episode, typically closes Friday night before the weekend episodes. Exact timings are announced during broadcast.</li>
+        <li><strong>The lowest total goes.</strong> Subject to twists — re-entries, immunity and jury rounds have all overridden the public vote in past seasons.</li>
+        <li><strong>Missed calls carry the districts.</strong> App voting skews urban and young; missed calls reach the households that decide close weeks.</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h3>What we never promise the client</h3>
+      <ul>
+        <li>The broadcaster does not publish official vote counts. Anyone quoting a percentage is quoting an unofficial poll.</li>
+        <li>Unofficial polls and trend positions are reported as directional indicators, labelled as such, every single week.</li>
+        <li>Survival is the outcome we own. Ranking within survival is not something any agency can guarantee.</li>
+        <li>Honest reporting in a bad week is what buys us credibility in a good one.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h3>Rules of engagement for every counter-play in this document</h3>
+    <div class="note">
+      <div class="rule yes"><span class="mark">DO</span><span>Ask questions of our own audience that let them reach the conclusion themselves.</span></div>
+      <div class="rule yes"><span class="mark">DO</span><span>Answer coordinated attacks with full-context video evidence rather than argument.</span></div>
+      <div class="rule yes"><span class="mark">DO</span><span>Route anything that touches a mainstream news cycle through the single designated approver before it publishes.</span></div>
+      <div class="rule yes"><span class="mark">DO</span><span>Reframe genuine attacks as proof the powerful are lining up against our contestant — only when the attack is real.</span></div>
+      <div class="rule no"><span class="mark">DON'T</span><span>Abuse a rival contestant, their family or their community from any account connected to us.</span></div>
+      <div class="rule no"><span class="mark">DON'T</span><span>Organise mass-reporting or brigading. It is traceable, it gets accounts removed, and it becomes the story.</span></div>
+      <div class="rule no"><span class="mark">DON'T</span><span>Manufacture victimhood. Invented grievances collapse publicly and take the real ones down with them.</span></div>
+      <div class="rule no"><span class="mark">DON'T</span><span>Feed troll noise. Starve it; reserve responses for coordinated attacks and genuine crises.</span></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h3>Standing vote line for every asset</h3>
+    <div class="note">
+      <p style="margin:0 0 8px" class="te">ఓటు వేశారా? ఇంకా వేయకపోతే ఇప్పుడే మిస్డ్ కాల్ ఇవ్వండి.</p>
+      <p style="margin:0; color:var(--text-2); font-size:13.5px">"Have you voted? If not, give a missed call right now." Pair it with the on-air number and the app steps on every creative published inside a live window — and with the district leaderboard standing, which is what actually moves a captain's group.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p style="margin:0">Compiled 2 September 2026 · Season fundamentals confirmed; contestant roster is press speculation and must be re-scored within 48 hours of the premiere. Companion documents: campaign playbook, war-room telecast SOP, WhatsApp captains activation, crisis holding statements.</p>
+    <div class="srcs">
+      <span>Wikipedia — Bigg Boss Telugu seasons 8 &amp; 9 · Bigg Boss Agnipariksha</span>
+      <span>The Hans India · Sakshi Post · Deccan Chronicle · Siasat · Telugu Cinema · Filmibeat · TeluguBiggBossVoting</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  function show(tab){
+    tabs.forEach(function(t){
+      var sel = t === tab;
+      t.setAttribute('aria-selected', sel ? 'true' : 'false');
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !sel;
+    });
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ show(t); });
+    t.addEventListener('keydown', function(e){
+      var i = tabs.indexOf(t), n = null;
+      if(e.key === 'ArrowRight') n = tabs[(i+1) % tabs.length];
+      if(e.key === 'ArrowLeft')  n = tabs[(i-1+tabs.length) % tabs.length];
+      if(n){ e.preventDefault(); n.focus(); show(n); }
+    });
+  });
+
+  try{
+    var premiere = new Date('2026-09-06T19:00:00+05:30').getTime();
+    var days = Math.ceil((premiere - Date.now()) / 86400000);
+    var n = document.getElementById('cd'), l = document.getElementById('cdl');
+    if(days > 1){ n.textContent = days; l.textContent = 'days to premiere'; }
+    else if(days === 1){ n.textContent = '1'; l.textContent = 'day to premiere'; }
+    else if(days === 0){ n.textContent = 'Today'; n.style.fontSize = '26px'; l.textContent = 'premiere night'; }
+    else { n.textContent = 'Wk ' + Math.max(1, Math.ceil(-days/7)); n.style.fontSize='30px'; l.textContent = 'in the house'; }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
